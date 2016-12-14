@@ -8,6 +8,9 @@
         <module>sc-hessian</module>
         <module>sc-mybatis-generator</module>
         <module>sc-utils</module>
+        <module>sc-code-generator</module>
+        <module>sc-mail</module>
+        <module>sc-excle</module>
     </modules>
     <groupId>com.sc</groupId>
     <artifactId>com-sc</artifactId>

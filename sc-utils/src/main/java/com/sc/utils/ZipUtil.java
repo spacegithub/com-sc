@@ -12,7 +12,7 @@ import java.util.zip.ZipOutputStream;
 
 public class ZipUtil {
 	/**
-	 * @Description: TODO(列出zip文件目录)
+	 * @Description: 列出zip文件目录
 	 * @return void 返回类型
 	 * @author qiss
 	 * @date 2014年12月4日 上午11:22:51
@@ -29,7 +29,7 @@ public class ZipUtil {
 	}
 
 	/**
-	 * @Description: TODO(列出MANIFEST.MF文件信息)
+	 * @Description: 列出MANIFEST.MF文件信息
 	 * @return void 返回类型
 	 * @author qiss
 	 * @date 2014年12月4日 上午11:23:29
@@ -52,7 +52,7 @@ public class ZipUtil {
 	}
 
 	/**
-	 * @Description: TODO(压缩单个文件为zip文件)
+	 * @Description: 压缩单个文件为zip文件
 	 * @return String 返回类型
 	 * @author qiss
 	 * @date 2014年12月4日 上午11:24:08
@@ -89,7 +89,7 @@ public class ZipUtil {
 	}
 
 	/**
-	 * @Description: TODO(压缩多个文件为zip文件)
+	 * @Description: 压缩多个文件为zip文件
 	 * @return String 返回类型
 	 * @author qiss
 	 * @date 2014年12月4日 上午11:24:34
@@ -121,7 +121,7 @@ public class ZipUtil {
 	}
 
 	/**
-	 * @Description: TODO(解压zip文件)
+	 * @Description: 解压zip文件
 	 * @return void 返回类型
 	 * @author qiss
 	 * @date 2014年12月4日 上午11:24:52
@@ -168,7 +168,7 @@ public class ZipUtil {
 	}
 
 	/**
-	 * @Description: TODO(内部工具类copy文件)
+	 * @Description: 内部工具类copy文件
 	 * @return void 返回类型
 	 * @author qiss
 	 * @date 2014年12月4日 上午11:25:44

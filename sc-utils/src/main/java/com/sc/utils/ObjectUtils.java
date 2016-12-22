@@ -19,7 +19,7 @@ public class ObjectUtils {
      * @param obj
      * @return
      */
-    private  static boolean isEmpty(Object obj) {
+    public   static boolean isEmpty(Object obj) {
         return obj == null?true:(obj.getClass().isArray()? Array.getLength(obj) == 0:(obj instanceof CharSequence?((CharSequence)obj).length() == 0:(obj instanceof Collection ?((Collection)obj).isEmpty():(obj instanceof Map ?((Map)obj).isEmpty():false))));
     }
     /**

@@ -2,12 +2,26 @@
 
 package com.sc.utils;
 
+import java.lang.reflect.Array;
+import java.util.Collection;
+import java.util.Map;
+
 /**
  * 对象判断常用方法
  *
  * @author Edmund
  */
 public class ObjectUtils {
+
+    /**
+     * 判断所有的Object
+     * 如果是字符串则空字符串也算
+     * @param obj
+     * @return
+     */
+    public   static boolean isEmpty(Object obj) {
+        return obj == null?true:(obj.getClass().isArray()? Array.getLength(obj) == 0:(obj instanceof CharSequence?((CharSequence)obj).length() == 0:(obj instanceof Collection ?((Collection)obj).isEmpty():(obj instanceof Map ?((Map)obj).isEmpty():false))));
+    }
     /**
      * 判断String对象是否是为Null或者为""
      * @param str String对象

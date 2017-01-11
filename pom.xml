@@ -11,6 +11,7 @@
         <module>sc-code-generator</module>
         <module>sc-mail</module>
         <module>sc-excle</module>
+        <module>sc-redis</module>
     </modules>
     <groupId>com.sc</groupId>
     <artifactId>com-sc</artifactId>

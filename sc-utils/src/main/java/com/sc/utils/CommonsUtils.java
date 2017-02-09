@@ -2,9 +2,11 @@ package com.sc.utils;
 
 import com.google.common.base.MoreObjects;
 
-import org.springframework.beans.BeanUtils;
+import com.alibaba.fastjson.JSON;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -12,13 +14,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <一句话功能简述> <功能详细描述>
+ * 工具类
  *
  * @auth:qiss
  * @see: [相关类/方法]（可选）
  * @since [产品/模块版本] （可选）
  */
-public class SenUtils {
+public class CommonsUtils {
 
     /**
      * 组织对象的toString方法
@@ -32,23 +34,9 @@ public class SenUtils {
                 stringHelper.add(field.getName(), field.get(object));
             }
         } catch (IllegalAccessException e) {
-          //do nothing
-        }
-        return stringHelper.toString();
-    }
-
-    /**
-     * 对象属性copy
-     */
-    public static <T> T copy(Object source, Class<T> czt) {
-        T t = null;
-        try {
-            t = czt.newInstance();
-            BeanUtils.copyProperties(source, t);
-        } catch (Exception e) {
             e.printStackTrace();
         }
-        return t;
+        return stringHelper.toString();
     }
 
     /**
@@ -90,4 +78,53 @@ public class SenUtils {
         return ls;
     }
 
+    /**
+     * 判断所有的Object
+     * 如果是字符串则空字符串也算
+     */
+    public static boolean isEmpty(Object obj) {
+        return obj == null ? true : (obj.getClass().isArray() ? Array.getLength(obj) == 0 : (obj instanceof CharSequence ? ((CharSequence) obj).length() == 0 : (obj instanceof Collection ? ((Collection) obj).isEmpty() : (obj instanceof Map ? ((Map) obj).isEmpty() : false))));
+    }
+
+    /**
+     * 转换分到元
+     */
+    public static String changeF2Y(Long amount) throws Exception {
+        return BigDecimal.valueOf(amount).divide(new BigDecimal(100)).toString();
+    }
+
+    /**
+     * 转为json
+     */
+    public static String toJson(Object obj) {
+        return JSON.toJSONString(obj);
+    }
+
+    /**
+     * 从json中取对应的key值
+     *
+     * @param clazz 对应的转换为的类型
+     */
+    public static <T> T findInJson(String json, String key, Class<T> clazz) {
+
+        return (T) JSON.parseObject(json).getObject(key, clazz);
+    }
+
+    /**
+     * 如果地一个为空则取第二个值,第二个值必须为非空否则抛出NullPointerException异常
+     */
+    public static <T> T firstNonNull(T first, T second) {
+        if (second == null) {
+            throw new NullPointerException();
+        }
+        return first != null ? first : second;
+    }
+
+    public static void main(String[] args) {
+        Map map = new HashMap();
+        map.put("fff", null);
+        map.put("ggg", null);
+        String str = (String) map.get("ff");
+        System.out.println("-->" + str);
+    }
 }

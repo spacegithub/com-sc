@@ -23,27 +23,62 @@ import java.util.Set;
  * @since [产品/模块版本] （可选）
  */
 public class CommonsUtils {
-
     /**
      * 组织对象的toString方法
      */
-    public static <T> String StringValue(Class<T> czt, Object object) {
+    public static <T> String stringValue(Object object) {
+        if (object == null)
+            return "null";
+        Class cz = object.getClass();
+        MoreObjects.ToStringHelper stringHelper = MoreObjects.toStringHelper(cz);
+        if (cz.isArray()) {
+            if (cz.getComponentType().isPrimitive()) {//如果是基本类型
+
+                if (cz == byte[].class)
+                    stringHelper.addValue(Arrays.toString((byte[]) object));
+                else if (cz == short[].class)
+                    stringHelper.addValue(Arrays.toString((short[]) object));
+                else if (cz == int[].class)
+                    stringHelper.addValue(Arrays.toString((int[]) object));
+                else if (cz == long[].class)
+                    stringHelper.addValue(Arrays.toString((long[]) object));
+                else if (cz == char[].class)
+                    stringHelper.addValue(Arrays.toString((char[]) object));
+                else if (cz == float[].class)
+                    stringHelper.addValue(Arrays.toString((float[]) object));
+                else if (cz == double[].class)
+                    stringHelper.addValue(Arrays.toString((double[]) object));
+                else if (cz == boolean[].class)
+                    stringHelper.addValue(Arrays.toString((boolean[]) object));
+                return stringHelper.toString();
+            } else {
+                return cz.getSimpleName() + "{" + Arrays.deepToString((Object[]) object) + "}";
+            }
+        }
         if (object instanceof List) {
-            return czt.getSimpleName() + "{" + Arrays.toString(((List) object).toArray()) + "}";
+            List ls = ((List) object);
+            for (Object obj : ls) {
+                stringHelper.addValue(JSON.toJSONString(obj));
+            }
+            return stringHelper.toString();
         }
         if (object instanceof Set) {
-            return czt.getSimpleName() + "{" + Arrays.toString(((Set) object).toArray()) + "}";
+            Set sets = ((Set) object);
+            for (Object obj : sets) {
+                stringHelper.addValue(JSON.toJSONString(obj));
+            }
+            return stringHelper.toString();
         }
         if (object instanceof Map) {
-            StringBuilder sb = new StringBuilder("Map{");
             for (Map.Entry<Object, Object> entry : ((Map<Object, Object>) object).entrySet()) {
-                sb.append("[" +  entry.getKey()+ "," + StringValue(entry.getValue().getClass(), entry.getValue()) + "]");
+                stringHelper.add(String.valueOf(entry.getKey()), JSON.toJSONString(entry.getValue()));
             }
-            return sb.append("}").toString();
+
+            return stringHelper.toString();
         }
-        Field fields[] = czt.getDeclaredFields();
+        Field fields[] = cz.getDeclaredFields();
         Field.setAccessible(fields, true);
-        MoreObjects.ToStringHelper stringHelper = MoreObjects.toStringHelper(czt);
+
         try {
             for (Field field : fields) {
                 stringHelper.add(field.getName(), field.get(object));
@@ -134,5 +169,4 @@ public class CommonsUtils {
         }
         return first != null ? first : second;
     }
-
 }

@@ -8,10 +8,12 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 工具类
@@ -25,7 +27,20 @@ public class CommonsUtils {
     /**
      * 组织对象的toString方法
      */
-    public static <T> String getToString(Class<T> czt, Object object) {
+    public static <T> String StringValue(Class<T> czt, Object object) {
+        if (object instanceof List) {
+            return czt.getSimpleName() + "{" + Arrays.toString(((List) object).toArray()) + "}";
+        }
+        if (object instanceof Set) {
+            return czt.getSimpleName() + "{" + Arrays.toString(((Set) object).toArray()) + "}";
+        }
+        if (object instanceof Map) {
+            StringBuilder sb = new StringBuilder("Map{");
+            for (Map.Entry<Object, Object> entry : ((Map<Object, Object>) object).entrySet()) {
+                sb.append("[" +  entry.getKey()+ "," + StringValue(entry.getValue().getClass(), entry.getValue()) + "]");
+            }
+            return sb.append("}").toString();
+        }
         Field fields[] = czt.getDeclaredFields();
         Field.setAccessible(fields, true);
         MoreObjects.ToStringHelper stringHelper = MoreObjects.toStringHelper(czt);

@@ -120,11 +120,4 @@ public class CommonsUtils {
         return first != null ? first : second;
     }
 
-    public static void main(String[] args) {
-        Map map = new HashMap();
-        map.put("fff", null);
-        map.put("ggg", null);
-        String str = (String) map.get("ff");
-        System.out.println("-->" + str);
-    }
 }

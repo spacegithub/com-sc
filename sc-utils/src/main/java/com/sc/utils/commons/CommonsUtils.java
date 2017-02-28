@@ -1,4 +1,4 @@
-package com.sc.utils;
+package com.sc.utils.commons;
 
 import com.google.common.base.MoreObjects;
 
@@ -168,5 +168,17 @@ public class CommonsUtils {
             throw new NullPointerException();
         }
         return first != null ? first : second;
+    }
+    /**
+     * JSON字符串替换对应的key
+     * @param t 要替换的实体
+     * @param map 替换的key和要替换的值
+     * @param <T> 返回新的json
+     * @return
+     */
+    public static <T> String jsonReplaceKeys(T t, Map<String, String> map) {
+        JsonNameFilter jsonNameFilter = new JsonNameFilter();
+        jsonNameFilter.setKeys(map);
+        return JSON.toJSONString(t, jsonNameFilter);
     }
 }

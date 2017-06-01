@@ -18,8 +18,7 @@ import javax.mail.internet.MimeMultipart;
 
 /**
  * 发送邮件核心代码
- * 
- * @author qiss time:2014-3-28 17:00:38
+
  * 
  */
 public class ComplexMailSender {

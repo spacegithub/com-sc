@@ -2,8 +2,10 @@
 
 package com.sc.hessian.header;
 
-import com.fg.commons.mapper.JsonMapper;
-import com.fg.commons.utils.Identities;
+
+import com.sc.mapper.JsonMapper;
+import com.sc.utils.Identities;
+
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;

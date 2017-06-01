@@ -21,7 +21,7 @@ public class SiginQueryTest {
         String serviceName = "single_trade_query";
         AliPayCore aliPayCore = new AliPayCore(new AliPayConf(partner, key, alipayGateway, serviceName));
         Map<String,String> map=new HashMap<>();
-        map.put("out_trade_no","CJIA145205p32346");
+        map.put("out_trade_no","145205p32346");
         //map.put("","");
         System.out.println("-->" +  aliPayCore.buildRequest(map));
     }

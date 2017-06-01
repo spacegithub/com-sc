@@ -7,7 +7,7 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
-    <context:component-scan base-package="com.fg">
+    <context:component-scan base-package="com.sc">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
         <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
     </context:component-scan>
@@ -15,7 +15,7 @@
     <!--自动扫描hessian注解-->
     <bean class="com.sc.hessian.server.HessianServerScannerConfigurer">
         <property name="hessianExporter" value="com.sc.hessian.service.Say" />
-        <property name="basePackage" value="com.fg.commons.hessian" />
+        <property name="basePackage" value="com.sc" />
         <property name="annotationClass" value="com.sc.hessian.core.Hessian" />
     </bean>
 

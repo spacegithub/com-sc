@@ -38,9 +38,9 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>com.fg.commons</groupId>
-            <artifactId>commons-utils</artifactId>
-            <version>1.4-SNAPSHOT</version>
+            <groupId>com.sc</groupId>
+            <artifactId>sc-utils</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
         <!--test-->
         <dependency>

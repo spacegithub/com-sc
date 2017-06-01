@@ -6,7 +6,6 @@ import redis.clients.jedis.JedisPool;
 /**
  * redis 命令行
  *
- * @auth:mingfly
  * @see: [相关类/方法]（可选）
  * @since [产品/模块版本] （可选）
  */

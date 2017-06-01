@@ -25,7 +25,7 @@ public class CodeGeneration {
      * 需要修改的项start
      *************************************/
     static String domainName = "UpdatePayStatus"; //类名
-    static String packagePath = "cjia.payment.platform";//类包
+    static String packagePath = "sc.code.platform";//类包
     static String hessionUrl="hessian.url.payment";
     /*************************************
      * 需要修改的项end

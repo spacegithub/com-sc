@@ -1,12 +1,3 @@
-/*
- * Copyright (C),2015-2015. 城家酒店管理有限公司
- * FileName: RSA.java
- * Author:   HUQIANBO
- * Date:     2015-11-25 11:19:19
- * Description: //模块目的、功能描述
- * History: //修改记录修改人姓名修改时间版本号描述
- * <HUQIANBO> <2015-11-25 11:19:19> <version> <desc>
- */
 
 package com.sc.utils;
 

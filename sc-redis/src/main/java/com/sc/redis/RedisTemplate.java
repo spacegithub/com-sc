@@ -2,17 +2,18 @@ package com.sc.redis;
 
 
 import com.sc.mapper.JsonMapper;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+
 /**
  * redis模板方法
  *
- * @auth:mingfly
+
  * @see: [相关类/方法]（可选）
  * @since [产品/模块版本] （可选）
  */

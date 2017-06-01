@@ -855,13 +855,13 @@
         <repository>
             <id>fg-releases</id>
             <url>
-                http://xxxx.xxxxx.com/content/repositories/fgRelease/
+                http://xxxx.xxxxx.com/content/repositories/Release/
             </url>
         </repository>
         <snapshotRepository>
             <id>fg-snapshots</id>
             <url>
-                http://xxxx.xxxxx.com/content/repositories/fgSnapshots/
+                http://xxxx.xxxxx.com/content/repositories/Snapshots/
             </url>
         </snapshotRepository>
         <!-- 设置maven doc发布地址 -->

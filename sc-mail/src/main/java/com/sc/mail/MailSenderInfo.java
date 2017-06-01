@@ -5,7 +5,7 @@ import java.util.Properties;
 /**
  * 邮箱发送配置属性
  * 
- * @author qiss 2014-3-28 17:03:25
+
  * 
  */
 public class MailSenderInfo {

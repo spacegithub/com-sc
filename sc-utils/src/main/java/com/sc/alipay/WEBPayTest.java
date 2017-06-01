@@ -23,13 +23,13 @@ public class WEBPayTest {
         map.put("payment_type","1");
         map.put("notify_url","http://120.26.214.154:8082/service/alipay/web/refundNotify/0");
         map.put("return_url","http://www.cjbnb.com/payment/onPaymentCompletionSync/0");
-        map.put("out_trade_no","CJIA-PAY002");
+        map.put("out_trade_no","PAY002");
         map.put("subject","测试网页支付");
         map.put("total_fee","0.01");
-        map.put("show_url","https://www.cjia.com/detail/453");
+        map.put("show_url","https://xxxx/detail/453");
         map.put("seller_id",partner);
         // map.put("app_pay","1");
-        map.put("body","城家测试");
+        map.put("body","测试");
 
         //map.put("","");
         System.out.println("-->" +  aliPayCore.buildRequestUrl(map));

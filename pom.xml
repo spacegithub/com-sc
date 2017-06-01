@@ -853,13 +853,13 @@
     </repositories>
     <distributionManagement>
         <repository>
-            <id>fg-releases</id>
+            <id>releases</id>
             <url>
                 http://xxxx.xxxxx.com/content/repositories/Release/
             </url>
         </repository>
         <snapshotRepository>
-            <id>fg-snapshots</id>
+            <id>snapshots</id>
             <url>
                 http://xxxx.xxxxx.com/content/repositories/Snapshots/
             </url>

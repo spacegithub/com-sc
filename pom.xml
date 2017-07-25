@@ -12,10 +12,11 @@
         <module>sc-mail</module>
         <module>sc-excle</module>
         <module>sc-redis</module>
+        <module>sc-pay-channel</module>
     </modules>
     <groupId>com.sc</groupId>
     <artifactId>com-sc</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <name>com-sc</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -598,7 +599,6 @@
                 <version>1.4.192</version>
                 <scope>test</scope>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
     <dependencies>

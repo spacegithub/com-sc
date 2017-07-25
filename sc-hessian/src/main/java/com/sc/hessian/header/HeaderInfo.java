@@ -3,8 +3,8 @@
 package com.sc.hessian.header;
 
 
-import com.sc.mapper.JsonMapper;
-import com.sc.utils.Identities;
+import com.sc.utils.mapper.JsonMapper;
+import com.sc.utils.utils.Identities;
 
 import org.apache.commons.lang3.StringUtils;
 

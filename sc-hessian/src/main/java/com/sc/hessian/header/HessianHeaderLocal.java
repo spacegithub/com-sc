@@ -3,7 +3,7 @@
 package com.sc.hessian.header;
 
 import com.caucho.hessian.client.HessianConnection;
-import com.sc.mapper.JsonMapper;
+import com.sc.utils.mapper.JsonMapper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

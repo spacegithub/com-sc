@@ -1,7 +1,7 @@
 package com.sc.redis;
 
 
-import com.sc.mapper.JsonMapper;
+import com.sc.utils.mapper.JsonMapper;
 
 import java.util.List;
 import java.util.Map;

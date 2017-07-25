@@ -1,6 +1,6 @@
 package com.sc.utils.test;
 
-import com.sc.spring.PropertiesUtils;
+import com.sc.utils.spring.PropertiesUtils;
 
 import org.junit.Assert;
 import org.junit.Test;

@@ -6,7 +6,7 @@ import com.sc.channel.wxpay.response.PayReverseResult;
 import com.sc.channel.wxpay.utils.EncryptUtil;
 import com.sc.channel.wxpay.utils.WecatSignUtil;
 import com.sc.channel.wxpay.utils.WeixinUtil;
-import com.sc.utils.utils.BeanUtil;
+import com.sc.utils.beanmap.BeanUtil;
 import com.sc.utils.utils.XmlUtil;
 
 import java.util.Map;

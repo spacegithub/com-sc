@@ -3,7 +3,7 @@
 // (powered by Fernflower decompiler)
 //
 
-package com.sc.utils.utils;
+package com.sc.utils.encrypt;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

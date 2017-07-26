@@ -1,4 +1,4 @@
-package com.sc.utils.utils;
+package com.sc.utils.encrypt;
 
 import org.apache.commons.codec.digest.DigestUtils;
 

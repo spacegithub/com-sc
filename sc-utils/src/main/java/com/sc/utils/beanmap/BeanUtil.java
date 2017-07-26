@@ -1,4 +1,4 @@
-package com.sc.utils.utils;
+package com.sc.utils.beanmap;
 
 import com.google.common.base.CaseFormat;
 

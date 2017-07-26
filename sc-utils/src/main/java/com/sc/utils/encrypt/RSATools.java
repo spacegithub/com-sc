@@ -1,5 +1,5 @@
 
-package com.sc.utils.utils;
+package com.sc.utils.encrypt;
 
 import java.io.FileInputStream;
 import java.security.KeyFactory;
@@ -17,13 +17,7 @@ import java.util.Enumeration;
 import javax.crypto.Cipher;
 
 
-/**
- * @author HUQIANBO
- *         <p/>
- *         DNAPAY
- */
-
-public class RSA {
+public class RSATools {
 
     private static final String ENCODING = "UTF-8";
 

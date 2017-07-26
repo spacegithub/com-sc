@@ -4,8 +4,8 @@ import com.sc.utils.rest.httpClient.HttpProtocolHandler;
 import com.sc.utils.rest.httpClient.HttpRequest;
 import com.sc.utils.rest.httpClient.HttpResponse;
 import com.sc.utils.rest.httpClient.HttpResultType;
-import com.sc.utils.utils.MD5;
-import com.sc.utils.utils.RSA;
+import com.sc.utils.encrypt.MD5;
+import com.sc.utils.encrypt.RSATools;
 
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.lang3.StringUtils;
@@ -45,7 +45,7 @@ public class AliPayCore {
         if ("MD5".equals(aliPayConf.getSign_type())) {
             mysign = MD5.sign(prestr, aliPayConf.getKey(), aliPayConf.getInput_charset());
         } else {
-            mysign = RSA.signAlipay(prestr, aliPayConf.getKey(), aliPayConf.getInput_charset());
+            mysign = RSATools.signAlipay(prestr, aliPayConf.getKey(), aliPayConf.getInput_charset());
         }
         return mysign;
     }

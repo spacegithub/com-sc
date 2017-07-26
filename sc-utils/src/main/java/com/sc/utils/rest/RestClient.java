@@ -2,6 +2,8 @@ package com.sc.utils.rest;
 
 import com.alibaba.fastjson.JSONObject;
 
+import org.springframework.http.HttpMethod;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -24,7 +26,7 @@ public class RestClient {
     }
 
     public String doPostJson(String url, Map<String, String> header, String requestJson) throws Exception {
-        return doHttpJson(url, header, requestJson, "POST");
+        return doHttpJson(url, header, requestJson, HttpMethod.POST.toString());
     }
 
     public JSONObject doGetJsonObject(String url, Map<String, String> header) throws Exception {
@@ -41,7 +43,7 @@ public class RestClient {
      * @throws Exception
      */
     public String doGetJson(String url, Map<String, String> header) throws Exception {
-        return doHttpJson(url, header, null, "GET");
+        return doHttpJson(url, header, null, HttpMethod.GET.toString());
     }
 
     /**
@@ -58,11 +60,11 @@ public class RestClient {
         HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
         conn.setConnectTimeout(connectionTimout);
         conn.setReadTimeout(readTimeout);
-        if (requestType.equals("POST")) {
-            conn.setRequestMethod("POST");// 提交模式
+        if (HttpMethod.POST.matches(requestType)) {
+            conn.setRequestMethod(HttpMethod.POST.toString());// 提交模式
             conn.setDoOutput(true);// 是否输入参数
         } else {
-            conn.setRequestMethod("GET");// 提交模式
+            conn.setRequestMethod(HttpMethod.GET.toString());// 提交模式
             conn.setDoOutput(false);// 是否输入参数
         }
         conn.setRequestProperty("content-type", "application/json");
@@ -73,7 +75,7 @@ public class RestClient {
             }
         }
         conn.setRequestProperty("Charset", "UTF-8");
-        if (requestType.equals("POST")) {
+        if (HttpMethod.POST.matches(requestType)) {
             byte[] data = requestJson.getBytes(Charset.forName("utf-8"));
             conn.getOutputStream().write(data);
         }

@@ -1,5 +1,7 @@
 package com.sc.utils.utils;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,6 +27,13 @@ public class FileUtil {
      */
     private FileUtil() {
 
+    }
+
+    /**
+     * 以utf-8的编码读取指定路径的文件并以字符串的形式输出
+     */
+    public static String readFileToString(String path) throws Exception {
+        return FileUtils.readFileToString(new File(path), "utf-8");
     }
 
     /**

@@ -119,6 +119,7 @@ public class JavaBeanUtil {
      *
      * @param inputString
      *            输入字符串
+     *            Bean --> bean
      * @return
      */
     public static String getValidPropertyName(String inputString) {
@@ -141,6 +142,7 @@ public class JavaBeanUtil {
      * 将属性转换成标准set方法名字符串<br>
      *
      * @param property
+     * aaa -->setAaaa
      * @return
      */
     public static String getSetterMethodName(String property) {
@@ -160,6 +162,7 @@ public class JavaBeanUtil {
      * 将属性转换成标准get方法名字符串<br>
      *
      * @param property
+     * aaa -->getAaaa
      * @return
      */
     public static String getGetterMethodName(String property) {

@@ -2,6 +2,8 @@
 
 package com.sc.utils.beanmap;
 
+import org.apache.commons.beanutils.BeanUtils;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -88,7 +90,7 @@ public class MapUtils extends org.apache.commons.collections.MapUtils {
      */
     @SuppressWarnings("unchecked")
     public static Map<String, String> toMap(Object object) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-        return BeanUtils.describe(object);
+        return BeanUtil.describe(object);
     }
 
     /**

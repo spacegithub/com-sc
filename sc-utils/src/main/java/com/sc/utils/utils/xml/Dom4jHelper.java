@@ -1,4 +1,4 @@
-package com.sc.utils.utils; /**
+package com.sc.utils.utils.xml; /**
  * http://www.jq-school.com
  */
 

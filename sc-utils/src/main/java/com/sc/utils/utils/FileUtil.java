@@ -11,7 +11,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 
 /**
  * 此类中封装一些常用的文件操作。
@@ -222,77 +221,6 @@ public class FileUtil {
         return true;
     }
 
-    /**
-     * 列出目录中的所有内容，包括其子目录中的内容。
-     * @param fileName 要列出的目录的目录名
-     * @return 目录内容的文件数组。
-     * @since  1.0
-     */
-  /*public static File[] listAll(String fileName) {
-    return listAll(new File(fileName));
-  }*/
-
-    /**
-     * 列出目录中的所有内容，包括其子目录中的内容。
-     * @param file 要列出的目录
-     * @return 目录内容的文件数组。
-     * @since  1.0
-     */
-  /*public static File[] listAll(File file) {
-    ArrayList list = new ArrayList();
-    File[] files;
-    if (!file.exists() || file.isFile()) {
-      return null;
-    }
-    list(list, file, new AllFileFilter());
-    list.remove(file);
-    files = new File[list.size()];
-    list.toArray(files);
-    return files;
-  }*/
-
-    /**
-     * 列出目录中的所有内容，包括其子目录中的内容。
-     * @param file 要列出的目录
-     * @param filter 过滤器
-     * @return 目录内容的文件数组。
-     * @since  1.0
-     */
-    public static File[] listAll(File file,
-                                 javax.swing.filechooser.FileFilter filter) {
-        ArrayList list = new ArrayList();
-        File[] files;
-        if (!file.exists() || file.isFile()) {
-            return null;
-        }
-        list(list, file, filter);
-        files = new File[list.size()];
-        list.toArray(files);
-        return files;
-    }
-
-    /**
-     * 将目录中的内容添加到列表。
-     * @param list 文件列表
-     * @param filter 过滤器
-     * @param file 目录
-     */
-    private static void list(ArrayList list, File file,
-                             javax.swing.filechooser.FileFilter filter) {
-        if (filter.accept(file)) {
-            list.add(file);
-            if (file.isFile()) {
-                return;
-            }
-        }
-        if (file.isDirectory()) {
-            File files[] = file.listFiles();
-            for (int i = 0; i < files.length; i++) {
-                list(list, files[i], filter);
-            }
-        }
-
-    }
 
     /**
      * 返回文件的URL地址。
@@ -549,12 +477,6 @@ public class FileUtil {
      */
     public static final boolean pathValidate(String path)
     {
-        //String path="d:/web/www/sub";
-        //System.out.println(path);
-        //path = getUNIXfilePath(path);
-
-        //path = ereg_replace("^\\/+", "", path);
-        //path = ereg_replace("\\/+$", "", path);
         String[] arraypath = path.split("/");
         String tmppath = "";
         for (int i = 0; i < arraypath.length; i++)

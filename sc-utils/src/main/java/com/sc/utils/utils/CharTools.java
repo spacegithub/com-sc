@@ -45,7 +45,7 @@ public class CharTools {
     }
     /**
      * Utf8URL编码
-     * @param s
+     * @param text
      * @return
      */
     public static final String Utf8URLencode(String text) {

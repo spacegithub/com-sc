@@ -10,7 +10,7 @@ import com.sc.channel.wxpay.utils.ValidateUtil;
 import com.sc.channel.wxpay.utils.WecatSignUtil;
 import com.sc.channel.wxpay.utils.WeixinUtil;
 import com.sc.utils.beanmap.BeanUtil;
-import com.sc.utils.utils.XmlUtil;
+import com.sc.utils.utils.xml.XmlUtil;
 
 import java.util.Map;
 

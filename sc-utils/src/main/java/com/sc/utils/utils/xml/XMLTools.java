@@ -1,4 +1,4 @@
-package com.sc.utils.utils;
+package com.sc.utils.utils.xml;
 
 import java.text.SimpleDateFormat;
 import java.util.regex.Pattern;

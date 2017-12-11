@@ -88,5 +88,43 @@ public class URLUtils {
         return mapRequest;
     }
 
+    /**
+     * 从请求url中获取对应的key-Value
+     * @param url
+     * @return
+     */
+    private static Map<String, String> getParamsFromUrl(String url) {
+        Map<String, String> map = null;
+        if (url != null && url.indexOf('?') != -1) {
+            map = splitUrlQuery(url.substring(url.indexOf('?') + 1));
+        }
+        if (map == null) {
+            map = new HashMap<String, String>();
+        }
+        return map;
+    }
+
+
+    /**
+     * 从URL中提取所有的参数。
+     *
+     * @param query URL地址
+     * @return 参数映射
+     */
+    public static Map<String, String> splitUrlQuery(String query) {
+        Map<String, String> result = new HashMap<String, String>();
+
+        String[] pairs = query.split("&");
+        if (pairs != null && pairs.length > 0) {
+            for (String pair : pairs) {
+                String[] param = pair.split("=", 2);
+                if (param != null && param.length == 2) {
+                    result.put(param[0], param[1]);
+                }
+            }
+        }
+
+        return result;
+    }
 }
  

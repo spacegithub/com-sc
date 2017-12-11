@@ -1,7 +1,7 @@
 package com.sc.channel.wxpay.utils;
 
 import com.sc.utils.beanmap.BeanUtil;
-import com.sc.utils.utils.XmlUtil;
+import com.sc.utils.utils.xml.XmlUtil;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

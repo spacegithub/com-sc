@@ -120,7 +120,7 @@ public class JodoTimeUtil {
      * @return
      */
     public static long pastDays(Date date) {
-        long t = new Date().getTime()-date.getTime();
+        long t = System.currentTimeMillis()-date.getTime();
         return t/(24*60*60*1000);
     }
 
@@ -130,7 +130,7 @@ public class JodoTimeUtil {
      * @return
      */
     public static long pastHour(Date date) {
-        long t = new Date().getTime()-date.getTime();
+        long t = System.currentTimeMillis()-date.getTime();
         return t/(60*60*1000);
     }
 
@@ -140,7 +140,7 @@ public class JodoTimeUtil {
      * @return
      */
     public static long pastMinutes(Date date) {
-        long t = new Date().getTime()-date.getTime();
+        long t = System.currentTimeMillis()-date.getTime();
         return t/(60*1000);
     }
 

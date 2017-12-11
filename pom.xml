@@ -40,11 +40,11 @@
     </properties>
     <dependencyManagement>
         <dependencies>
-            <dependency>
+  <!--          <dependency>
                 <groupId>com.xiaoleilu</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>$(hutool.version)</version>
-            </dependency>
+            </dependency>-->
             <!-- spring -->
             <dependency>
                 <groupId>org.springframework</groupId>

@@ -1,4 +1,4 @@
-package com.sc.utils.rest;
+package com.sc.utils.rest.resttemplete;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

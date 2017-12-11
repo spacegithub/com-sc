@@ -1,4 +1,4 @@
-package com.sc.utils.rest;
+package com.sc.utils.rest.resttemplete;
 
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 

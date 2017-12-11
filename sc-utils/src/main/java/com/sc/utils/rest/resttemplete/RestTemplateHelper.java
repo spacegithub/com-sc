@@ -1,4 +1,4 @@
-package com.sc.utils.rest;
+package com.sc.utils.rest.resttemplete;
 
 import com.sc.utils.mapper.JsonMapper;
 
@@ -23,6 +23,7 @@ import java.util.Map;
 
 /**
  * 提供rest请求的工具类
+ * RestTemplateHelper.init().authHeader(map).build(urlUtils.toString(), requestBody).call();
  */
 public class RestTemplateHelper {
     private static Log logger = LogFactory.getLog(RestTemplateHelper.class);

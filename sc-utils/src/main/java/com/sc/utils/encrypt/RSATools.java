@@ -10,7 +10,6 @@ import java.security.Signature;
 import java.security.cert.Certificate;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
-import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Enumeration;
 
@@ -169,6 +168,13 @@ public class RSATools {
         }
     }
 
+    /**
+     * 获取私钥
+     * @param keyPath
+     * @param passwd
+     * @return
+     * @throws Exception
+     */
     public static RSAPrivateKey getPrivateKey(String keyPath, String passwd) throws Exception {
 
         try {
@@ -199,7 +205,13 @@ public class RSATools {
         }
     }
 
-
+    /**
+     * 获取公钥
+     * @param keyPath
+     * @param passwd
+     * @return
+     * @throws Exception
+     */
     public static RSAPublicKey getPublicKey(String keyPath, String passwd) throws Exception {
 
         try {
@@ -234,77 +246,4 @@ public class RSATools {
     }
 
 
-    public static final String SIGN_ALGORITHMS = "SHA1WithRSA";
-
-    /**
-     * RSA签名
-     *
-     * @param content       待签名数据
-     * @param privateKey    商户私钥
-     * @param input_charset 编码格式
-     * @return 签名值
-     */
-    public static String signAlipay(String content, String privateKey, String input_charset) {
-        try {
-            PKCS8EncodedKeySpec priPKCS8 = new PKCS8EncodedKeySpec(Base64.decode(privateKey));
-            KeyFactory keyf = KeyFactory.getInstance("RSA");
-            PrivateKey priKey = keyf.generatePrivate(priPKCS8);
-
-            Signature signature = Signature
-                    .getInstance(SIGN_ALGORITHMS);
-
-            signature.initSign(priKey);
-            signature.update(content.getBytes(input_charset));
-
-            byte[] signed = signature.sign();
-
-            return Base64.encodeBytes(signed);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-
-
-
-    public static void main(String[] args) throws Exception {
-
-        String pfx_path = "c:\\yilian2048.pfx";
-        String pfx_pass = "11111111";
-        System.out.println(Base64.encodeBytes(getPublicKey(pfx_path, pfx_pass).getEncoded()));
-        /*String res= "wl9aM5d2Xa5lpavmkL1rPoPb6HOgOfhZGLJDCGPM0b2vGlOJ/o4WBwTgVzPTkiL+ieoECn7MnIv90OkMY42dHfv5M0bkuk3jMncH7wSr6dpUMYnumlO4bfM2tNP8JT5yKzCOn2I7/GFneBRExUNapc1+pM1nIsNFwGpncb19SUpheCcKWJgpE2kuaR+GznJzp7oDzcjJU75P544eUQcZ8lTGyRBloXtMyZDOgePnfNmVg8qyeCXMNQ0gPtgAX6alXcAUe6CIUMwt++avroyM/XRrYTTLIphUdK6ItAQNUnI3bTrpfUTz6QSZj5RQ+d/XmLJUKi4tdPvtbGvFOXxMQEtRClUg4gl2Yp+pIieNQcM0d0hkOz/bCUy/nLva60cScysD7oGIsYltIOil8UvcwcWYjqKCq0Kivk8NfvGfdfut+vEMtFwfrWd4FETFQ1ql7qsdydQIgTV3e9vE9Ksgp1AnreWl0WFNyNO6DYxVAzM/nz+au1+QD+nZl92c+eM4RfBehhsiOGZ8QgBQNWKqfSq0hfujIJoVT/5OavJfoFj1tFPM/XDohUokrbSId1NziEqilog+lRnZ+St89Gb7Jw5IypgatUf+8hnF/H/rP/rrNizqESOvIfbuR9QHwJUmTkAX422ICBxdf1ga2aj+/0pb/QlleBwCB4j4EAVWLg8WHtTWHSCI0wLfdMFSuji1RVeAd4tHqij/ZNgbc6p0GL53ujHrZp+SP7pBksAIXGThrZXfIB7uAhVVrGzVSFfj+Z3hAJVeFyH6cQTXsbWsAZ+G2/MWXbB/+YX4alWAJNspUpT040euoNp+YQAdtgfM+UJGIKi3HjNtgjJ9OZlWbQACqhWr+FeHSKCri2ehGH+d7YtXtuM7YWBWNqSRv89VQDsmYdrN/wIUy9MVWUq8rvhz10EPQZZmTUUlG1geP3kQYncz21LFMzpmjkzuVBKOQwPNx3eq8iDFI+ax1g//yC1e1HnXfut0veFWUQjQvUu6CAteZQAea/Aex0iVKrWozBynZjGQphaJo9jKc7Atfg==|Yr2aonI8sN74h4lQA7eiFJXUAGXorTnHrF1mjapNmu14Wf61MGPsTCQwjAFaGhYtGerQwq0jXM7QU+8RrnZx2+TXGfZwPXtOFgcDtzIm0StT0oISNwBckkrej822hk0flR6vgGelzkszOUHpczxRHmquBxxMvTfsiqj2/Wd+tKM=";
-//MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAv8jzSQ0smn0h2O7923M0rIXAulrKyzOWd1UhDkUGax+vQXhUl7SrTqOL12DR55wNkpcrxE8Kgho2xIiLyMEIAz9yr4Y2F2GIdmUfHAX2Os6vHE9/p18OixL0DA/j1WRSQMV98290aGqy7eATEnZNWxOyUMrSvt4zsfyEIB7a3Mm0nzNNA/qqEyXw904vpIqNmjFyT4qr1jyVZoVldraHaDxjhBe7fY+rJBgNW8GRBpkt5GaPF/1BKLyY2aX1fAOmGWpqgZzKO36M7kEevidlgwLOlqe+wbYUcKqROkQbncD4wjacifcBKFeYY4OYrlKxc0+HmRS7ac34sGpv5gXrLQIDAQAB
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzWw3Qni0EBEwlb7VoEMIFCGZ4Cc+4+a9aDEVPI29WnyYVduBZ1Qo2cNUWvhVayVpWfZIvKMJfkrSr8/eFUkIakulqQNdMUIUkST7lrlivalhEvxxClYvMr1OAmuQKemKrHrdDUlG+h7oiMP9bJJpcNh+8NCjSeQEimkDJ7ESOvtuGUemgr8L2JKowPKtgvHJOmOLTMv55XUFZJn35BSQq6Bzn0osIwdU7peZrdfSTxa5p11NHRFVR84J//85Uc4Uk8Mb54JDw+kEwZSK8WOJcwRjDlbcRx0H463D4b64FYDm44F/Hx7IDJf1TqS1N7kV7TqnwZs24V4aaDOg2OmUJQIDAQAB
-//MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAv8jzSQ0smn0h2O7923M0rIXAulrKyzOWd1UhDkUGax+vQXhUl7SrTqOL12DR55wNkpcrxE8Kgho2xIiLyMEIAz9yr4Y2F2GIdmUfHAX2Os6vHE9/p18OixL0DA/j1WRSQMV98290aGqy7eATEnZNWxOyUMrSvt4zsfyEIB7a3Mm0nzNNA/qqEyXw904vpIqNmjFyT4qr1jyVZoVldraHaDxjhBe7fY+rJBgNW8GRBpkt5GaPF/1BKLyY2aX1fAOmGWpqgZzKO36M7kEevidlgwLOlqe+wbYUcKqROkQbncD4wjacifcBKFeYY4OYrlKxc0+HmRS7ac34sGpv5gXrLQIDAQAB
-//MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAv8jzSQ0smn0h2O7923M0rIXAulrKyzOWd1UhDkUGax+vQXhUl7SrTqOL12DR55wNkpcrxE8Kgho2xIiLyMEIAz9yr4Y2F2GIdmUfHAX2Os6vHE9/p18OixL0DA/j1WRSQMV98290aGqy7eATEnZNWxOyUMrSvt4zsfyEIB7a3Mm0nzNNA/qqEyXw904vpIqNmjFyT4qr1jyVZoVldraHaDxjhBe7fY+rJBgNW8GRBpkt5GaPF/1BKLyY2aX1fAOmGWpqgZzKO36M7kEevidlgwLOlqe+wbYUcKqROkQbncD4wjacifcBKFeYY4OYrlKxc0+HmRS7ac34sGpv5gXrLQIDAQAB
-//MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAv8jzSQ0smn0h2O7923M0rIXAulrKyzOWd1UhDkUGax+vQXhUl7SrTqOL12DR55wNkpcrxE8Kgho2xIiLyMEIAz9yr4Y2F2GIdmUfHAX2Os6vHE9/p18OixL0DA/j1WRSQMV98290aGqy7eATEnZNWxOyUMrSvt4zsfyEIB7a3Mm0nzNNA/qqEyXw904vpIqNmjFyT4qr1jyVZoVldraHaDxjhBe7fY+rJBgNW8GRBpkt5GaPF/1BKLyY2aX1fAOmGWpqgZzKO36M7kEevidlgwLOlqe+wbYUcKqROkQbncD4wjacifcBKFeYY4OYrlKxc0+HmRS7ac34sGpv5gXrLQIDAQAB
-    	String pfx_path = "C:\\yilian.pfx" ;
-    	String pfx_pass = "11111111";
-
-    	String xml = "<MSGBEAN><MSG_TYPE>200002</MSG_TYPE><BATCH_NO>99EE936559D864</BATCH_NO><USER_NAME>13760136514</USER_NAME><TRANS_STATE></TRANS_STATE><MSG_SIGN>";
-    	String sign = RSA.sign(xml, pfx_path, pfx_pass);
-    	System.out.println("sign==="+sign);
-		if(true)
-			return;
-
-		String msg_sign_enc = res.split("\\|")[0];
-		System.out.println("msg_sign_enc" + msg_sign_enc);
-		String key_3des_enc = res.split("\\|")[1];
-		System.out.println("key_3des_enc"+key_3des_enc);
-		byte[] bs = Base64.decode(key_3des_enc);
-		System.out.println("key_3des_enc  decode ="+Base64.encode(bs)) ;
-		System.out.println(decrypt(key_3des_enc, pfx_path, pfx_pass));
-
-		//解密密钥
-		String key_3des = RSA.decrypt(key_3des_enc,pfx_path,pfx_pass);
-
-//		key_3des = Base64.encode(key_3des.getBytes("UTF-8"));
-
-
-		//解密报文
-		String msg_sign = TripleDes.decrypt(key_3des, msg_sign_enc);
-		System.out.println(msg_sign);*/
-    }
 }

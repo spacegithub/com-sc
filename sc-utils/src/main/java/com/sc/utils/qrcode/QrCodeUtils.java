@@ -14,6 +14,9 @@ import com.sc.utils.qrcode.compose.MatrixToImageWriterEx;
 import com.sc.utils.qrcode.compose.QrcodeVo;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+
+import javax.imageio.ImageIO;
 
 /**
  * 二维码的生成需要借助MatrixToImageWriter类，该类是由Google提供的，可以将该类直接拷贝到源码中使用
@@ -38,13 +41,12 @@ public class QrCodeUtils {
     }
 
     public static void main(String[] args) throws Exception {
-  /*      QrcodeVo qrcodeVo = new QrcodeVo();
-        qrcodeVo.setContent("http://www.baidu.com?token=10020%&SDS&fff=1020");
+        QrcodeVo qrcodeVo = new QrcodeVo();
+        qrcodeVo.setContent("http://www.baidusssss.com?token=10020%&SDS&fff=1020");
         qrcodeVo.setHeight(500);
         qrcodeVo.setWidth(500);
         qrcodeVo.setFile(new File("c:\\qrcode_logo.png"));
       ImageIO.write(createQRCode(qrcodeVo), "JPEG", new File("c:\\a.jpeg"));
-       */
   System.out.println("-->" + readQRCode("c:\\a.jpeg"));
 
     }

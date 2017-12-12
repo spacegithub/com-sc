@@ -53,7 +53,7 @@ public class BarcodeUtil {
     }
 
     public static void main(String[] args)throws Exception {
-       // ImageIO.write(encode("10010",500,100,12),"png",new File("c:\\a.png"));
+        ImageIO.write(encode("dddd",500,100,12),"png",new File("c:\\a.png"));
         System.out.println("-->" +  decode(new File("c:\\a.png")));
     }
 }

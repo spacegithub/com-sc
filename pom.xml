@@ -34,6 +34,7 @@
         <redis.clients.version>2.7.2</redis.clients.version>
         <org.hibernate.version>5.0.3.Final</org.hibernate.version>
         <hutool.version>3.2.2</hutool.version>
+        <zxing.version>3.3.1</zxing.version>
         <maven.javadoc.skip>true</maven.javadoc.skip>
         <maven.build.tests.skip>true</maven.build.tests.skip>
         <!--        <javadoc.doclint.param/>-->
@@ -46,6 +47,16 @@
                 <version>$(hutool.version)</version>
             </dependency>-->
             <!-- spring -->
+            <dependency>
+                <groupId>com.google.zxing</groupId>
+                <artifactId>javase</artifactId>
+                <version>${zxing.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.zxing</groupId>
+                <artifactId>core</artifactId>
+                <version>${zxing.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-core</artifactId>

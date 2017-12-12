@@ -3,6 +3,7 @@ package com.sc.utils.qrcode.compose;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.BinaryBitmap;
+import com.google.zxing.DecodeHintType;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatReader;
 import com.google.zxing.MultiFormatWriter;
@@ -19,6 +20,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Hashtable;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 
@@ -36,9 +38,12 @@ public class MatrixToImageWriterEx {
     public static String readQRCode(String filePath) {
         String str = null;
         try {
-            str = new MultiFormatReader().decode(new BinaryBitmap(new HybridBinarizer(new BufferedImageLuminanceSource(ImageIO.read(new FileInputStream(filePath))))), new Hashtable()).getText();
+            Map map = new Hashtable();
+            map.put(DecodeHintType.PURE_BARCODE, Boolean.TRUE);
+            str = new MultiFormatReader().decode(new BinaryBitmap(new HybridBinarizer(new BufferedImageLuminanceSource(ImageIO.read(new FileInputStream(filePath))))), map).getText();
         } catch (Exception e) {
             e.printStackTrace();
+
         }
         return str;
     }
@@ -82,16 +87,14 @@ public class MatrixToImageWriterEx {
     public static BufferedImage overlapImage(BufferedImage image, InputStream in) {
         try {
             BufferedImage logo = ImageIO.read(in);
-            Graphics2D g = image.createGraphics();
-
-            int width = image.getWidth() / 5;
-            int height = image.getHeight() / 5;
-
-            int x = (image.getWidth() - width) / 2;
-            int y = (image.getHeight() - height) / 2;
-
-            g.drawImage(logo, x, y, width, height, null);
-            g.dispose();
+            int deltaHeight = image.getHeight() - logo.getHeight();
+            int deltaWidth = image.getWidth() - logo.getWidth();
+            BufferedImage combined = new BufferedImage(image.getHeight(), image.getWidth(), BufferedImage.TYPE_INT_RGB);
+            Graphics2D g = (Graphics2D) combined.getGraphics();
+            g.drawImage(image, 0, 0, null);
+            g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+            g.drawImage(logo, Math.round(deltaWidth / 2), (int) Math.round(deltaHeight / 2), null);
+            return combined;
         } catch (Exception e) {
             e.printStackTrace();
         }

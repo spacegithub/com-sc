@@ -25,6 +25,11 @@ import javax.imageio.ImageIO;
  */
 public class QrCodeUtils {
 
+    /**
+     * 创建二维码
+     * @param qrcodeVo
+     * @return
+     */
     public static BufferedImage createQRCode(QrcodeVo qrcodeVo) {
         if (qrcodeVo.getWidth() == null) {
             qrcodeVo.setWidth(Integer.valueOf(300));
@@ -36,13 +41,18 @@ public class QrCodeUtils {
         return MatrixToImageWriterEx.writeToStream(matrix, qrcodeVo.getFile());
     }
 
+    /**
+     * 解析二维码内容
+     * @param filePaht 二维码路径
+     * @return
+     */
     public static String readQRCode(String filePaht) {
         return MatrixToImageWriterEx.readQRCode(filePaht);
     }
 
     public static void main(String[] args) throws Exception {
         QrcodeVo qrcodeVo = new QrcodeVo();
-        qrcodeVo.setContent("http://www.baidusssss.com?token=10020%&SDS&fff=1020");
+        qrcodeVo.setContent("http://www.aaaa.com?token=10020%&SDS&fff=1020");
         qrcodeVo.setHeight(500);
         qrcodeVo.setWidth(500);
         qrcodeVo.setFile(new File("c:\\qrcode_logo.png"));

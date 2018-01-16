@@ -39,7 +39,6 @@ public abstract class HessianHeaderLocal {
                 logger.error("[Hesssain Header err]", ex);
             }
         } else { //PMS Header传值处理方式，将被废弃。
-            headerInfo.setUserId(Long.valueOf(httpServletRequest.getHeader(HeaderCommons.userId)));
             headerInfo.setApplicationCode(httpServletRequest.getHeader(HeaderCommons.applicationCode));
             headerInfo.setChannel(httpServletRequest.getHeader(HeaderCommons.channel));
             headerInfo.setClientId(httpServletRequest.getHeader(HeaderCommons.clientId));
@@ -65,7 +64,6 @@ public abstract class HessianHeaderLocal {
         HeaderInfo headerInfo = getHeaderInfo();
         if (null != headerInfo) {
             hessianConnection.addHeader(HeaderCommons.id, headerInfo.getId());
-            hessianConnection.addHeader(HeaderCommons.userId, String.valueOf(headerInfo.getUserId()));
             hessianConnection.addHeader(HeaderCommons.applicationCode, headerInfo.getApplicationCode());
             hessianConnection.addHeader(HeaderCommons.channel, headerInfo.getChannel());
             hessianConnection.addHeader(HeaderCommons.clientId, headerInfo.getClientId());

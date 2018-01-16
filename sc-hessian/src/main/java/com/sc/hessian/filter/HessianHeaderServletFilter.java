@@ -1,6 +1,6 @@
 package com.sc.hessian.filter;
 
-import com.sc.hessian.header.HessianHeaderLocal;
+import com.sc.base.api.header.HessianHeaderLocal;
 
 import java.io.IOException;
 

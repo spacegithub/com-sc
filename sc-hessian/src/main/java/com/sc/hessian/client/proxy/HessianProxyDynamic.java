@@ -7,7 +7,7 @@ import com.caucho.hessian.client.HessianProxyFactory;
 import com.caucho.hessian.client.HessianRuntimeException;
 import com.caucho.hessian.io.AbstractHessianOutput;
 import com.caucho.hessian.io.HessianDebugOutputStream;
-import com.sc.hessian.header.HessianHeaderLocal;
+import com.sc.base.api.header.HessianHeaderLocal;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

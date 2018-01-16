@@ -1,4 +1,5 @@
-package com.sc.base.api;
+package com.sc.base.api.header;
+
 
 import com.alibaba.fastjson.JSON;
 
@@ -7,6 +8,13 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.Serializable;
 import java.util.UUID;
 
+/**
+ * 头信息
+ * 建立hessian请求之前会被创建,如有其他hessian调用.则该信息一次传递.
+ *
+ * @see: [相关类/方法]（可选）
+ * @since [产品/模块版本] （可选）
+ */
 public class HeaderInfo implements Serializable {
 
     /**
@@ -16,14 +24,14 @@ public class HeaderInfo implements Serializable {
     private String id;
 
     /**
-     * 用户Id
+     * 用户编号
      */
-    private String userId;
+    private Long userId;
 
     /**
      * 用户的标记，登陆成功后返回，算法需要讨论
      */
-    private String userToken;
+    private String userToken;//
     /**
      * 应用编号
      */
@@ -58,28 +66,16 @@ public class HeaderInfo implements Serializable {
      */
     private String subChannel;
 
-    /**
-     * 用户Id
-     */
-    private String serviceCode;
-
-    /**
-     * 编码类型,v3
-     */
-    private String contentType;
-
-    /**
-     * 幂等Id,v3
-     */
-    private String requestId;
-
-    /**
-     * 推广渠道,v3
-     */
-    private String exSourceId;
-
     public HeaderInfo() {
         this.id = UUID.randomUUID().toString().replaceAll("-", "");
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getId() {
@@ -90,14 +86,6 @@ public class HeaderInfo implements Serializable {
         if (StringUtils.isNoneBlank(id)) {
             this.id = id;
         }
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public String getUserToken() {
@@ -164,36 +152,9 @@ public class HeaderInfo implements Serializable {
         this.subChannel = subChannel;
     }
 
-    public String getServiceCode() {
-        return serviceCode;
-    }
-
-    public void setServiceCode(String serviceCode) {
-        this.serviceCode = serviceCode;
-    }
-
-    public String getContentType() {
-        return contentType;
-    }
-
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
-    }
-
-    public String getRequestId() {
-        return requestId;
-    }
-
-    public void setRequestId(String requestId) {
-        this.requestId = requestId;
-    }
-
-    public String getExSourceId() {
-        return exSourceId;
-    }
-
-    public void setExSourceId(String exSourceId) {
-        this.exSourceId = exSourceId;
+    @Override
+    public String toString() {
+        return JSON.toJSONString(this);
     }
 
     public boolean isEmpty() {
@@ -204,10 +165,5 @@ public class HeaderInfo implements Serializable {
                 && StringUtils.isBlank(this.getServiceVersion())
                 && StringUtils.isBlank(this.getSourceId())
                 ;
-    }
-
-    @Override
-    public String toString() {
-        return JSON.toJSONString(this);
     }
 }

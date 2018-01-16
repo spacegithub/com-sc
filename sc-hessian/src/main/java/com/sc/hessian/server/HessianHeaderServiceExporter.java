@@ -1,6 +1,6 @@
 package com.sc.hessian.server;
 
-import com.sc.hessian.header.HessianHeaderLocal;
+import com.sc.base.api.header.HessianHeaderLocal;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

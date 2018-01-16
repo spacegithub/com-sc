@@ -13,6 +13,11 @@
     <version>1.0.0-SNAPSHOT</version>
     <dependencies>
         <dependency>
+            <groupId>com.sc</groupId>
+            <artifactId>sc-base-api</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>com.caucho</groupId>
             <artifactId>hessian</artifactId>
         </dependency>

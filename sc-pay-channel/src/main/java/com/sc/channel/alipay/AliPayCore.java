@@ -45,7 +45,7 @@ public class AliPayCore {
         if ("MD5".equals(aliPayConf.getSign_type())) {
             mysign = MD5.sign(prestr, aliPayConf.getKey(), aliPayConf.getInput_charset());
         } else {
-            mysign = RSATools.signAlipay(prestr, aliPayConf.getKey(), aliPayConf.getInput_charset());
+            mysign = RSATools.sign(prestr, aliPayConf.getKey(), aliPayConf.getInput_charset());
         }
         return mysign;
     }

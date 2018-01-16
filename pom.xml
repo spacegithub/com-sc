@@ -13,6 +13,7 @@
         <module>sc-excle</module>
         <module>sc-redis</module>
         <module>sc-pay-channel</module>
+        <module>sc-base-api</module>
     </modules>
     <groupId>com.sc</groupId>
     <artifactId>com-sc</artifactId>

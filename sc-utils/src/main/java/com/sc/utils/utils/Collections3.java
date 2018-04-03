@@ -121,6 +121,29 @@ public class Collections3
 		return collection.iterator().next();
 	}
 
+    /**
+     * list排序
+     * @param list
+     * @param c
+     * @param <T>
+     * @return
+     */
+    public static <T> List<T> sort(List<T> list, Comparator<? super T> c){
+        Collections.sort(list,c);
+        return list;
+    }
+
+    /**
+     * list排序
+     * @param list
+     * @param <T>
+     * @return
+     */
+    public static <T extends Comparable<? super T>> List<T> sort(List<T> list){
+        Collections.sort(list);
+        return list;
+    }
+
 	/**
 	 * 获取Collection的最后一个元素 ，如果collection为空返回null.
 	 */

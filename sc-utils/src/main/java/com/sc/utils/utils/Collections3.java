@@ -7,18 +7,18 @@ import java.util.*;
 
 /**
  * Collections工具集.
- * 
+ *
  * 在JDK的Collections和Guava的Collections2后, 命名为Collections3.
- * 
+ *
  * 函数主要由两部分组成，一是自反射提取元素的功能，二是源自Apache Commons Collection, 争取不用在项目里引入它。
- * 
+ *
  */
 public class Collections3
 {
 
 	/**
 	 * 提取集合中的对象的两个属性(通过Getter函数), 组合成Map.
-	 * 
+	 *
 	 * @param collection 来源集合.
 	 * @param keyPropertyName 要提取为Map中的Key值的属性名.
 	 * @param valuePropertyName 要提取为Map中的Value值的属性名.
@@ -41,7 +41,7 @@ public class Collections3
 
 	/**
 	 * 提取集合中的对象的一个属性(通过Getter函数), 组合成List.
-	 * 
+	 *
 	 * @param collection 来源集合.
 	 * @param propertyName 要提取的属性名.
 	 */
@@ -61,7 +61,7 @@ public class Collections3
 
 	/**
 	 * 提取集合中的对象的一个属性(通过Getter函数), 组合成由分割符分隔的字符串.
-	 * 
+	 *
 	 * @param collection 来源集合.
 	 * @param propertyName 要提取的属性名.
 	 * @param separator 分隔符.
@@ -142,6 +142,20 @@ public class Collections3
     public static <T extends Comparable<? super T>> List<T> sort(List<T> list){
         Collections.sort(list);
         return list;
+    }
+
+    /**
+     * 去除重复的list
+     * @param list
+     * @param <T>
+     * @return
+     */
+    public <T> List<T> removeStringListDupli(List<T> list){
+            Set<T> set = new LinkedHashSet<>();
+            set.addAll(list);
+            list.clear();
+            list.addAll(set);
+            return list;
     }
 
 	/**

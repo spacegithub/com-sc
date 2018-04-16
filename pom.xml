@@ -4,6 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
     <modules>
         <module>sc-hessian</module>
         <module>sc-mybatis-generator</module>
@@ -15,7 +20,8 @@
         <module>sc-pay-channel</module>
         <module>sc-base-api</module>
     </modules>
-    <groupId>com.sc</groupId>
+
+    <groupId>com.github.senssic</groupId>
     <artifactId>com-sc</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <name>com-sc</name>
@@ -40,13 +46,37 @@
         <maven.build.tests.skip>true</maven.build.tests.skip>
         <!--        <javadoc.doclint.param/>-->
     </properties>
+
+    <issueManagement>
+        <system>Github Issue</system>
+        <url>https://github.com/Senssic/com-sc/issues</url>
+    </issueManagement>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>senssic</name>
+            <email>senssic@foxmail.com</email>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git@github.com:Senssic/com-sc.git</connection>
+        <developerConnection>scm:git@github.com:Senssic/com-sc.git</developerConnection>
+        <url>git@github.com:Senssic/com-sc.git</url>
+    </scm>
+
+
+
+
     <dependencyManagement>
         <dependencies>
-  <!--          <dependency>
-                <groupId>com.xiaoleilu</groupId>
-                <artifactId>hutool-all</artifactId>
-                <version>$(hutool.version)</version>
-            </dependency>-->
             <!-- spring -->
             <dependency>
                 <groupId>com.google.zxing</groupId>
@@ -650,6 +680,52 @@
                 <javadoc.doclint.param>-Xdoclint:none</javadoc.doclint.param>
             </properties>
         </profile>
+        <profile>
+            <id>release</id>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>oss</id>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+                </snapshotRepository>
+                <repository>
+                    <id>oss</id>
+                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                </repository>
+            </distributionManagement>
+            <build>
+                <plugins>
+                    <!-- Javadoc -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.10.4</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!-- Gpg Signature -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
     <build>
         <pluginManagement>
@@ -857,33 +933,4 @@
             </plugin>
         </plugins>
     </reporting> -->
-    <repositories>
-        <repository>
-            <id>spring-milestone</id>
-            <name>Spring Portfolio Milestone Repository</name>
-            <url>http://repo.springsource.org/milestone/</url>
-        </repository>
-    </repositories>
-    <distributionManagement>
-        <repository>
-            <id>releases</id>
-            <url>
-                http://xxxx.xxxxx.com/content/repositories/Release/
-            </url>
-        </repository>
-        <snapshotRepository>
-            <id>snapshots</id>
-            <url>
-                http://xxxx.xxxxx.com/content/repositories/Snapshots/
-            </url>
-        </snapshotRepository>
-        <!-- 设置maven doc发布地址 -->
-        <!-- <site> -->
-        <!-- <id>website</id> -->
-        <!--
-        <url>scp://www.mycompany.com/www/docs/project/</url>
-        -->
-        <!-- </site> -->
-    </distributionManagement>
-
 </project>

@@ -23,7 +23,7 @@
 
     <groupId>com.github.senssic</groupId>
     <artifactId>com-sc</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>com-sc</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

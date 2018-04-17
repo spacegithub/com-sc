@@ -37,23 +37,7 @@ import java.util.*;
 
 import static org.springframework.util.Assert.notNull;
 
-/**
- * hessian 接口客户端自动扫描注入
- *
- * <bean class="com.xxx.HessianClientScannerConfigurer">
- *  <property name="basePackage" value="com.**.remote"></property>
- *  <property name="annotationClass" value="Hessian"></property>
- *  <property name="locations">
- *      <list>
- *          <value>classpath:hessianurl.properties</value>
- *      </list>
- *  </property>
- * </bean>
- *
- *
- * @see: [相关类/方法]（可选）
- * @since [产品/模块版本] （可选）
- */
+
 public class HessianClientScannerConfigurer implements
         BeanDefinitionRegistryPostProcessor, InitializingBean,
         ApplicationContextAware, BeanNameAware {
@@ -68,11 +52,11 @@ public class HessianClientScannerConfigurer implements
 
     private ApplicationContext applicationContext;
 
-    // 实现了该接口
+    
     private Class<?> markerInterface;
-    // 配置了该注解
+    
     private Class<? extends Annotation> annotationClass;
-    //配置bean代理工厂
+    
     private HessianProxyFactory proxyFactory;
 
     private BeanNameGenerator nameGenerator;
@@ -114,7 +98,7 @@ public class HessianClientScannerConfigurer implements
         HessianClassPathScanner scan = new HessianClassPathScanner(registry);
         scan.setResourceLoader(this.applicationContext);
         scan.setBeanNameGenerator(this.nameGenerator);
-        // 引入注解配置
+        
         scan.setIncludeAnnotationConfig(this.includeAnnotationConfig);
         scan.registerFilters();
 
@@ -207,9 +191,9 @@ public class HessianClientScannerConfigurer implements
 
                     definition.getPropertyValues().add("serviceUrl", getRemoteUrl(context,uri));
                     definition.getPropertyValues().add("serviceInterface", definition.getBeanClassName());
-//                  新增overloadEnabled属性，并把它的值设置为true，默认是false，则Hessian就能支持方法的重载了
+
                     definition.getPropertyValues().add("overloadEnabled", overloadEnabled);
-                    //如果定义了proxyFactory则,注入
+                    
                     if(null!=proxyFactory){
                         definition.getPropertyValues().add("proxyFactory", proxyFactory);
                     }
@@ -217,22 +201,17 @@ public class HessianClientScannerConfigurer implements
                     definition.setBeanClass(HessianProxyFactoryBean.class);
 
 
-                    // the mapper interface is the original class of the bean
-                    // but, the actual class of the bean is HessianFactoryBean
-//                  definition.getPropertyValues().add("hessianInterface", definition.getBeanClassName());
-//                  definition.setBeanClass(HessianFactoryBean.class);
+                    
+                    
+
+
                 }
             }
             return beanDefinitions;
 
         }
 
-        /**
-         * 如果是多个server做负载,则有多条server地址
-         * @param context
-         * @param uri
-         * @return
-         */
+        
         private  String getRemoteUrl(String context,String uri){
             String urlProperty= System.getProperty(context,"");
             String[] urls = StringUtils.tokenizeToStringArray(urlProperty, ConfigurableApplicationContext.CONFIG_LOCATION_DELIMITERS);
@@ -249,9 +228,7 @@ public class HessianClientScannerConfigurer implements
             return (beanDefinition.getMetadata().isInterface() && beanDefinition.getMetadata().isIndependent());
         }
 
-        /**
-         * {@inheritDoc}
-         */
+        
         @Override
         protected boolean checkCandidate(String beanName,
                                          BeanDefinition beanDefinition) throws IllegalStateException {
@@ -269,13 +246,13 @@ public class HessianClientScannerConfigurer implements
         public void registerFilters() {
             boolean acceptAllInterfaces = true;
 
-            // if specified, use the given annotation and / or marker interface
+            
             if (HessianClientScannerConfigurer.this.annotationClass != null) {
                 addIncludeFilter(new AnnotationTypeFilter(HessianClientScannerConfigurer.this.annotationClass));
                 acceptAllInterfaces = false;
             }
 
-            // override AssignableTypeFilter to ignore matches on the actual marker interface
+            
             if (HessianClientScannerConfigurer.this.markerInterface != null) {
                 addIncludeFilter(new AssignableTypeFilter(HessianClientScannerConfigurer.this.markerInterface) {
                     @Override
@@ -287,7 +264,7 @@ public class HessianClientScannerConfigurer implements
             }
 
             if (acceptAllInterfaces) {
-                // default include filter that accepts all classes
+                
                 addIncludeFilter(new TypeFilter() {
                     public boolean match(MetadataReader metadataReader, MetadataReaderFactory metadataReaderFactory) throws IOException {
                         return true;
@@ -295,7 +272,7 @@ public class HessianClientScannerConfigurer implements
                 });
             }
 
-            // exclude package-info.java
+            
             addExcludeFilter(new TypeFilter() {
                 public boolean match(MetadataReader metadataReader, MetadataReaderFactory metadataReaderFactory) throws IOException {
                     String className = metadataReader.getClassMetadata().getClassName();

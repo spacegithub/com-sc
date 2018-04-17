@@ -8,12 +8,8 @@ import java.lang.annotation.*;
 @Documented
 public @interface RequestAttrParam
 {
-    /**
-     * 用于绑定的请求参数名字
-     */
+    
     String value() default "" ;
-    /**
-     * 是否必须，默认是
-     */
+    
     boolean required() default true;
 }

@@ -1,8 +1,6 @@
 package com.sc.base.api;
 
-/**
- * 异常
- */
+
 public class BaseException extends Exception {
     private String code;
 

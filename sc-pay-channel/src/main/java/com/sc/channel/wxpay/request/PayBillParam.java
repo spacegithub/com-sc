@@ -1,14 +1,14 @@
 package com.sc.channel.wxpay.request;
 
 public class PayBillParam {
-    private String appid; // 公众账号ID
-    private String mchId; // 微信支付 商户号
-    private String deviceInfo; //非必填 设备号  终端设备号(门店号或收银设备ID)，注意：PC网页或公众号内支付请传"WEB"
-    private String nonceStr; // 随机字符串
-    private String sign; // 签名
+    private String appid; 
+    private String mchId; 
+    private String deviceInfo; 
+    private String nonceStr; 
+    private String sign; 
 
-    private String billDate;// 对账日期  下载对账单的日期，格式：20140603
-    private String bill_type;// 账单类型 ALL，返回当日所有订单信息，默认值    SUCCESS，返回当日成功支付的订单    REFUND，返回当日退款订单
+    private String billDate;
+    private String bill_type;
 
     public String getAppid() {
         return appid;

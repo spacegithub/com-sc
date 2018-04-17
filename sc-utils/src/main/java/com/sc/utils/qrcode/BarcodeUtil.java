@@ -19,31 +19,16 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-/**
- * 一维码生成工具类
- *
- * @author qiss
- */
+
 public class BarcodeUtil {
-    /**
-     * 生成一维码
-     *
-     * @param contents 内容
-     * @param width    长
-     * @param height   宽
-     * @param offset   偏移量
-     */
+    
     public static BufferedImage encode(String contents, int width, int height, int offset) throws WriterException, IOException {
         contents = new String(contents.getBytes("UTF-8"), "ISO-8859-1");
         BitMatrix matrix = new MultiFormatWriter().encode(contents, BarcodeFormat.CODE_128, width - offset, height);
         return MatrixToImageWriter.toBufferedImage(matrix);
     }
 
-    /**
-     * 解析一维码内容
-     *
-     * @param file 文件
-     */
+    
     public static String decode(File file) throws IOException, NotFoundException {
         BufferedImage image = ImageIO.read(file);
         LuminanceSource source = new BufferedImageLuminanceSource(image);

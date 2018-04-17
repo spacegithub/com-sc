@@ -7,19 +7,13 @@ import java.io.UnsupportedEncodingException;
 
 public class HttpResponse {
 
-    /**
-     * 返回中的Header信息
-     */
+    
     private Header[] responseHeaders;
 
-    /**
-     * String类型的result
-     */
+    
     private String stringResult;
 
-    /**
-     * btye类型的result
-     */
+    
     private byte[]   byteResult;
 
     public Header[] getResponseHeaders() {

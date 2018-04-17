@@ -16,11 +16,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-/**
- * 发送邮件核心代码
 
- * 
- */
 public class ComplexMailSender {
 
 	public boolean sendTextMail(MailSenderInfo mailInfo) {
@@ -50,12 +46,7 @@ public class ComplexMailSender {
 		return false;
 	}
 
-	/**
-	 * 发送html邮件
-	 * 
-	 * @param mailInfo
-	 * @return
-	 */
+	
 	public boolean sendHtmlMail(MailSenderInfo mailInfo) {
 		MyAuthenticator authenticator = null;
 		Properties pro = mailInfo.getProperties();
@@ -86,12 +77,7 @@ public class ComplexMailSender {
 		return false;
 	}
 
-	/**
-	 * 发送附件
-	 * 
-	 * @param mailInfo
-	 * @return
-	 */
+	
 	public boolean sendAttachmentMail(MailSenderInfo mailInfo) {
 		MyAuthenticator authenticator = null;
 		Properties pro = mailInfo.getProperties();

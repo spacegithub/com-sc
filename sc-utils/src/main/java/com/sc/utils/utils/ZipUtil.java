@@ -11,13 +11,7 @@ import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
 public class ZipUtil {
-	/**
-	 * @Description: 列出zip文件目录
-	 * @return void 返回类型
-	 * @author qiss
-	 * @date 2014年12月4日 上午11:22:51
-	 * @throws
-	 */
+	
 	public static void ListZipFile(String path) throws Exception {
 		ZipFile zipFile = new ZipFile(path);
 		Enumeration<? extends ZipEntry> zipEntrys = zipFile.entries();
@@ -28,13 +22,7 @@ public class ZipUtil {
 		zipFile.close();
 	}
 
-	/**
-	 * @Description: 列出MANIFEST.MF文件信息
-	 * @return void 返回类型
-	 * @author qiss
-	 * @date 2014年12月4日 上午11:23:29
-	 * @throws
-	 */
+	
 	public static void ZipFileText(String path) throws Exception {
 		ZipFile zipFile = new ZipFile(path);
 		ZipEntry zipEntry = zipFile.getEntry("META-INF/MANIFEST.MF");
@@ -51,13 +39,7 @@ public class ZipUtil {
 		System.out.println();
 	}
 
-	/**
-	 * @Description: 压缩单个文件为zip文件
-	 * @return String 返回类型
-	 * @author qiss
-	 * @date 2014年12月4日 上午11:24:08
-	 * @throws
-	 */
+	
 	public static String Zip(String path, File file) throws IOException {
 		if (file == null) {
 			return null;
@@ -88,13 +70,7 @@ public class ZipUtil {
 		return zipFileName;
 	}
 
-	/**
-	 * @Description: 压缩多个文件为zip文件
-	 * @return String 返回类型
-	 * @author qiss
-	 * @date 2014年12月4日 上午11:24:34
-	 * @throws
-	 */
+	
 	public static String Zip(String path, String zipName, File[] files)
 			throws IOException {
 		if (files == null) {
@@ -120,13 +96,7 @@ public class ZipUtil {
 		return zipFullName;
 	}
 
-	/**
-	 * @Description: 解压zip文件
-	 * @return void 返回类型
-	 * @author qiss
-	 * @date 2014年12月4日 上午11:24:52
-	 * @throws
-	 */
+	
 	public static void unzip(File zipFilename, String outputDirectory)
 			throws Exception {
 		try {
@@ -167,13 +137,7 @@ public class ZipUtil {
 		}
 	}
 
-	/**
-	 * @Description: 内部工具类copy文件
-	 * @return void 返回类型
-	 * @author qiss
-	 * @date 2014年12月4日 上午11:25:44
-	 * @throws
-	 */
+	
 	private static void copy(File f, ZipFile zipFile, ZipEntry zipEntry)
 			throws IOException {
 		InputStream in = zipFile.getInputStream(zipEntry);

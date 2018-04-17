@@ -35,13 +35,7 @@ public class RequestAttrHandlerMethodArgumentResolver implements HandlerMethodAr
     }
 
 
-    /**
-     * 获取别名
-     *
-     * @param requestJsonParam
-     * @param parameter
-     * @return
-     */
+    
     private String getAlias(RequestAttrParam requestJsonParam, MethodParameter parameter) {
         String alias = requestJsonParam.value();
         if (StringUtils.isBlank(alias)) {

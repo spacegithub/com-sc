@@ -14,20 +14,16 @@ public abstract class HessianHeaderLocal {
 
     private static ThreadLocal<HeaderInfo> HEADERLOCAL = new ThreadLocal<>();
 
-    /**
-     * 获取当前头信息
-     */
+    
     public static HeaderInfo getHeaderInfo() {
         return HEADERLOCAL.get();
     }
 
-    /**
-     * 获取Header头部信息
-     */
+    
     public static HeaderInfo getHeaderInfo(HttpServletRequest httpServletRequest) {
         HeaderInfo headerInfo = new HeaderInfo();
 
-        //支持从header中取headInfo，兼容Mobile、web、op
+        
         String header = httpServletRequest.getHeader("header");
         if (header != null && !header.isEmpty()) {
             try {
@@ -38,7 +34,7 @@ public abstract class HessianHeaderLocal {
             } catch (Exception ex) {
                 logger.error("[Hesssain Header err]", ex);
             }
-        } else { //PMS Header传值处理方式，将被废弃。
+        } else { 
             headerInfo.setApplicationCode(httpServletRequest.getHeader(HeaderCommons.applicationCode));
             headerInfo.setChannel(httpServletRequest.getHeader(HeaderCommons.channel));
             headerInfo.setClientId(httpServletRequest.getHeader(HeaderCommons.clientId));
@@ -48,18 +44,16 @@ public abstract class HessianHeaderLocal {
             headerInfo.setUserToken(httpServletRequest.getHeader(HeaderCommons.userToken));
             headerInfo.setVersion(httpServletRequest.getHeader(HeaderCommons.version));
         }
-        //requestId 统一处理
+        
         headerInfo.setId(httpServletRequest.getHeader(HeaderCommons.id));
         HEADERLOCAL.set(headerInfo);
         if (!headerInfo.isEmpty()) {
-//            logger.info("[Hesssain Header]:{}", JsonMapper.nonEmptyMapper().toJson(headerInfo));
+
         }
         return headerInfo;
     }
 
-    /**
-     * 在httpheader中新增头部信息
-     */
+    
     public static void addHeader(HessianConnection hessianConnection) {
         HeaderInfo headerInfo = getHeaderInfo();
         if (null != headerInfo) {
@@ -78,9 +72,7 @@ public abstract class HessianHeaderLocal {
 
     }
 
-    /**
-     * 删除头部信息
-     */
+    
     public static void delHeader() {
         HEADERLOCAL.remove();
     }

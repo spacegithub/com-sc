@@ -3,12 +3,7 @@ package com.sc.redis;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
-/**
- * redis 命令行
- *
- * @see: [相关类/方法]（可选）
- * @since [产品/模块版本] （可选）
- */
+
 public abstract class RedisCommond {
 
     private JedisPool jedisPool;

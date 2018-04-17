@@ -5,25 +5,25 @@ public class PayRefundResult extends WeixinResult {
     private String mchId;
     private String nonceStr;
     private String sign;
-    private String resultCode; // 业务结果 SUCCESS/FAIL
+    private String resultCode; 
     private String errCode;
     private String errCodeDes;
 
     private String deviceInfo;
 
-    private String transactionId; // 微信支付订单号
-    private String outTradeNo;// 客户订单号
-    private String outRefundNo;// 客户退款单号
-    private String refundId;// 微信退款单号
-    private String refundChannel;// 退款渠道   ORIGINAL—原路退款    BALANCE—退回到余额
+    private String transactionId; 
+    private String outTradeNo;
+    private String outRefundNo;
+    private String refundId;
+    private String refundChannel;
 
-    private String refundFee;// 退款额度
+    private String refundFee;
 
-    private String totalFee; // 总金额  单位为分
-    private String feeType; // 货币种类  默认人民币，CNY
+    private String totalFee; 
+    private String feeType; 
 
-    private String cashFee; // 现金支付金额
-    private String cashRefundFee; // 现金退款金额
+    private String cashFee; 
+    private String cashRefundFee; 
 
     public String getAppid() {
         return appid;

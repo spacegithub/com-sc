@@ -1,6 +1,4 @@
-package com.sc.utils.utils.xml; /**
- * http://www.jq-school.com
- */
+package com.sc.utils.utils.xml; 
 
 
 import org.dom4j.Attribute;
@@ -24,33 +22,19 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * @author advance
- *
- */
+
 public class Dom4jHelper {
-    /**
-     *  解析url xml文档
-     * @param url
-     * @return
-     * @throws DocumentException
-     */
+    
     public Document parse(URL url) throws DocumentException {
         SAXReader reader = new SAXReader();
         Document document = reader.read(url);
         return document;
     }
-    /**
-     * 遍历解析文档
-     * @param document
-     */
+    
     public void treeWalk(Document document) {
         treeWalk( document.getRootElement() );
     }
-    /**
-     * 遍历解析元素
-     * @param element
-     */
+    
     public void treeWalk(Element element) {
         for ( int i = 0, size = element.nodeCount(); i < size; i++ ) {
             Node node = element.node(i);
@@ -58,39 +42,27 @@ public class Dom4jHelper {
                 treeWalk( (Element) node );
             }
             else {
-                // 处理....
+                
             }
         }
     }
 
-    /**
-     * 解析文件，获得根元素
-     * @param xmlPath
-     * @param encoding
-     * @return
-     * @throws Exception
-     */
+    
     public static Element parse(String xmlPath,String encoding)throws Exception{
-        //文件是否存在
+        
         File file = new File(xmlPath);
         if(!file.exists()){
             throw new Exception("找不到xml文件："+xmlPath);
         }
 
-        //解析
+        
         SAXReader reader = new SAXReader(false);
         Document doc = reader.read(new FileInputStream(file),encoding);
         Element root = doc.getRootElement();
         return root;
     }
 
-    /**
-     * 保存文档
-     * @param doc
-     * @param xmlPath
-     * @param encoding
-     * @throws Exception
-     */
+    
     public static void save(Document doc,String xmlPath,String encoding)throws Exception{
         OutputFormat format=OutputFormat.createPrettyPrint();
         format.setEncoding(encoding);
@@ -99,14 +71,7 @@ public class Dom4jHelper {
         writer.flush();
         writer.close();
     }
-    /**
-     * 修改xml某节点的值
-     * @param inputXml 原xml文件
-     * @param nodes 要修改的节点
-     * @param attributename 属性名称
-     * @param value 新值
-     * @param outXml 输出文件路径及文件名 如果输出文件为null，则默认为原xml文件
-     */
+    
     public static void modifyDocument(File inputXml, String nodes, String attributename, String value, String outXml) {
         try {
             SAXReader saxReader = new SAXReader();
@@ -119,9 +84,9 @@ public class Dom4jHelper {
                     attribute.setValue(value);
             }
             XMLWriter output;
-            if (outXml != null){ //指定输出文件
+            if (outXml != null){ 
                 output = new XMLWriter(new FileWriter(new File(outXml)));
-            }else{ //输出文件为原文件
+            }else{ 
                 output = new XMLWriter(new FileWriter(inputXml));
             }
             output.write(document);
@@ -135,13 +100,7 @@ public class Dom4jHelper {
         }
     }
 
-    /**
-     * xml转换为字符串
-     * @param doc
-     * @param encoding
-     * @return
-     * @throws Exception
-     */
+    
     public static String toString(Document doc,String encoding)throws Exception{
         OutputFormat format=OutputFormat.createPrettyPrint();
         format.setEncoding(encoding);
@@ -154,19 +113,12 @@ public class Dom4jHelper {
 
         return byteOS.toString(encoding);
     }
-    /**
-     * 字符串转换为Document
-     * @param text
-     * @return
-     * @throws DocumentException
-     */
+    
     public static Document str2Document(String text) throws DocumentException{
         Document document = DocumentHelper.parseText(text);
         return document;
     }
-    /**
-     * @param args
-     */
+    
     public static void main(String[] args) {
 
 

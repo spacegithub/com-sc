@@ -44,17 +44,17 @@ public class RequestJsonHandlerMethodArgumentResolver implements HandlerMethodAr
         final HttpServletRequest servletRequest = webRequest.getNativeRequest(HttpServletRequest.class);
 
         String requestBody=  getRequestBody(servletRequest.getInputStream());
-        // content-type不是json的不处理
+        
         if (!servletRequest.getContentType().contains(MediaTypes.JSON) || StringUtils.isBlank(requestBody)) {
             logger.error("请求类型错误或者RequestBody为空");
             return null;
         }
 
-        //如果是当前json对象直接试用
+        
         if(requestJsonParam.current()){
             if (Collection.class.isAssignableFrom(parameter.getParameterType()))
             {
-                //获取实际类型
+                
                 Class clazz= Reflections.getClassGenricType(parameter.getGenericParameterType());
                 return JSON.parseArray(requestBody,clazz);
             }
@@ -62,7 +62,7 @@ public class RequestJsonHandlerMethodArgumentResolver implements HandlerMethodAr
         }
 
         String aliasName=getAlias(requestJsonParam,parameter);
-        // 利用fastjson转换为对应的类型
+        
         if ( Long.class.isAssignableFrom(parameter.getParameterType())){
             return  JSON.parseObject(requestBody).getLong(aliasName);
         }else if (String.class.isAssignableFrom(parameter.getParameterType())){
@@ -82,7 +82,7 @@ public class RequestJsonHandlerMethodArgumentResolver implements HandlerMethodAr
         }else if (BigDecimal.class.isAssignableFrom(parameter.getParameterType())){
             return JSON.parseObject(requestBody).getBigDecimal(aliasName);
         }else if (Collection.class.isAssignableFrom(parameter.getParameterType())){
-            //获取实际类型
+            
             Class clazz= Reflections.getClassGenricType(parameter.getGenericParameterType());
             String jsonArray=JSON.parseObject(requestBody).getString(aliasName);
             return JSONArray.parseArray(jsonArray,clazz);
@@ -90,7 +90,7 @@ public class RequestJsonHandlerMethodArgumentResolver implements HandlerMethodAr
             String innerParam=JSON.parseObject(requestBody).getString(aliasName);
             if (Collection.class.isAssignableFrom(parameter.getParameterType()))
             {
-                //获取实际类型
+                
                 Class clazz= Reflections.getClassGenricType(parameter.getGenericParameterType());
                 return JSON.parseArray(innerParam,clazz);
             }
@@ -98,12 +98,7 @@ public class RequestJsonHandlerMethodArgumentResolver implements HandlerMethodAr
         }
     }
 
-    /**
-     * 复用流的内容
-     * @param inputStream
-     * @return
-     * @throws IOException
-     */
+    
     private String getRequestBody(InputStream inputStream) throws IOException
     {
         String requestBody= RequestBodyThreadLocalInterceptor.RequestBodyThreadLocal.get();
@@ -114,12 +109,7 @@ public class RequestJsonHandlerMethodArgumentResolver implements HandlerMethodAr
         return requestBody;
     }
 
-    /**
-     * 获取别名
-     * @param requestJsonParam
-     * @param parameter
-     * @return
-     */
+    
     private String getAlias(RequestJsonParam requestJsonParam, MethodParameter parameter)
     {
         String alias = requestJsonParam.value();

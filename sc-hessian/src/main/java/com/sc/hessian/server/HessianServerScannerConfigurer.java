@@ -41,18 +41,7 @@ import java.util.Set;
 import static org.springframework.util.Assert.notNull;
 
 
-/**
- * hessian 接口服务端自动扫描注入
- * <p/>
- * <bean class="com.xxx.HessianClientScannerConfigurer">
- * <property name="basePackage" value="com.**.remote"></property>
- * <property name="annotationClass" value="Hessian"></property>
- * </bean>
- *
- *
- * @see: [相关类/方法]（可选）
- * @since [产品/模块版本] （可选）
- */
+
 public class HessianServerScannerConfigurer implements
         BeanDefinitionRegistryPostProcessor, InitializingBean,
         ApplicationContextAware, BeanNameAware {
@@ -65,14 +54,14 @@ public class HessianServerScannerConfigurer implements
 
     private ApplicationContext applicationContext;
 
-    // 实现了该接口
+    
     private Class<?> markerInterface;
 
-    // 配置了该注解
+    
     private Class<? extends Annotation> annotationClass;
-    //hessian导出工具
+    
     private Class<? extends HessianExporter> hessianExporter;
-    // 存放spring 容器中的有接口的实现类的bean name
+    
     private Map<String, String> implClassContextName = new HashMap<String, String>();
 
     private BeanNameGenerator nameGenerator = new AnnotationBeanNameGenerator() {
@@ -122,7 +111,7 @@ public class HessianServerScannerConfigurer implements
         HessianClassPathScanner scan = new HessianClassPathScanner(registry);
         scan.setResourceLoader(this.applicationContext);
         scan.setBeanNameGenerator(this.nameGenerator);
-        // 引入注解配置
+        
         scan.setIncludeAnnotationConfig(this.includeAnnotationConfig);
         scan.registerFilters();
 
@@ -196,8 +185,8 @@ public class HessianServerScannerConfigurer implements
                                 + "' serviceInterface");
                     }
 
-                    // the mapper interface is the original class of the bean
-                    // but, the actual class of the bean is HessianServiceExporter
+                    
+                    
                     definition.getPropertyValues().add("serviceInterface", definition.getBeanClassName());
                     String beanNameRef = implClassContextName.get(definition.getBeanClassName());
                     definition.getPropertyValues().add("service", new RuntimeBeanReference(beanNameRef));
@@ -214,9 +203,7 @@ public class HessianServerScannerConfigurer implements
             return (beanDefinition.getMetadata().isInterface() && beanDefinition.getMetadata().isIndependent());
         }
 
-        /**
-         * {@inheritDoc}
-         */
+        
         @Override
         protected boolean checkCandidate(String beanName,
                                          BeanDefinition beanDefinition) throws IllegalStateException {
@@ -233,12 +220,7 @@ public class HessianServerScannerConfigurer implements
             }
         }
 
-        /**
-         * 获取bean的实现类,若有多个则只取application中第一个
-         *
-         * @param beanDefinition
-         * @return
-         */
+        
         private String getImplBeanName(BeanDefinition beanDefinition) {
             try {
                 if (implClassContextName.containsKey(beanDefinition.getBeanClassName())) {
@@ -264,13 +246,13 @@ public class HessianServerScannerConfigurer implements
         public void registerFilters() {
             boolean acceptAllInterfaces = true;
 
-            // if specified, use the given annotation and / or marker interface
+            
             if (HessianServerScannerConfigurer.this.annotationClass != null) {
                 addIncludeFilter(new AnnotationTypeFilter(HessianServerScannerConfigurer.this.annotationClass));
                 acceptAllInterfaces = false;
             }
 
-            // override AssignableTypeFilter to ignore matches on the actual marker interface
+            
             if (HessianServerScannerConfigurer.this.markerInterface != null) {
                 addIncludeFilter(new AssignableTypeFilter(HessianServerScannerConfigurer.this.markerInterface) {
                     @Override
@@ -282,7 +264,7 @@ public class HessianServerScannerConfigurer implements
             }
 
             if (acceptAllInterfaces) {
-                // default include filter that accepts all classes
+                
                 addIncludeFilter(new TypeFilter() {
                     public boolean match(MetadataReader metadataReader, MetadataReaderFactory metadataReaderFactory) throws IOException {
                         return true;
@@ -290,7 +272,7 @@ public class HessianServerScannerConfigurer implements
                 });
             }
 
-            // exclude package-info.java
+            
             addExcludeFilter(new TypeFilter() {
                 public boolean match(MetadataReader metadataReader, MetadataReaderFactory metadataReaderFactory) throws IOException {
                     String className = metadataReader.getClassMetadata().getClassName();

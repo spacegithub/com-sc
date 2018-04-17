@@ -40,7 +40,7 @@ public class WecatSignUtil {
             if ("class".equals(k) || "key".equals(k) || "sign".equals(k)) {
                 continue;
             }
-            Object v = entry.getValue(); //  非空
+            Object v = entry.getValue(); 
             if (v == null || "".equals(v.toString())) {
                 continue;
             }
@@ -57,7 +57,7 @@ public class WecatSignUtil {
     }
 
     public static Map<String, Object> doVerifySign(String resultStr, String key) {
-        // 校验返回结果 签名
+        
         Map<String, Object> resultMap = XmlUtil.parseXml(resultStr);
         String resultSign = sign(resultMap, key);
         if (resultMap.get("sign") == null || !resultMap.get("sign").equals(resultSign)) {

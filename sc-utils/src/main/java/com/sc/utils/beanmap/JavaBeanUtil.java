@@ -3,23 +3,12 @@ package com.sc.utils.beanmap;
 
 import java.util.Locale;
 
-/**
- * javaBean的基本构成字符串转换方法
- *
- * @author Wesley
- *
- */
+
 public class JavaBeanUtil {
 
     private static final char SEPARATOR = '_';
 
-    /**
-     * 将属性样式字符串转成驼峰样式字符串<br>
-     * (例:branchNo -> branch_no)<br>
-     *
-     * @param inputString
-     * @return
-     */
+    
     public static String toUnderlineString(String inputString) {
         if (inputString == null)
             return null;
@@ -50,28 +39,12 @@ public class JavaBeanUtil {
         return sb.toString();
     }
 
-    /**
-     * 将驼峰字段转成属性字符串<br>
-     * (例:branch_no -> branchNo )<br>
-     *
-     * @param inputString
-     *            输入字符串
-     * @return
-     */
+    
     public static String toCamelCaseString(String inputString) {
         return toCamelCaseString(inputString, false);
     }
 
-    /**
-     * 将驼峰字段转成属性字符串<br>
-     * (例:branch_no -> branchNo )<br>
-     *
-     * @param inputString
-     *            输入字符串
-     * @param firstCharacterUppercase
-     *            是否首字母大写
-     * @return
-     */
+    
     public static String toCamelCaseString(String inputString, boolean firstCharacterUppercase) {
         if (inputString == null)
             return null;
@@ -114,14 +87,7 @@ public class JavaBeanUtil {
         return sb.toString();
     }
 
-    /**
-     * 得到标准字段名称
-     *
-     * @param inputString
-     *            输入字符串
-     *            Bean --> bean
-     * @return
-     */
+    
     public static String getValidPropertyName(String inputString) {
         String answer;
         if (inputString == null) {
@@ -138,13 +104,7 @@ public class JavaBeanUtil {
         return answer;
     }
 
-    /**
-     * 将属性转换成标准set方法名字符串<br>
-     *
-     * @param property
-     * aaa -->setAaaa
-     * @return
-     */
+    
     public static String getSetterMethodName(String property) {
         StringBuilder sb = new StringBuilder();
 
@@ -158,13 +118,7 @@ public class JavaBeanUtil {
         return sb.toString();
     }
 
-    /**
-     * 将属性转换成标准get方法名字符串<br>
-     *
-     * @param property
-     * aaa -->getAaaa
-     * @return
-     */
+    
     public static String getGetterMethodName(String property) {
         StringBuilder sb = new StringBuilder();
 

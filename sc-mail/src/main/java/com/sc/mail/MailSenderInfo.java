@@ -2,12 +2,7 @@ package com.sc.mail;
 
 import java.util.Properties;
 
-/**
- * 邮箱发送配置属性
- * 
 
- * 
- */
 public class MailSenderInfo {
 	private String mailServerHost;
 	private String mailServerPort = "25";

@@ -12,13 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Hessianheader
- *
- *
- * @see: [相关类/方法]（可选）
- * @since [产品/模块版本] （可选）
- */
+
 public class HessianHeaderServiceExporter  extends HessianServiceExporter {
 
 
@@ -28,11 +22,11 @@ public class HessianHeaderServiceExporter  extends HessianServiceExporter {
     public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         try{
-            //保存Hessian header信息
+            
             HessianHeaderLocal.getHeaderInfo(request);
             super.handleRequest(request, response);
         }finally {
-            //请求处理完成清除审计用户信息
+            
             HessianHeaderLocal.delHeader();
         }
 

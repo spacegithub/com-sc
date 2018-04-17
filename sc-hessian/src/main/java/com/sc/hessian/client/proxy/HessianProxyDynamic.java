@@ -25,36 +25,22 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 
-/**
- * 实现简单的多URL轮循
- *
- *
- * @see: [相关类/方法]（可选）
- * @since [产品/模块版本] （可选）
- */
+
 public class HessianProxyDynamic extends HessianProxy {
 
     private static final java.util.logging.Logger log = java.util.logging.Logger.getLogger(HessianProxy.class.getName());
     private static Logger logger= LoggerFactory.getLogger(HessianProxyDynamic.class);
-    //轮循URL
+    
     private AtomicInteger atomicInteger=new AtomicInteger(0);
     private List<URL> hessianUrls =new ArrayList();
 
-    /**
-     * 重构方法
-     * @param urls
-     * @param factory
-     * @param type
-     */
+    
     public HessianProxyDynamic(String urls, HessianProxyFactory factory,Class<?> type){
         super(null, factory,null);
         initRoundUrl(urls);
     }
 
-    /**
-     * 初始化url
-     * @param url
-     */
+    
     public void initRoundUrl(String url) {
         String[] urls = StringUtils.tokenizeToStringArray(url, ConfigurableApplicationContext.CONFIG_LOCATION_DELIMITERS);
         try {
@@ -66,12 +52,9 @@ public class HessianProxyDynamic extends HessianProxy {
         }
     }
 
-    /**
-     * 计算当前应当读取哪个URL
-     * @return
-     */
+    
     private URL roundUrl(){
-        //如果只有一条记录则直接获取第一条
+        
         if (1==hessianUrls.size()){
             return hessianUrls.get(0);
         }
@@ -124,23 +107,14 @@ public class HessianProxyDynamic extends HessianProxy {
 
     }
 
-    /**
-     * 在请求头部增加部分信息
-     * @param conn
-     */
+    
     @Override
     protected void addRequestHeaders(HessianConnection conn) {
         HessianHeaderLocal.addHeader(conn);
         super.addRequestHeaders(conn);
     }
 
-    /**
-     * 监控Hessian接口性能信息
-     * @param url
-     * @param methodName
-     * @param args
-     * @param startTime
-     */
+    
     private void monitor(String url,String methodName, Object[] args,long startTime){
         JSONObject jsonObject=new JSONObject();
         jsonObject.put("url",url);

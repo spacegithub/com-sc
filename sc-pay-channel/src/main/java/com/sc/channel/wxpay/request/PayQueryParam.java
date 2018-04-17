@@ -5,9 +5,9 @@ public class PayQueryParam {
     private String mchId;
     private String nonceStr;
     private String sign;
-    //  客户，微信 订单号 二选一；
-    private String outTradeNo; // 客户订单号  商户系统内部的订单号，当没提供transaction_id时需要传这个。
-    private String transactionId; // 微信订单号  微信的订单号，优先使用；
+    
+    private String outTradeNo; 
+    private String transactionId; 
 
     public String getAppid() {
         return appid;

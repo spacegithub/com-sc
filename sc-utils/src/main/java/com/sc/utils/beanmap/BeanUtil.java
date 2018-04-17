@@ -14,16 +14,14 @@ import java.util.TreeMap;
 
 public class BeanUtil extends BeanUtils {
 
-    /**
-     * 将对象转为Map
-     */
+    
     public static Map<String, Object> object2Map(Object object) {
-        Map<String, Object> data = new TreeMap<String, Object>(); //对key进行排序
+        Map<String, Object> data = new TreeMap<String, Object>(); 
         try {
             BeanInfo info = Introspector.getBeanInfo(object.getClass(), Introspector.IGNORE_ALL_BEANINFO);
             PropertyDescriptor[] descriptors = info.getPropertyDescriptors();
             for (PropertyDescriptor pd : descriptors) {
-                // 将 驼峰式写法转成下划线写法
+                
                 String name = CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, pd.getName());
                 Object value = pd.getReadMethod().invoke(object);
                 if ("class".equals(name) || value == null)
@@ -36,13 +34,7 @@ public class BeanUtil extends BeanUtils {
         return data;
     }
 
-    /**
-     * 将map转为对象
-     * @param clazz
-     * @param data
-     * @param <T>
-     * @return
-     */
+    
     public static <T> T map2Object(Class<T> clazz, Map<String, Object> data) {
         try {
             T object = clazz.newInstance();
@@ -68,15 +60,7 @@ public class BeanUtil extends BeanUtils {
         return null;
     }
 
-    /**
-     * 将源对象中的值覆盖到目标对象中，仅覆盖源对象中不为NULL值的属性
-     *
-     * @param dest
-     *            目标对象，标准的JavaBean
-     * @param orig
-     *            源对象，可为Map、标准的JavaBean
-     * @throws Exception
-     */
+    
     @SuppressWarnings("rawtypes")
     public static void applyIf(Object dest, Object orig) throws Exception {
         try {
@@ -108,17 +92,7 @@ public class BeanUtil extends BeanUtils {
         }
     }
 
-    /**
-     * 检查对象中是否存在空值属性
-     *
-     * @param orig
-     *            源对象，标准的JavaBean
-     * @param dest
-     *            排除检查的属性:Map
-     *
-     *
-     * @throws Exception
-     */
+    
     @SuppressWarnings("rawtypes")
     public static boolean checkObjProperty(Object orig, Map dest) throws Exception {
         try {

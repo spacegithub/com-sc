@@ -21,10 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * 提供rest请求的工具类
- * RestTemplateHelper.init().authHeader(map).build(urlUtils.toString(), requestBody).call();
- */
+
 public class RestTemplateHelper {
     private static Log logger = LogFactory.getLog(RestTemplateHelper.class);
 
@@ -52,12 +49,7 @@ public class RestTemplateHelper {
         this.headers = headers;
     }
 
-    /**
-     * 正常一般的请求
-     *
-     * @param path        请求路径
-     * @param requestDate 请求数据实体
-     */
+    
     public RestTemplateHelper build(String path, Object requestDate) {
         SSLUtil.turnOnSslChecking();
         restTemplate = new RestTemplate();
@@ -66,12 +58,7 @@ public class RestTemplateHelper {
         return this;
     }
 
-    /**
-     * 忽略https 直接请求
-     *
-     * @param path        请求路径
-     * @param requestDate 请求数据实体
-     */
+    
     public RestTemplateHelper buildNonHttps(String path, Object requestDate) {
         SSLUtil.turnOffSslChecking();
         CustomSimpleClientHttpRequestFactory factory = new CustomSimpleClientHttpRequestFactory(new NoopHostnameVerifier());
@@ -81,12 +68,7 @@ public class RestTemplateHelper {
         return this;
     }
 
-    /**
-     * 正常的https请求
-     *
-     * @param path        请求路径
-     * @param requestDate 请求数据实体
-     */
+    
     public RestTemplateHelper buildHttps(String path, Object requestDate) {
         SSLUtil.turnOnSslChecking();
         CloseableHttpClient httpClient = HttpClients.custom().setSSLHostnameVerifier(new NoopHostnameVerifier()).build();
@@ -106,20 +88,12 @@ public class RestTemplateHelper {
         return this;
     }
 
-    /**
-     * 组装请求
-     *
-     * @return 响应体
-     */
+    
     public String call() {
         return call("application/json; charset=UTF-8");
     }
 
-    /**
-     * 组装请求
-     *
-     * @return 响应体
-     */
+    
     public String call(String mediaType) {
         MediaType type = MediaType.parseMediaType(mediaType);
         headers.setContentType(type);

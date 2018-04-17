@@ -24,17 +24,11 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-/**
- * @author qiss
- */
+
 public class MatrixToImageWriterEx {
 
 
-    /**
-     * 解析二维码（QRCode）
-     *
-     * @param filePath 图片路径
-     */
+    
     public static String readQRCode(String filePath) {
         String str = null;
         try {
@@ -48,9 +42,7 @@ public class MatrixToImageWriterEx {
         return str;
     }
 
-    /**
-     * 创建二维码
-     */
+    
     public static BitMatrix createQRCode(QrcodeVo qrcodeVo) {
         Hashtable hints = new Hashtable();
         hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
@@ -65,9 +57,7 @@ public class MatrixToImageWriterEx {
         return matrix;
     }
 
-    /**
-     * 将二维码写入到流
-     */
+    
     public static BufferedImage writeToStream(BitMatrix matrix, File logoFile) {
         BufferedImage bi = MatrixToImageWriter.toBufferedImage(matrix);
 

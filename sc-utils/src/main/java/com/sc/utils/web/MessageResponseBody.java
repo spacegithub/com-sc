@@ -2,12 +2,10 @@ package com.sc.utils.web;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-/**
- * 响应消息体
- */
+
 public class MessageResponseBody<T> {
-    private static final String SUCCESS = "0";//成功
-    private static final String ERROR = "1";//失败
+    private static final String SUCCESS = "0";
+    private static final String ERROR = "1";
     @JsonIgnore
     private String resultCode;
     private T result;

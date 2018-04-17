@@ -4,11 +4,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
-    <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>7</version>
-    </parent>
     <modules>
         <module>sc-hessian</module>
         <module>sc-mybatis-generator</module>
@@ -24,7 +19,7 @@
     <groupId>com.github.senssic</groupId>
     <artifactId>com-sc</artifactId>
     <version>1.0.0</version>
-    <name>com-sc</name>
+    <name>senssic Dependencies</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdk.version>1.7</jdk.version>
@@ -43,9 +38,12 @@
         <hutool.version>3.2.2</hutool.version>
         <zxing.version>3.3.1</zxing.version>
         <maven.javadoc.skip>true</maven.javadoc.skip>
-        <maven.build.tests.skip>true</maven.build.tests.skip>
+        <maven.build.tests.skip>false</maven.build.tests.skip>
         <!--        <javadoc.doclint.param/>-->
     </properties>
+    <url>https://github.com/Senssic/com-sc</url>
+
+    <description>Dependency definitions for all tools projects</description>
 
     <issueManagement>
         <system>Github Issue</system>
@@ -67,12 +65,10 @@
     </developers>
 
     <scm>
-        <connection>scm:git@github.com:Senssic/com-sc.git</connection>
-        <developerConnection>scm:git@github.com:Senssic/com-sc.git</developerConnection>
+        <connection>scm:git:git@github.com:Senssic/com-sc.git</connection>
+        <developerConnection>scm:git:git@github.com:Senssic/com-sc.git</developerConnection>
         <url>git@github.com:Senssic/com-sc.git</url>
     </scm>
-
-
 
 
     <dependencyManagement>
@@ -694,6 +690,19 @@
             </distributionManagement>
             <build>
                 <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>2.4</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
                     <!-- Javadoc -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -701,12 +710,18 @@
                         <version>2.10.4</version>
                         <executions>
                             <execution>
-                                <phase>package</phase>
+                                <id>attach-javadocs</id>
+                                <phase>install</phase>
                                 <goals>
                                     <goal>jar</goal>
                                 </goals>
                             </execution>
                         </executions>
+                        <configuration>
+                            <aggregate>true</aggregate>
+                            <encoding>UTF-8</encoding>
+                            <charset>UTF-8</charset>
+                        </configuration>
                     </plugin>
                     <!-- Gpg Signature -->
                     <plugin>
@@ -761,6 +776,7 @@
                         <includes>
                             <include>**/*Test.java</include>
                         </includes>
+
                     </configuration>
                     <dependencies>
                         <dependency>
@@ -785,15 +801,6 @@
                         <warName>${project.artifactId}</warName>
                     </configuration>
                 </plugin>
-                <!-- java doc -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>2.10.4</version>
-                    <configuration>
-                        <aggregate>true</aggregate>
-                    </configuration>
-                </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>versions-maven-plugin</artifactId>
@@ -807,23 +814,11 @@
                     <configuration>
                         <archive>
                             <manifest>
-                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                                <addDefaultImplementationEntries>true
+                                </addDefaultImplementationEntries>
                             </manifest>
                         </archive>
                     </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-source-plugin</artifactId>
-                    <version>2.4</version>
-                    <executions>
-                        <execution>
-                            <id>attach-sources</id>
-                            <goals>
-                                <goal>jar</goal>
-                            </goals>
-                        </execution>
-                    </executions>
                 </plugin>
                 <!--  tomcat插件   -->
                 <plugin>
@@ -837,100 +832,85 @@
                     <artifactId>maven-deploy-plugin</artifactId>
                     <version>2.8.2</version>
                 </plugin>
-                <!--  assembly插件  -->
-                <!-- <plugin> -->
-                <!-- <groupId>org.apache.maven.plugins</groupId> -->
-                <!-- <artifactId>maven-assembly-plugin</artifactId> -->
-                <!-- <version>2.4</version> -->
-                <!-- </plugin> -->
-                <!--  dependency相关插件  -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-dependency-plugin</artifactId>
                     <version>2.10</version>
                 </plugin>
+
+                <plugin>
+                    <groupId>org.mortbay.jetty</groupId>
+                    <artifactId>maven-jetty-plugin</artifactId>
+                    <version>6.1.25</version>
+                    <configuration>
+                        <scanIntervalSeconds>1</scanIntervalSeconds>
+                        <connectors>
+                            <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+                                <port>8080</port>
+                            </connector>
+                        </connectors>
+                        <contextPath>/</contextPath>
+                    </configuration>
+                </plugin>
+                <!-- maven报告 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>2.4</version>
+                </plugin>
+
+                <!--assembly插件-->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>2.4</version>
+                </plugin>
+
+                <!--deploy center-->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.4</version>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>jar-no-fork</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- Javadoc -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>2.10.4</version>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- Gpg Signature -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>1.6</version>
+                    <executions>
+                        <execution>
+                            <id>sign-artifacts</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>sign</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
             </plugins>
         </pluginManagement>
-        <plugins>
-            <plugin>
-                <artifactId>maven-source-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <phase>deploy</phase>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <!--
-                 explicitly define maven-deploy-plugin after other to force exec order
-                -->
-                <artifactId>maven-deploy-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>deploy</id>
-                        <phase>deploy</phase>
-                        <goals>
-                            <goal>deploy</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <!--
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <configuration>
-                    <aggregate>true</aggregate>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                        // 解决jdk1.8编译问题
-                        <configuration>
-                            <linksource>true</linksource>
-                            <additionalparam>${javadoc.doclint.param}</additionalparam>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin> -->
-            <plugin>
-                <groupId>org.mortbay.jetty</groupId>
-                <artifactId>maven-jetty-plugin</artifactId>
-                <version>6.1.25</version>
-                <configuration>
-                    <scanIntervalSeconds>1</scanIntervalSeconds>
-                    <connectors>
-                        <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
-                            <port>8080</port>
-                        </connector>
-                    </connectors>
-                    <contextPath>/</contextPath>
-                </configuration>
-            </plugin>
-            <!-- Tests -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <skipTests>${maven.build.tests.skip}</skipTests>
-                </configuration>
-            </plugin>
-
-        </plugins>
     </build>
-    <!-- maven报告 -->
-    <!--
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>2.4</version>
-            </plugin>
-        </plugins>
-    </reporting> -->
 </project>

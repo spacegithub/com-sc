@@ -1,13 +1,7 @@
 package com.sc.base.api;
 
 import java.io.Serializable;
-/**
- * <一句话功能简述>
- * <功能详细描述>
- *
- * @see: [相关类/方法]（可选）
- * @since [产品/模块版本] （可选）
- */
+
 public class BaseResponse implements Serializable {
     public static final int RESULT_CODE_SUCCESS = 0;
     public static final int RESULT_CODE_VALIDATE_FAILED = -1;

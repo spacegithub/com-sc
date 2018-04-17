@@ -37,14 +37,10 @@ public class WeixinUtil {
     public static final Log logger = LogFactory.getLog(WeixinUtil.class);
     public static final String UTF_8 = "UTF-8";
 
-    /**
-     * 如果中文乱码 需要再进行转码
-     * <p/>
-     * resultStr = new String(resultStr.getBytes("ISO-8859-1"), "utf-8");
-     */
+    
     public static String postXml2(String url, String xml) {
         CloseableHttpClient client = HttpClients.createDefault();
-        // 设置超时时间
+        
         client.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 10000);
         client.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 10000);
 
@@ -70,9 +66,7 @@ public class WeixinUtil {
         return responseBody;
     }
 
-    /**
-     * 可以处理中文乱码，
-     */
+    
     public static String postXml(String url, String xml) {
         String result="";
         HttpPost httpPost = new HttpPost(url);
@@ -103,9 +97,7 @@ public class WeixinUtil {
         return result;
     }
 
-    /**
-     * 可以处理中文乱码， 带上 证书信息
-     */
+    
     public static String postXmlWithKey(String url, String xml, InputStream in, String mchId) throws Exception {
 
         KeyStore keyStore = KeyStore.getInstance("PKCS12");
@@ -117,11 +109,11 @@ public class WeixinUtil {
         }
         logger.info("Weixin post xml :"+xml);
 
-        // Trust own CA and all self-signed certs
+        
         SSLContext sslcontext = SSLContexts.custom()
                 .loadKeyMaterial(keyStore, mchId.toCharArray())
                 .build();
-        // Allow TLSv1 protocol only
+        
         SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
                 sslcontext,
                 new String[]{"TLSv1"},

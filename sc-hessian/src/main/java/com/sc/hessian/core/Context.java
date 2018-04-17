@@ -1,11 +1,6 @@
 package com.sc.hessian.core;
 
-/**
- * 客服端url链接前半部分配置
- *
- * 配置文件中增加：api.remote.url=http://localhost:8080/hessian
 
- */
 public enum Context {
     API("api.remote.url");
 

@@ -30,7 +30,7 @@ public class EncryptUtil {
         }
     }
 
-    // 随机32个字符
+    
     public static String random() {
         char[] array = new char[32];
         Random random = new Random();

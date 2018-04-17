@@ -8,38 +8,34 @@ public class PayQueryResult extends WeixinResult {
     private String mchId;
     private String nonceStr;
     private String sign;
-    private String resultCode; // 业务结果 SUCCESS/FAIL
+    private String resultCode; 
     private String errCode;
     private String errCodeDes;
 
     private String deviceInfo;
-    private String openid;  // 客户 微信 openid
-    private String isSubscribe; // 是否关注公众账号
-    private String tradeType; // 交易方式  TradeType
+    private String openid;  
+    private String isSubscribe; 
+    private String tradeType; 
 
-    // SUCCESS—支付成功    REFUND—转入退款    NOTPAY—未支付    CLOSED—已关闭    REVOKED—已撤销（刷卡支付）
-    // USERPAYING--用户支付中    PAYERROR--支付失败(其他原因，如银行返回失败)
-    private String tradeState;// 交易状态
+    
+    
+    private String tradeState;
 
-    private String bankType; //付款银行	银行类型，采用字符串类型的银行标识
-    private String feeType; // 货币种类  默认人民币，CNY
-    private String totalFee; // 总金额  单位为分
-    private String cashFeeType; //现金支付货币类型
-    private String cashFee; //  现金支付金额
-    private String couponFee; // 代金券或立减优惠金额
-    private String couponCount; // 代金券或立减优惠使用数量
-    /**
-     * 代金券或立减优惠批次ID	coupon_batch_id_$n	否	String(20)	100	代金券或立减优惠批次ID ,$n为下标，从0开始编号
-     * 代金券或立减优惠ID	coupon_id_$n	否	String(20)	10000 	代金券或立减优惠ID, $n为下标，从0开始编号
-     * 单个代金券或立减优惠支付金额	coupon_fee_$n	否	Int	100	单个代金券或立减优惠支付金额, $n为下标，从0开始编号
-     */
+    private String bankType; 
+    private String feeType; 
+    private String totalFee; 
+    private String cashFeeType; 
+    private String cashFee; 
+    private String couponFee; 
+    private String couponCount; 
+    
 
-    private String transactionId; // 微信支付订单号
-    private String outTradeNo;// 客户订单号
-    private String attach;// 附加数据， 统一下单时候 传过来的 再原样传回去
-    private String timeEnd; // 支付完成时间  格式为yyyyMMddHHmmss
+    private String transactionId; 
+    private String outTradeNo;
+    private String attach;
+    private String timeEnd; 
 
-    private String tradeStateDesc;// 交易状态描述  对当前查询订单状态的描述和下一步操作的指引
+    private String tradeStateDesc;
 
     public String getAppid() {
         return appid;

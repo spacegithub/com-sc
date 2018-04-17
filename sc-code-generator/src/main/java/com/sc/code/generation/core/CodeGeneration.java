@@ -13,23 +13,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-/**
- * <一句话功能简述> <功能详细描述>
- *
- * @auth:qiss
- * @see: [相关类/方法]（可选）
- * @since [产品/模块版本] （可选）
- */
+
 public class CodeGeneration {
-    /*************************************
-     * 需要修改的项start
-     *************************************/
-    static String domainName = "UpdatePayStatus"; //类名
-    static String packagePath = "sc.code.platform";//类包
+    
+    static String domainName = "UpdatePayStatus"; 
+    static String packagePath = "sc.code.platform";
     static String hessionUrl="hessian.url.payment";
-    /*************************************
-     * 需要修改的项end
-     *************************************/
+    
     static String templateDir = "\\src\\main\\resources\\templete\\";
     static String sourcePath = System.getProperty("user.dir")+templateDir;
     static String resultDir = "\\out";
@@ -55,7 +45,7 @@ public class CodeGeneration {
             pro.setProperty(Velocity.INPUT_ENCODING, "UTF-8");
             pro.setProperty(Velocity.FILE_RESOURCE_LOADER_PATH, sourcePath);
             VelocityEngine ve = new VelocityEngine(pro);
-            //获取包名称
+            
             String packageName=(packagePath+"."+targetFile.substring(0,targetFile.lastIndexOf("/"))).replace("/", ".");
             VelocityContext context = new VelocityContext();
             context.put("domainName",domainName);

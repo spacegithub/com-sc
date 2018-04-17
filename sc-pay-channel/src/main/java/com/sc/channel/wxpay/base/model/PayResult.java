@@ -1,11 +1,9 @@
 package com.sc.channel.wxpay.base.model;
 
 
-/**
- * 通用支付返回结果
- */
+
 public class PayResult {
-    private String resultCode; // ResultCode
+    private String resultCode; 
     private String message;
     private String errCode;
     private String errorMessage;

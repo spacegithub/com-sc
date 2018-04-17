@@ -6,10 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
-/**
- * depend on jackson
- * @author Diamond
- */
+
 public class CustomerJsonSerializer {
 
     static final String DYNC_INCLUDE = "DYNC_INCLUDE";
@@ -24,11 +21,7 @@ public class CustomerJsonSerializer {
     interface DynamicInclude {
     }
 
-    /**
-     * @param clazz 需要设置规则的Class
-     * @param include 转换时包含哪些字段
-     * @param filter 转换时过滤哪些字段
-     */
+    
     public void filter(Class<?> clazz, String include, String filter) {
         if (clazz == null) return;
         if (include != null && include.length() > 0) {
@@ -47,13 +40,13 @@ public class CustomerJsonSerializer {
     }
     public void main(String args[]) {
 /*        CustomerJsonSerializer cjs= new CustomerJsonSerializer();
-        // 设置转换 Article 类时，只包含 id, name
+        
         cjs.filter(Article.class, "id,name", null);
 
         String include = cjs.toJson(new Article());
 
         cjs = new CustomerJsonSerializer();
-        // 设置转换 Article 类时，过滤掉 id, name
+        
         cjs.filter(Article.class, null, "id,name");
 
         String filter = cjs.toJson(new Article());

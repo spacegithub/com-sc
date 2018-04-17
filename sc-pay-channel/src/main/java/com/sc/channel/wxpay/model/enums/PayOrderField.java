@@ -3,9 +3,7 @@ package com.sc.channel.wxpay.model.enums;
 
 import com.sc.channel.wxpay.base.service.Validator;
 
-/**
- * payOrderParam 参数 必填信息
- */
+
 public enum PayOrderField implements Validator {
     APP_ID("appid", true),
     MCH_ID("mch_id", true),

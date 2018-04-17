@@ -21,11 +21,7 @@ public class MapperCommentGenerator implements CommentGenerator {
         return;
     }
 
-    /**
-     * xml中的注释
-     *
-     * @param xmlElement
-     */
+    
     public void addComment(XmlElement xmlElement) {
         xmlElement.addElement(new TextElement("<!--"));
         StringBuilder sb = new StringBuilder();
@@ -41,12 +37,7 @@ public class MapperCommentGenerator implements CommentGenerator {
 
     public void addConfigurationProperties(Properties properties) {}
 
-    /**
-     * 删除标记
-     *
-     * @param javaElement
-     * @param markAsDoNotDelete
-     */
+    
     protected void addJavadocTag(JavaElement javaElement, boolean markAsDoNotDelete) {
         StringBuilder sb = new StringBuilder();
         sb.append(" * ");
@@ -57,23 +48,12 @@ public class MapperCommentGenerator implements CommentGenerator {
         javaElement.addJavaDocLine(sb.toString());
     }
 
-    /**
-     * Example使用
-     *
-     * @param innerClass
-     * @param introspectedTable
-     */
+    
     public void addClassComment(InnerClass innerClass, IntrospectedTable introspectedTable) {}
 
     public void addEnumComment(InnerEnum innerEnum, IntrospectedTable introspectedTable) {}
 
-    /**
-     * 给字段添加数据库备注
-     *
-     * @param field
-     * @param introspectedTable
-     * @param introspectedColumn
-     */
+    
     public void addFieldComment(Field field, IntrospectedTable introspectedTable, IntrospectedColumn introspectedColumn) {
         if (StringUtility.stringHasValue(introspectedColumn.getRemarks())) {
             field.addJavaDocLine("/**");
@@ -83,9 +63,9 @@ public class MapperCommentGenerator implements CommentGenerator {
             field.addJavaDocLine(sb.toString());
             field.addJavaDocLine(" */");
         }
-        //添加注解
+        
         if (field.isTransient()) {
-            //@Column
+            
             field.addAnnotation("@Transient");
         }
         for (IntrospectedColumn column : introspectedTable.getPrimaryKeyColumns()) {
@@ -100,11 +80,11 @@ public class MapperCommentGenerator implements CommentGenerator {
                     + column
                     + introspectedColumn.getContext().getEndingDelimiter();
         }
-//        if (!column.equals(introspectedColumn.getJavaProperty())) {
-            //强制试用Column属性
-            //@Column
+
+            
+            
             field.addAnnotation("@Column(name = \"" + column + "\")");
-//        }
+
         if (introspectedColumn.isIdentity()) {
             if (introspectedTable.getTableConfiguration().getGeneratedKey().getRuntimeSqlStatement().equals("JDBC")) {
                 field.addAnnotation("@GeneratedValue(generator = \"JDBC\")");
@@ -116,27 +96,13 @@ public class MapperCommentGenerator implements CommentGenerator {
         }
     }
 
-    /**
-     * Example使用
-     *
-     * @param field
-     * @param introspectedTable
-     */
+    
     public void addFieldComment(Field field, IntrospectedTable introspectedTable) {}
 
-    /**
-     * @param method
-     * @param introspectedTable
-     */
+    
     public void addGeneralMethodComment(Method method, IntrospectedTable introspectedTable) {}
 
-    /**
-     * getter方法注释
-     *
-     * @param method
-     * @param introspectedTable
-     * @param introspectedColumn
-     */
+    
     public void addGetterComment(Method method, IntrospectedTable introspectedTable, IntrospectedColumn introspectedColumn) {
         StringBuilder sb = new StringBuilder();
         method.addJavaDocLine("/**");
@@ -157,13 +123,7 @@ public class MapperCommentGenerator implements CommentGenerator {
         method.addJavaDocLine(" */");
     }
 
-    /**
-     * setter方法注释
-     *
-     * @param method
-     * @param introspectedTable
-     * @param introspectedColumn
-     */
+    
     public void addSetterComment(Method method, IntrospectedTable introspectedTable, IntrospectedColumn introspectedColumn) {
         StringBuilder sb = new StringBuilder();
         method.addJavaDocLine("/**");
@@ -185,12 +145,6 @@ public class MapperCommentGenerator implements CommentGenerator {
         method.addJavaDocLine(" */");
     }
 
-    /**
-     * Example使用
-     *
-     * @param innerClass
-     * @param introspectedTable
-     * @param markAsDoNotDelete
-     */
+    
     public void addClassComment(InnerClass innerClass, IntrospectedTable introspectedTable, boolean markAsDoNotDelete) {}
 }

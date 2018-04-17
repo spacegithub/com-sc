@@ -4,18 +4,11 @@ package com.sc.utils.utils;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-/**
- * 关于异常的工具类.
- * 
- * 参考了guava的Throwables。
- * 
- */
+
 public class Exceptions
 {
 
-	/**
-	 * 将CheckedException转换为UncheckedException.
-	 */
+	
 	public static RuntimeException unchecked(Throwable ex) {
 		if (ex instanceof RuntimeException) {
 			return (RuntimeException) ex;
@@ -24,18 +17,14 @@ public class Exceptions
 		}
 	}
 
-	/**
-	 * 将ErrorStack转化为String.
-	 */
+	
 	public static String getStackTraceAsString(Throwable ex) {
 		StringWriter stringWriter = new StringWriter();
 		ex.printStackTrace(new PrintWriter(stringWriter));
 		return stringWriter.toString();
 	}
 
-	/**
-	 * 获取组合本异常信息与底层异常信息的异常描述, 适用于本异常为统一包装异常类，底层异常才是根本原因的情况。
-	 */
+	
 	public static String getErrorMessageWithNestedException(Throwable ex) {
 		Throwable nestedException = ex.getCause();
 		return new StringBuilder().append(ex.getMessage()).append(" nested exception is ")
@@ -43,9 +32,7 @@ public class Exceptions
 				.toString();
 	}
 
-	/**
-	 * 获取异常的Root Cause.
-	 */
+	
 	public static Throwable getRootCause(Throwable ex) {
 		Throwable cause;
 		while ((cause = ex.getCause()) != null) {
@@ -54,9 +41,7 @@ public class Exceptions
 		return ex;
 	}
 
-	/**
-	 * 判断异常是否由某些底层的异常引起.
-	 */
+	
 	public static boolean isCausedBy(Exception ex, Class<? extends Exception>... causeExceptionClasses) {
 		Throwable cause = ex;
 		while (cause != null) {

@@ -20,18 +20,18 @@ public class RSATools {
 
     private static final String ENCODING = "UTF-8";
 
-    //私钥签名
+    
     public static String sign(String data, String pfx_path, String key_pass) {
 
         try {
 
             RSAPrivateKey pbk = getPrivateKey(pfx_path, key_pass);
 
-            // 用私钥对信息生成数字签名
+            
             Signature signet = Signature.getInstance("MD5withRSA");
             signet.initSign(pbk);
             signet.update(data.getBytes(ENCODING));
-            byte[] signed = signet.sign(); // 对信息的数字签名
+            byte[] signed = signet.sign(); 
             return Base64.encodeBytes(signed);
         } catch (Exception e) {
             e.printStackTrace();
@@ -39,18 +39,18 @@ public class RSATools {
         }
     }
 
-    //私钥签名2048
+    
     public static String signSHA(String data, String pfx_path, String key_pass) {
 
         try {
 
             RSAPrivateKey pbk = getPrivateKey(pfx_path, key_pass);
 
-            // 用私钥对信息生成数字签名
+            
             Signature signet = Signature.getInstance("SHA256withRSA");
             signet.initSign(pbk);
             signet.update(data.getBytes(ENCODING));
-            byte[] signed = signet.sign(); // 对信息的数字签名
+            byte[] signed = signet.sign(); 
 
             return Base64.encodeBytes(signed);
 
@@ -60,7 +60,7 @@ public class RSATools {
         }
     }
 
-    //公钥加密
+    
     public static String encrypt(String data, String pub_key) {
 
         try {
@@ -81,7 +81,7 @@ public class RSATools {
         }
     }
 
-    //公钥加密
+    
     public static byte[] encrypt64(String data, String pub_key) {
 
         try {
@@ -102,7 +102,7 @@ public class RSATools {
         }
     }
 
-    //私钥解密
+    
     public static String decrypt(String sign_msg, String pfx_path, String pfx_pass) {
 
         try {
@@ -122,7 +122,7 @@ public class RSATools {
         }
     }
 
-    //公钥验签
+    
     public static boolean verify(String data, String pub_key, String value) {
 
         try {
@@ -145,7 +145,7 @@ public class RSATools {
         }
     }
 
-    //公钥验签
+    
     public static boolean verifySHA(String data, String pub_key, String value) {
 
         try {
@@ -168,13 +168,7 @@ public class RSATools {
         }
     }
 
-    /**
-     * 获取私钥
-     * @param keyPath
-     * @param passwd
-     * @return
-     * @throws Exception
-     */
+    
     public static RSAPrivateKey getPrivateKey(String keyPath, String passwd) throws Exception {
 
         try {
@@ -205,13 +199,7 @@ public class RSATools {
         }
     }
 
-    /**
-     * 获取公钥
-     * @param keyPath
-     * @param passwd
-     * @return
-     * @throws Exception
-     */
+    
     public static RSAPublicKey getPublicKey(String keyPath, String passwd) throws Exception {
 
         try {

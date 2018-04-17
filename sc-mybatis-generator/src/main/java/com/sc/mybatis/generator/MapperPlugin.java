@@ -17,11 +17,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
-/**
- * 通用Mapper生成器插件
- *
- * @author liuzh
- */
+
 public class MapperPlugin extends PluginAdapter {
     private Set<String> mappers = new HashSet<String>();
     private boolean caseSensitive = false;
@@ -30,7 +26,7 @@ public class MapperPlugin extends PluginAdapter {
     @Override
     public void setContext(Context context) {
         super.setContext(context);
-        //设置默认的注释生成器
+        
         CommentGeneratorConfiguration commentCfg = new CommentGeneratorConfiguration();
         commentCfg.setConfigurationType(MapperCommentGenerator.class.getCanonicalName());
         context.setCommentGeneratorConfiguration(commentCfg);
@@ -67,45 +63,33 @@ public class MapperPlugin extends PluginAdapter {
         return true;
     }
 
-    /**
-     * 生成的Mapper接口
-     *
-     * @param interfaze
-     * @param topLevelClass
-     * @param introspectedTable
-     * @return
-     */
+    
     @Override
     public boolean clientGenerated(Interface interfaze, TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-        //获取实体类
+        
         FullyQualifiedJavaType entityType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
-        //import接口
+        
         for (String mapper : mappers) {
             interfaze.addImportedType(new FullyQualifiedJavaType(mapper));
             interfaze.addSuperInterface(new FullyQualifiedJavaType(mapper + "<" + entityType.getShortName() + ">"));
         }
 
         if (caseRepository){
-            //spring实体注解
+            
             interfaze.addImportedType(new FullyQualifiedJavaType("org.springframework.stereotype.Repository"));
             interfaze.addAnnotation("@Repository");
         }
-        //import实体类
+        
         interfaze.addImportedType(entityType);
         return true;
     }
 
-    /**
-     * 处理实体类的包和@Table注解
-     *
-     * @param topLevelClass
-     * @param introspectedTable
-     */
+    
     private void processEntityClass(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-        //引入JPA注解
+        
         topLevelClass.addImportedType("javax.persistence.*");
         String tableName = introspectedTable.getFullyQualifiedTableNameAtRuntime();
-        //如果包含空格，或者需要分隔符，需要完善
+        
         if (StringUtility.stringContainsSpace(tableName)) {
             tableName = context.getBeginningDelimiter()
                     + tableName
@@ -113,10 +97,10 @@ public class MapperPlugin extends PluginAdapter {
         }
         if (caseAlias){
             topLevelClass.addImportedType("org.apache.ibatis.type.Alias");
-            //增加别名注解(@Alias("order"))
+            
             topLevelClass.addAnnotation("@Alias(\"" + StringUtils.uncapitalize(topLevelClass.getType().getShortName()) + "\")");
         }
-        //是否忽略大小写，对于区分大小写的数据库，会有用
+        
         if (caseSensitive && !topLevelClass.getType().getShortName().equals(tableName)) {
             topLevelClass.addAnnotation("@Table(name = \"" + tableName + "\")");
         } else if (!topLevelClass.getType().getShortName().equalsIgnoreCase(tableName)) {
@@ -126,46 +110,28 @@ public class MapperPlugin extends PluginAdapter {
      }
 
 
-    /**
-     * 生成基础实体类
-     *
-     * @param topLevelClass
-     * @param introspectedTable
-     * @return
-     */
+    
     @Override
     public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         processEntityClass(topLevelClass, introspectedTable);
         return true;
     }
 
-    /**
-     * 生成实体类注解KEY对象
-     *
-     * @param topLevelClass
-     * @param introspectedTable
-     * @return
-     */
+    
     @Override
     public boolean modelPrimaryKeyClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         processEntityClass(topLevelClass, introspectedTable);
         return true;
     }
 
-    /**
-     * 生成带BLOB字段的对象
-     *
-     * @param topLevelClass
-     * @param introspectedTable
-     * @return
-     */
+    
     @Override
     public boolean modelRecordWithBLOBsClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         processEntityClass(topLevelClass, introspectedTable);
         return false;
     }
 
-    //下面所有return false的方法都不生成。这些都是基础的CRUD方法，使用通用Mapper实现
+    
     @Override
     public boolean clientDeleteByPrimaryKeyMethodGenerated(Method method, TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         return false;

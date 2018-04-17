@@ -36,7 +36,7 @@ public class RequestHeaderJsonHandlerMethodArgumentResolver implements HandlerMe
 
         final HttpServletRequest servletRequest = webRequest.getNativeRequest(HttpServletRequest.class);
 
-        //获取注解别名
+        
         String[] aliasNames=getAlias(requestJsonParam, parameter);
 
         String requestHeader= servletRequest.getHeader(aliasNames[0]);
@@ -48,7 +48,7 @@ public class RequestHeaderJsonHandlerMethodArgumentResolver implements HandlerMe
 
         if (2==aliasNames.length){
             String aliasName=aliasNames[1];
-            // 利用fastjson转换为对应的类型
+            
             if ( Long.class.isAssignableFrom(parameter.getParameterType())){
                 return  JSON.parseObject(requestHeader).getLong(aliasName);
             }else if (String.class.isAssignableFrom(parameter.getParameterType())){
@@ -83,11 +83,7 @@ public class RequestHeaderJsonHandlerMethodArgumentResolver implements HandlerMe
         return requestHeader;
     }
 
-    /**
-     * 是否是Json
-     * @param headerParam
-     * @return
-     */
+    
     private boolean isJson(String headerParam){
         try{
             JSON.parseObject(headerParam);
@@ -97,12 +93,7 @@ public class RequestHeaderJsonHandlerMethodArgumentResolver implements HandlerMe
         return true;
     }
 
-    /**
-     * 获取别名[header.account]
-     * @param requestJsonParam
-     * @param parameter
-     * @return
-     */
+    
     private String[] getAlias(RequestHeaderJsonParam requestJsonParam, MethodParameter parameter)
     {
         String alias = requestJsonParam.value();

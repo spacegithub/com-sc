@@ -14,9 +14,9 @@ public class SendEmail {
 		mailInfo.setSubject("物流预警");
 		mailInfo.setContent("亲,这些都是超时的信息,请你查收");
 		mailInfo.setFileName("预警清单.wps");
-		mailInfo.setByt(new String("aaff").getBytes());// 发送附件
+		mailInfo.setByt(new String("aaff").getBytes());
 
 		ComplexMailSender sms = new ComplexMailSender();
-		sms.sendAttachmentMail(mailInfo);// 发送文体格式
+		sms.sendAttachmentMail(mailInfo);
 	}
 }

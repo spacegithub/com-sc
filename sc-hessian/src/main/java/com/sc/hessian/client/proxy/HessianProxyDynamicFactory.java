@@ -7,13 +7,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 import java.net.MalformedURLException;
 
-/**
- * 动态Url,在分布式环境中轮循操作
- *
- *
- * @see: [相关类/方法]（可选）
- * @since [产品/模块版本] （可选）
- */
+
 public class HessianProxyDynamicFactory extends HessianProxyFactory {
 
     @Override

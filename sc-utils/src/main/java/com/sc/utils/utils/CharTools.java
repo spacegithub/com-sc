@@ -1,22 +1,10 @@
 package com.sc.utils.utils;
 import java.io.UnsupportedEncodingException;
 
-/**
- * <p>Title:字符编码工具类 </p>
- * <p>Description:  </p>
- * <p>Copyright:  Copyright (c) 2007</p>
- * <p>Company:  </p>
- * @author:
- * @version 1.0
- * http://www.jq-school.com
- */
+
 public class CharTools {
 
-    /**
-     * 转换编码 ISO-8859-1到GB2312
-     * @param text
-     * @return
-     */
+    
     public static final String ISO2GB(String text) {
         String result = "";
         try {
@@ -28,11 +16,7 @@ public class CharTools {
         return result;
     }
 
-    /**
-     * 转换编码 GB2312到ISO-8859-1
-     * @param text
-     * @return
-     */
+    
     public static final String GB2ISO(String text) {
         String result = "";
         try {
@@ -43,11 +27,7 @@ public class CharTools {
         }
         return result;
     }
-    /**
-     * Utf8URL编码
-     * @param text
-     * @return
-     */
+    
     public static final String Utf8URLencode(String text) {
         StringBuffer result = new StringBuffer();
 
@@ -76,11 +56,7 @@ public class CharTools {
         return result.toString();
     }
 
-    /**
-     * Utf8URL解码
-     * @param text
-     * @return
-     */
+    
     public static final String Utf8URLdecode(String text) {
         String result = "";
         int p = 0;
@@ -105,11 +81,7 @@ public class CharTools {
         return result + text;
     }
 
-    /**
-     * utf8URL编码转字符
-     * @param text
-     * @return
-     */
+    
     private static final String CodeToWord(String text) {
         String result;
 
@@ -131,11 +103,7 @@ public class CharTools {
         return result;
     }
 
-    /**
-     * 编码是否有效
-     * @param text
-     * @return
-     */
+    
     private static final boolean Utf8codeCheck(String text){
         String sign = "";
         if (text.startsWith("%e"))
@@ -148,11 +116,7 @@ public class CharTools {
         return sign.equals("147-1");
     }
 
-    /**
-     * 判断是否Utf8Url编码
-     * @param text
-     * @return
-     */
+    
     public static final boolean isUtf8Url(String text) {
         text = text.toLowerCase();
         int p = text.indexOf("%");
@@ -162,13 +126,10 @@ public class CharTools {
         return Utf8codeCheck(text);
     }
 
-    /**
-     * 测试
-     * @param args
-     */
+    
     public static void main(String[] args) {
 
-        //CharTools charTools = new CharTools();
+        
 
         String url;
 
@@ -176,14 +137,14 @@ public class CharTools {
         if(CharTools.isUtf8Url(url)){
             System.out.println(CharTools.Utf8URLdecode(url));
         }else{
-            //System.out.println(URLDecoder.decode(url));
+            
         }
 
         url = "http://www.baidu.com/baidu?word=%D6%D0%B9%FA%B4%F3%B0%D9%BF%C6%D4%DA%CF%DF%C8%AB%CE%C4%BC%EC%CB%F7&tn=myie2dg";
         if(CharTools.isUtf8Url(url)){
             System.out.println(CharTools.Utf8URLdecode(url));
         }else{
-            //System.out.println(URLDecoder.decode(url));
+            
         }
 
     }

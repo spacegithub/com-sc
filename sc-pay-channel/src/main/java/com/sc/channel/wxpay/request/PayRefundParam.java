@@ -2,19 +2,19 @@ package com.sc.channel.wxpay.request;
 
 public class PayRefundParam {
     private String appid;
-    private String mchId; // 商户号
-    private String deviceInfo; // 设备号
+    private String mchId; 
+    private String deviceInfo; 
     private String nonceStr;
     private String sign;
-    //  客户，微信 订单号 二选一；
-    private String outTradeNo; // 客户订单号  商户系统内部的订单号，当没提供transaction_id时需要传这个。
-    private String transactionId; // 微信订单号  微信的订单号，优先使用；
+    
+    private String outTradeNo; 
+    private String transactionId; 
 
-    private String outRefundNo;// 商户退款单号
-    private Long totalFee;// 总金额  单位为分
-    private Long refundFee;// 退款金额  单位为分
-    private String refundFeeType; // 默认人民币  CNY
-    private String opUserId;// 操作员， 默认商户号
+    private String outRefundNo;
+    private Long totalFee;
+    private Long refundFee;
+    private String refundFeeType; 
+    private String opUserId;
 
     public String getAppid() {
         return appid;

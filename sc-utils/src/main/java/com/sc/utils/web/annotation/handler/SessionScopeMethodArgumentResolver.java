@@ -14,7 +14,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 public class SessionScopeMethodArgumentResolver implements HandlerMethodArgumentResolver {
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        //让方法和参数，两种target通过
+        
         if(parameter.hasParameterAnnotation(SessionScope.class))return true;
         else if (parameter.getMethodAnnotation(SessionScope.class) != null)return true;
         return false;

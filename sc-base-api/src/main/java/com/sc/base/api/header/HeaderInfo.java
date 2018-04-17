@@ -8,62 +8,35 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.Serializable;
 import java.util.UUID;
 
-/**
- * 头信息
- * 建立hessian请求之前会被创建,如有其他hessian调用.则该信息一次传递.
- *
- * @see: [相关类/方法]（可选）
- * @since [产品/模块版本] （可选）
- */
+
 public class HeaderInfo implements Serializable {
 
-    /**
-     * 请求主键(UUID)
-     * 建立hessian请求之前会被创建,如有其他hessian调用,则将传递该Id.
-     */
+    
     private String id;
 
-    /**
-     * 用户编号
-     */
+    
     private Long userId;
 
-    /**
-     * 用户的标记，登陆成功后返回，算法需要讨论
-     */
-    private String userToken;//
-    /**
-     * 应用编号
-     */
+    
+    private String userToken;
+    
     private String applicationCode;
-    /**
-     * 设备编号，唯一区别每一个设备，客户端产生
-     */
+    
     private String clientId;
 
-    /**
-     * 下载渠道号
-     */
+    
     private String sourceId;
 
-    /**
-     * 客户端版本号
-     */
+    
     private String version;
 
-    /**
-     * 服务版本
-     */
+    
     private String serviceVersion;
 
-    /**
-     * 主渠道号
-     */
+    
     private String channel;
 
-    /**
-     * 子渠道号
-     */
+    
     private String subChannel;
 
     public HeaderInfo() {

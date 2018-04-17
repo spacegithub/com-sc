@@ -37,7 +37,7 @@
         <org.hibernate.version>5.0.3.Final</org.hibernate.version>
         <hutool.version>3.2.2</hutool.version>
         <zxing.version>3.3.1</zxing.version>
-        <maven.javadoc.skip>true</maven.javadoc.skip>
+        <maven.javadoc.skip>false</maven.javadoc.skip>
         <maven.build.tests.skip>false</maven.build.tests.skip>
         <!--        <javadoc.doclint.param/>-->
     </properties>
@@ -696,7 +696,6 @@
                         <version>2.4</version>
                         <executions>
                             <execution>
-                                <phase>package</phase>
                                 <goals>
                                     <goal>jar-no-fork</goal>
                                 </goals>
@@ -711,7 +710,6 @@
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
-                                <phase>install</phase>
                                 <goals>
                                     <goal>jar</goal>
                                 </goals>
@@ -731,7 +729,6 @@
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
-                                <phase>verify</phase>
                                 <goals>
                                     <goal>sign</goal>
                                 </goals>
@@ -873,7 +870,6 @@
                     <version>2.4</version>
                     <executions>
                         <execution>
-                            <phase>package</phase>
                             <goals>
                                 <goal>jar-no-fork</goal>
                             </goals>
@@ -887,7 +883,6 @@
                     <version>2.10.4</version>
                     <executions>
                         <execution>
-                            <phase>package</phase>
                             <goals>
                                 <goal>jar</goal>
                             </goals>
@@ -902,7 +897,6 @@
                     <executions>
                         <execution>
                             <id>sign-artifacts</id>
-                            <phase>verify</phase>
                             <goals>
                                 <goal>sign</goal>
                             </goals>

@@ -1,23 +1,26 @@
 package com.sc.utils.utils.commons;
 
-import com.google.common.base.MoreObjects;
-
 import com.alibaba.fastjson.JSON;
+import com.google.common.base.MoreObjects;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 
 public class ScUtils {
-    
+    /**
+     * 去除空集合
+     * @param oldCollection 待转换的集合
+     * @param <T>
+     * @return 返回转换后的集合
+     */
+    public static <T> Collection<T> removeNull(Collection<? extends T> oldCollection) {
+        oldCollection.removeAll(Collections.singleton(null));
+        return (Collection<T>) oldCollection;
+    }
+
     public static <T> String stringValue(Object object) {
         if (object == null)
             return "null";

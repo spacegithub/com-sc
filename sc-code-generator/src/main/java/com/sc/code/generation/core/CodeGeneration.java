@@ -4,6 +4,8 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -29,7 +31,7 @@ public class CodeGeneration {
 
 
 
-
+    private static final Logger logger = LoggerFactory.getLogger(CodeGeneration.class);
     public static void main(String[]args) throws Exception {
 
         Map<String,Object> map = new HashMap();

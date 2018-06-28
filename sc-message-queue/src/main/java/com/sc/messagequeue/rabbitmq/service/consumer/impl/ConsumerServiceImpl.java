@@ -103,7 +103,7 @@ public class ConsumerServiceImpl implements ConsumerService {
     	factory.setAutomaticRecoveryEnabled(true);
 
     	List<Consumerbo> consumerbos = new ArrayList<Consumerbo>();
-    	//1.1.1版本以后的配置，cjia.exchange.topic={product.ModifyRMStatus:ota.product.ModifyRMStatus:[20000,50,0]}，多个queue逗号隔开，多个exchangeName分号隔开
+    	//1.1.1版本以后的配置，sc.exchange.topic={product.ModifyRMStatus:ota.product.ModifyRMStatus:[20000,50,0]}，多个queue逗号隔开，多个exchangeName分号隔开
     	if(StringUtils.isNotEmpty(definitions) && !StringUtils.contains(definitions, "rabbitmq.definitions")){
     		String[] exchangeArr = StringUtils.split(definitions, "#");
     		for(int i=0;i<exchangeArr.length;i++){

@@ -54,7 +54,7 @@ public abstract class ClassTemplate {
             	int index = org.apache.commons.lang3.StringUtils.indexOf(oldBasePackage, "/*");
             	if(index != -1){
             		existsRegular = true;
-            		//截取到第一个.*左边的路径,比如cjia.*.filecore -> cjia
+            		//截取到第一个.*左边的路径,比如sc.*.filecore -> sc
             		basePackage = org.apache.commons.lang3.StringUtils.substring(oldBasePackage, 0, index);
             	}
         		// 从包名获取 URL 类型的资源

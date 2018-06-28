@@ -29,7 +29,7 @@ import javax.annotation.PostConstruct;
 public class ProviderServiceImpl implements ProviderService {
 
     private static Logger logger = LoggerFactory.getLogger(ProviderServiceImpl.class);
-    private static String EXCHANGE_DEFAULT = "cjia.exchange.topic";
+    private static String EXCHANGE_DEFAULT = "sc.exchange.topic";
 
     private ConnectionFactory factory;
     

@@ -20,6 +20,7 @@ public class RedisTemplate extends RedisCommond{
     
     public String get(final String key) {
         return run(new RedisCallback<String>() {
+            @Override
             public String doInRedis(Jedis jedis) {
                 return jedis.get(key);
             }
@@ -28,6 +29,7 @@ public class RedisTemplate extends RedisCommond{
 
     public <T> T get(final String key,final Class<T> clazz){
         return run(new RedisCallback<T>() {
+            @Override
             public T doInRedis(Jedis jedis) {
                 String result= jedis.get(key);
                 return JsonMapper.nonEmptyMapper().fromJson(result, clazz);
@@ -37,6 +39,7 @@ public class RedisTemplate extends RedisCommond{
 
     public <T> List<T> getList(final String key,final Class<T> clazz){
         return run(new RedisCallback<List<T>>() {
+            @Override
             public List<T> doInRedis(Jedis jedis) {
                 String result= jedis.get(key);
                 return (List<T>)JsonMapper.nonEmptyMapper().fromJson(result, List.class);
@@ -47,6 +50,7 @@ public class RedisTemplate extends RedisCommond{
     
     public void set(final String key, final String value) {
         run(new RedisCallback<String>() {
+            @Override
             public String doInRedis(Jedis jedis) {
                return jedis.set(key, value);
             }
@@ -56,6 +60,7 @@ public class RedisTemplate extends RedisCommond{
     
     public void set(final String key, final Object value) {
         run(new RedisCallback<String>() {
+            @Override
             public String doInRedis(Jedis jedis) {
                 return jedis.set(key, JsonMapper.nonEmptyMapper().toJson(value));
             }
@@ -256,6 +261,27 @@ public class RedisTemplate extends RedisCommond{
             @Override
             public String doInRedis(Jedis jedis) {
                 return jedis.hmset(key, fields);
+            }
+        });
+    }
+
+
+    /**
+     * redis锁,如果设置成功则返回1并设置过期时间,如果已存在(表示此key存在未过期的数值),则返回0
+     * @param key 锁key
+     * @param seconds 过期时间
+     * @param value 锁值
+     * @return
+     */
+    public Long setnx(final String key, final int seconds, final String value) {
+        return (Long)this.run(new RedisCallback<Long>() {
+            @Override
+            public Long doInRedis(Jedis jedis) {
+                Long setnx = jedis.setnx(key, value);
+                if (setnx.equals(1L)) {
+                    jedis.expire(key,seconds);
+                }
+                return setnx;
             }
         });
     }

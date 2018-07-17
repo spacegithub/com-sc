@@ -15,6 +15,7 @@
         <module>sc-pay-channel</module>
         <module>sc-base-api</module>
         <module>sc-message-queue</module>
+        <module>sc-test</module>
     </modules>
 
     <groupId>com.github.senssic</groupId>

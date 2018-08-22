@@ -35,7 +35,7 @@
         <shiro.version>1.3.2</shiro.version>
         <jetty.version>1.2.3</jetty.version>
         <quartz.version>2.2.3</quartz.version>
-        <redis.clients.version>2.7.2</redis.clients.version>
+        <redis.clients.version>2.8.0</redis.clients.version>
         <org.hibernate.version>5.0.3.Final</org.hibernate.version>
         <hutool.version>3.2.2</hutool.version>
         <zxing.version>3.3.1</zxing.version>

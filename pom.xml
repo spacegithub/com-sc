@@ -16,6 +16,7 @@
         <module>sc-base-api</module>
         <module>sc-message-queue</module>
         <module>sc-test</module>
+        <module>sc-rule-engine</module>
     </modules>
 
     <groupId>com.github.senssic</groupId>

@@ -15,48 +15,17 @@ import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 
 public class RuleEngineDefaultTest {
     @Test
     public void execute() throws Exception {
         String feerulexml = Class.class.getClass().getResource("/").getPath() + "feerule.xml";
-
-       /* //创建解析XML对象
-        XStream xStream = new XStream();
-        //设置别名, 默认会输出全路径
-        xStream.alias("rule-set", RuleSet.class);
-        xStream.alias("rule", Rule.class);
-        xStream.alias("rule-eval", RuleEval.class);
-
-        RuleSet ruleSet=new RuleSet();
-        ruleSet.setName("test");
-
-        List<Rule> list=new ArrayList<>();
-        Rule rule=new Rule();
-        rule.setId("1");
-        rule.setPriority(10);
-        RuleEval ruleEval=new RuleEval();
-        ruleEval.setAction("asdfsdf");
-        ruleEval.setCondition("eeeee");
-        rule.setRuleEval(ruleEval);
-        list.add(rule);
-
-        rule=new Rule();
-        rule.setId("1");
-        rule.setPriority(10);
-        RuleEval ruleEval2=new RuleEval();
-        ruleEval2.setAction("asdfsdf");
-        ruleEval2.setCondition("eeeee");
-        rule.setRuleEval(ruleEval2);
-        list.add(rule);
-        ruleSet.setRules(list);
-        //转为xml
-        String xml = xStream.toXML(ruleSet);
-        System.out.println(xml);*/
-
-
         XStream xstream = new XStream(new DomDriver());
         xstream.autodetectAnnotations(true);
         xstream.processAnnotations(new Class[]{RuleSet.class, Rule.class});
@@ -68,6 +37,28 @@ public class RuleEngineDefaultTest {
         ruleContext.put("salary", 5100);
         ruleEngine.execute(ruleContext, "feerule");
         System.out.println("-->" + ruleContext.get("totalSalary"));
+    }
+
+    @Test
+    public void testCompoter() {
+        List list=new ArrayList();
+        list.add(1);
+        list.add(3);
+        list.add(10);
+        list.add(6);
+        Collections.sort(list, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o1 > o2 ? 1 : o1 == o2 ? 0 : -1;
+            }
+        });
+
+        list.remove(0);
+        list.remove(0);
+
+
+
+
     }
 
 }

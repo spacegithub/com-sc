@@ -8,6 +8,7 @@
         <module>sc-hessian</module>
         <module>sc-mybatis-generator</module>
         <module>sc-utils</module>
+        <module>sc-socket</module>
         <module>sc-code-generator</module>
         <module>sc-mail</module>
         <module>sc-excle</module>
@@ -25,7 +26,7 @@
     <name>senssic Dependencies</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jdk.version>1.7</jdk.version>
+        <jdk.version>1.8</jdk.version>
         <jackson.version>2.8.4</jackson.version>
         <springframework.version>4.3.2.RELEASE</springframework.version>
         <logback.version>1.1.7</logback.version>
@@ -40,8 +41,18 @@
         <org.hibernate.version>5.0.3.Final</org.hibernate.version>
         <hutool.version>3.2.2</hutool.version>
         <zxing.version>3.3.1</zxing.version>
+        <testng.version>6.14.3</testng.version>
+        <jfinal.version>3.4</jfinal.version>
+        <redisson.version>3.7.5</redisson.version>
+        <caffeine.version>2.6.2</caffeine.version>
+        <okhttp.version>3.11.0</okhttp.version>
+        <reflectasm.version>1.11.7</reflectasm.version>
+        <curator-x-discovery.version>4.0.1</curator-x-discovery.version>
+        <j2cache-core.version>2.5.4-release</j2cache-core.version>
+
         <maven.javadoc.skip>false</maven.javadoc.skip>
         <maven.build.tests.skip>false</maven.build.tests.skip>
+
         <!--        <javadoc.doclint.param/>-->
     </properties>
     <url>https://github.com/Senssic/com-sc</url>
@@ -76,6 +87,62 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>${okhttp.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.esotericsoftware</groupId>
+                <artifactId>reflectasm</artifactId>
+                <version>${reflectasm.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-x-discovery</artifactId>
+                <version>${curator-x-discovery.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.testng</groupId>
+                <artifactId>testng</artifactId>
+                <version>${testng.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.jfinal</groupId>
+                <artifactId>jfinal</artifactId>
+                <version>${jfinal.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.oschina.j2cache</groupId>
+                <artifactId>j2cache-core</artifactId>
+                <version>${j2cache-core.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.zxing</groupId>
+                <artifactId>core</artifactId>
+                <version>${zxing.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.ben-manes.caffeine</groupId>
+                <artifactId>caffeine</artifactId>
+                <version>${caffeine.version}</version>
+            </dependency>
+
+            <!-- redisson,集群会用到 -->
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson</artifactId>
+                <version>${redisson.version}</version>
+            </dependency>
             <!-- spring -->
             <dependency>
                 <groupId>com.google.zxing</groupId>

@@ -35,16 +35,7 @@ public class TioTools {
 	}
 
 	public static void main(String[] args) {
-//		newProject();
-										tio();
-		//						addBlankFile("F:\\gitee");
-		//		deleteGits(new String[] { "F:\\gitee", "D:\\svn_nb" });
-//		addBlankFile("D:\\work\\tio-im");
-//		deleteFiles(new String[] { "D:\\work\\tio-im" }, new String[] { ".settings", ".classpath", ".project", ".externalToolBuilders" });
 
-		//		AtomicInteger count = new AtomicInteger();
-		//		findFile("D:\\work", "g-m-db", count);
-		//		System.out.println("共找到" + count + "个文件及目录");
 	}
 
 	/**
@@ -185,33 +176,6 @@ public class TioTools {
 		}
 	}
 
-	public static void newProject() {
-		String[] rootDirStrs = new String[] { "F:\\gitee\\java\\projects\\im-platform" };
-
-		for (String rootDirStr : rootDirStrs) {
-			Map<String, String> old2newStr = new HashMap<>();
-			Map<String, String> old2newFilename = new HashMap<>();
-
-			String oldName = "live";
-			String newName = "im";
-			old2newStr.put("tio-" + oldName, "tio-" + newName); //中划线
-			old2newStr.put("tio_" + oldName, "tio_" + newName); //下划线
-			old2newStr.put("TIO-" + oldName.toUpperCase(), "TIO-" + newName.toUpperCase()); //中划线
-			old2newStr.put("TIO_" + oldName.toUpperCase(), "TIO_" + newName.toUpperCase()); //下划线
-
-			old2newFilename.putAll(old2newStr);
-
-			try {
-				//如果需要修改文件名字，就在这里调一下rename
-				rename(rootDirStr, old2newFilename);
-
-				//替换文字
-				replaceStr(rootDirStr, old2newStr);
-			} catch (Exception e) {
-				log.error(e.getMessage(), e);
-			}
-		}
-	}
 
 	/**
 	 * 给空目录添加一个空白文件

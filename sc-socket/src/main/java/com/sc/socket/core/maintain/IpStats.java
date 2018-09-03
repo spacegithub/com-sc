@@ -28,7 +28,7 @@ public class IpStats {
 	@SuppressWarnings("unused")
 	private static Logger log = LoggerFactory.getLogger(IpStats.class);
 
-	private final static String CACHE_NAME = "TIO_IP_STAT";
+	private final static String CACHE_NAME = "SOCKET_IP_STAT";
 
 	private String groupContextId;
 	private GroupContext groupContext;

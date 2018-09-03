@@ -5,7 +5,7 @@ import com.sc.socket.core.GroupContext;
 import com.sc.socket.core.intf.Packet;
 
 /**
- *
+ * ip统计监听器
  * 2017年9月25日 下午4:40:27
  */
 public interface IpStatListener {

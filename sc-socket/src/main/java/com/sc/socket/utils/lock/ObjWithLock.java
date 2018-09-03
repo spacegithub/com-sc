@@ -7,8 +7,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
 
 /**
  * 自带读写锁的对象.
- *
- *
  */
 public class ObjWithLock<T> implements Serializable {
 	/**

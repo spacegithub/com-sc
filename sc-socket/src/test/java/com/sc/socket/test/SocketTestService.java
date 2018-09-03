@@ -112,6 +112,9 @@ public class SocketTestService {
                 System.out.println("服务端:-->服务端即将关闭!");
             }
         });
+
+
+
         TioServer tioServer = new TioServer(serverGroupContext);
         tioServer.start(null, 8886);
     }

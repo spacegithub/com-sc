@@ -3,6 +3,7 @@ package com.sc.socket.utils.cache.guavaredis;
 import com.sc.socket.utils.cache.CacheChangeType;
 import com.sc.socket.utils.cache.CacheChangedVo;
 import com.sc.socket.utils.cache.ICache;
+import com.sc.socket.utils.cache.guava.GuavaCache;
 import com.sc.socket.utils.cache.redis.RedisCache;
 import com.sc.socket.utils.cache.redis.RedisExpireUpdateTask;
 import com.sc.socket.utils.hutool.StrUtil;
@@ -12,8 +13,6 @@ import org.redisson.api.RedissonClient;
 import org.redisson.api.listener.MessageListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.sc.socket.utils.cache.guava.GuavaCache;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -26,7 +25,7 @@ import java.util.Objects;
  */
 public class GuavaRedisCache implements ICache {
 
-	public static final String CACHE_CHANGE_TOPIC = "TIO_CACHE_CHANGE_TOPIC_GUAVA";
+	public static final String CACHE_CHANGE_TOPIC = "SOCKET_CACHE_CHANGE_TOPIC_GUAVA";
 
 	private static Logger log = LoggerFactory.getLogger(GuavaRedisCache.class);
 	public static Map<String, GuavaRedisCache> map = new HashMap<>();

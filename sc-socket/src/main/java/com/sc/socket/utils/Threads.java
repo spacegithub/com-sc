@@ -35,7 +35,7 @@ public class Threads {
 	private static SynThreadPoolExecutor tioExecutor = null;
 
 	/**
-	 * 
+	 *
 	 * @return
 	 *
 	 */
@@ -51,12 +51,12 @@ public class Threads {
 
 			LinkedBlockingQueue<Runnable> groupQueue = new LinkedBlockingQueue<>();
 			//			ArrayBlockingQueue<Runnable> groupQueue = new ArrayBlockingQueue<>(QUEUE_CAPACITY);
-			String groupThreadName = "tio-group";
+			String groupThreadName = "socket-group";
 			DefaultThreadFactory defaultThreadFactory = DefaultThreadFactory.getInstance(groupThreadName, Thread.MAX_PRIORITY);
 
 			groupExecutor = new ThreadPoolExecutor(MAX_POOL_SIZE_FOR_GROUP, MAX_POOL_SIZE_FOR_GROUP, KEEP_ALIVE_TIME, TimeUnit.SECONDS, groupQueue, defaultThreadFactory);
 			//			groupExecutor = new ThreadPoolExecutor(AVAILABLE_PROCESSORS * 2, Integer.MAX_VALUE, 60L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>(), defaultThreadFactory);
-
+            //预启动核心线程
 			groupExecutor.prestartCoreThread();
 //			groupExecutor.prestartAllCoreThreads();
 			return groupExecutor;
@@ -64,7 +64,7 @@ public class Threads {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 *
 	 */
@@ -80,12 +80,12 @@ public class Threads {
 
 			LinkedBlockingQueue<Runnable> tioQueue = new LinkedBlockingQueue<>();
 			//			ArrayBlockingQueue<Runnable> tioQueue = new ArrayBlockingQueue<>(QUEUE_CAPACITY);
-			String tioThreadName = "tio-worker";
+			String tioThreadName = "socket-worker";
 			DefaultThreadFactory defaultThreadFactory = DefaultThreadFactory.getInstance(tioThreadName, Thread.MAX_PRIORITY);
 
 			tioExecutor = new SynThreadPoolExecutor(MAX_POOL_SIZE_FOR_TIO, MAX_POOL_SIZE_FOR_TIO, KEEP_ALIVE_TIME, tioQueue, defaultThreadFactory, tioThreadName);
 			//			tioExecutor = new SynThreadPoolExecutor(AVAILABLE_PROCESSORS * 2, Integer.MAX_VALUE, 60, new SynchronousQueue<Runnable>(), defaultThreadFactory, tioThreadName);
-
+            //预启动核心线程
 			tioExecutor.prestartCoreThread();
 //			tioExecutor.prestartAllCoreThreads();
 			return tioExecutor;

@@ -16,7 +16,7 @@ import java.util.Collection;
 public class IpBlacklist {
 	private String id;
 
-	private final static String CACHE_NAME = "TIO_IP_BLACK_LIST";
+	private final static String CACHE_NAME = "SOCKET_IP_BLACK_LIST";
 	private final static Long TIME_TO_LIVE_SECONDS = Time.MINUTE_1 * 120;
 	private final static Long TIME_TO_IDLE_SECONDS = null;
 

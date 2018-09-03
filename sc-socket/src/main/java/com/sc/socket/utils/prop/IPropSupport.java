@@ -1,15 +1,12 @@
 package com.sc.socket.utils.prop;
 
 /**
- * 属性支持接口
+ * 属性支持接口,对属性的一些操作
  *
- * 2017年8月18日 下午5:34:14
  */
 public interface IPropSupport {
 	/**
 	 * 清除所有属性
-	 * 
-	 *
 	 */
 	public void clearAttribute();
 

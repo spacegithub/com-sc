@@ -36,36 +36,52 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * 
+ * 客户端和服务端的上下文抽象包括一些常用的配置和统计信息
  *
  * 2016年10月10日 下午5:25:43
  */
 public abstract class GroupContext extends MapWithLockPropSupport {
 	static Logger log = LoggerFactory.getLogger(GroupContext.class);
 	/**
-	 * 默认的接收数据的buffer size
+	 * 默认的接收数据的buffer size,如果系统中有default.read.buffer.size的设置则取系统中的value,否则为默认值(第二个参数)
 	 */
-	public static final int READ_BUFFER_SIZE = Integer.getInteger("tio.default.read.buffer.size", 2048);
+	public static final int READ_BUFFER_SIZE = Integer.getInteger("default.read.buffer.size", 2048);
 
+    /**
+     * 全局线程ID自增
+     */
 	private final static AtomicInteger ID_ATOMIC = new AtomicInteger();
 
+    /**
+     * 默认为大端排序
+     */
 	private ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
 
+    /**
+     * 是否为端连接
+     */
 	public boolean isShortConnection = false;
-
+    /**
+     * SSL连接配置
+     */
 	public SslConfig sslConfig = null;
-	
+
 	public boolean debug = false;
-	
+    /**
+     * 组统计
+     */
 	public GroupStat groupStat = null;
-	
+
+    /**
+     * 默认记录消息组信息
+     */
 	public boolean statOn = true;
-	
+
 	/**
 	 * 启动时间
 	 */
 	public long startTime = SystemTimer.currTime;
-	
+
 	/**
 	 * 是否用队列发送
 	 */
@@ -81,6 +97,12 @@ public abstract class GroupContext extends MapWithLockPropSupport {
 	 */
 	public long heartbeatTimeout = 1000 * 120;
 
+
+    /**
+     * 消息处理模式
+     * 1.SINGLE_THREAD  处理消息与解码在同一个线程中处理
+     * 2.QUEUE 把packet丢到一个队列中，让线程池去处理
+     */
 	public PacketHandlerMode packetHandlerMode = PacketHandlerMode.SINGLE_THREAD;//.queue;
 
 	/**
@@ -88,30 +110,68 @@ public abstract class GroupContext extends MapWithLockPropSupport {
 	 */
 	private int readBufferSize = READ_BUFFER_SIZE;
 
+    /**
+     * 消息组监听器
+     */
 	private GroupListener groupListener = null;
 
 	private TioUuid tioUuid = new DefaultTioUuid();
-
+    /**
+     * 异步线程池
+     */
 	public SynThreadPoolExecutor tioExecutor = null;
 
+    /**
+     * 关闭连接任务
+     */
 	public CloseRunnable closeRunnable;
 
 	public ThreadPoolExecutor groupExecutor = null;
+    /**
+     * 客户端节点
+     */
 	public final ClientNodes clientNodes = new ClientNodes();
+
+    /**
+     * 自带读写锁的set集合
+     */
 	public final SetWithLock<ChannelContext> connections = new SetWithLock<ChannelContext>(new HashSet<ChannelContext>());
+    /**
+     * 组,多对多
+     */
 	public final Groups groups = new Groups();
+    /**
+     * 用户,一对多
+     */
 	public final Users users = new Users();
+    /**
+     * 凭证,一对多
+     */
 	public final Tokens tokens = new Tokens();
+    /**
+     *编号,-对-
+     */
 	public final Ids ids = new Ids();
+    /**
+     * 业务编号,一对一
+     */
 	public final BsIds bsIds = new BsIds();
+    /**
+     * ip,一对多  一个id有哪些客户端,改只在服务端维护
+     */
 	public final Ips ips = new Ips();
+    /**
+     * ip统计
+     */
 	public IpStats ipStats = null;
 
 	/**
 	 * ip黑名单
 	 */
 	public IpBlacklist ipBlacklist = null;//new IpBlacklist();
-
+    /**
+     * 等待包
+     */
 	public final MapWithLock<Integer, Packet> waitingResps = new MapWithLock<Integer, Packet>(new HashMap<Integer, Packet>());
 
 	/**
@@ -127,7 +187,9 @@ public abstract class GroupContext extends MapWithLockPropSupport {
 	protected int maxDecodeErrorCountForIp = 10;
 
 	protected String name = "未命名GroupContext";
-
+    /**
+     * ip统计监听器
+     */
 	private IpStatListener ipStatListener = DefaultIpStatListener.me;
 
 	private boolean isStopped = false;
@@ -139,7 +201,7 @@ public abstract class GroupContext extends MapWithLockPropSupport {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param tioExecutor
 	 * @param groupExecutor
 	 *
@@ -150,7 +212,7 @@ public abstract class GroupContext extends MapWithLockPropSupport {
 		this.ipBlacklist = new IpBlacklist(id, this);
 		this.ipStats = new IpStats(this, null);
 
-		
+
 		this.tioExecutor = tioExecutor;
 		if (this.tioExecutor == null) {
 			this.tioExecutor = Threads.getTioExecutor();
@@ -229,7 +291,7 @@ public abstract class GroupContext extends MapWithLockPropSupport {
 		return name;
 	}
 
-	
+
 
 	/**
 	 * @return the tioUuid
@@ -346,11 +408,11 @@ public abstract class GroupContext extends MapWithLockPropSupport {
 		this.ipStatListener = ipStatListener;
 		//		this.ipStats.setIpStatListener(ipStatListener);
 	}
-	
+
 	public GroupStat getGroupStat() {
 		return groupStat;
 	}
-	
+
 	/**
 	 * 是否用队列解码（系统初始化时确定该值，中途不要变更此值，否则在切换的时候可能导致消息丢失
 	 * @param useQueueDecode
@@ -359,7 +421,7 @@ public abstract class GroupContext extends MapWithLockPropSupport {
 	public void setUseQueueDecode(boolean useQueueDecode) {
 		this.useQueueDecode = useQueueDecode;
 	}
-	
+
 	/**
 	 * 是否用队列发送，可以随时切换
 	 * @param useQueueSend
@@ -368,7 +430,7 @@ public abstract class GroupContext extends MapWithLockPropSupport {
 	public void setUseQueueSend(boolean useQueueSend) {
 		this.useQueueSend = useQueueSend;
 	}
-	
+
 	/**
 	 * 是服务器端还是客户端
 	 * @return

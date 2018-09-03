@@ -25,7 +25,7 @@ import java.util.Objects;
  */
 public class CaffeineRedisCache implements ICache {
 
-	public static final String CACHE_CHANGE_TOPIC = "TIO_CACHE_CHANGE_TOPIC_CAFFEINE";
+	public static final String CACHE_CHANGE_TOPIC = "SOCKET_CACHE_CHANGE_TOPIC_CAFFEINE";
 
 	private static Logger log = LoggerFactory.getLogger(CaffeineRedisCache.class);
 	public static Map<String, CaffeineRedisCache> map = new HashMap<>();

@@ -25,274 +25,268 @@ import java.util.concurrent.Executor;
 import javax.net.ssl.SSLException;
 
 /**
- *
- *
+ * 发送处理,队列异步线程发送
  * 2017年4月4日 上午9:19:18
  */
 public class SendRunnable extends AbstractQueueRunnable<Packet> {
 
-	private static final Logger log = LoggerFactory.getLogger(SendRunnable.class);
+    private static final Logger log = LoggerFactory.getLogger(SendRunnable.class);
+    private static final int MAX_CAPACITY = TcpConst.MAX_DATA_LENGTH - 1024; //减掉1024是尽量防止溢出的一小部分还分成一个tcp包发出
+    /**
+     * The msg queue.
+     */
+    private ConcurrentLinkedQueue<Packet> forSendAfterSslHandshakeCompleted = null;//new ConcurrentLinkedQueue<>();
+    private ChannelContext channelContext = null;
 
-	/** The msg queue. */
-	private ConcurrentLinkedQueue<Packet> forSendAfterSslHandshakeCompleted = null;//new ConcurrentLinkedQueue<>();
+    private GroupContext groupContext = null;
 
-	public ConcurrentLinkedQueue<Packet> getForSendAfterSslHandshakeCompleted(boolean forceCreate) {
-		if (forSendAfterSslHandshakeCompleted == null && forceCreate) {
-			synchronized (this) {
-				if (forSendAfterSslHandshakeCompleted == null) {
-					forSendAfterSslHandshakeCompleted = new ConcurrentLinkedQueue<>();
-				}
-			}
-		}
+    private AioHandler aioHandler = null;
 
-		return forSendAfterSslHandshakeCompleted;
-	}
+    private boolean isSsl = false;
 
-	private ChannelContext channelContext = null;
+    //SSL加密锁
+    //	private Object sslEncryptLock = new Object();
 
-	private GroupContext groupContext = null;
+    /**
+     *
+     * @param channelContext
+     * @param executor
+     *
+     */
+    public SendRunnable(ChannelContext channelContext, Executor executor) {
+        super(executor);
+        this.channelContext = channelContext;
+        this.groupContext = channelContext.groupContext;
+        this.aioHandler = groupContext.getAioHandler();
+        this.isSsl = SslUtils.isSsl(groupContext);
+    }
 
-	private AioHandler aioHandler = null;
+    /**
+     * 新旧值是否进行了切换
+     */
+    private static boolean swithed(Boolean oldValue, boolean newValue) {
+        if (oldValue == null) {
+            return false;
+        }
 
-	private boolean isSsl = false;
+        if (Objects.equals(oldValue, newValue)) {
+            return false;
+        }
 
-	//SSL加密锁
-	//	private Object sslEncryptLock = new Object();
+        return true;
+    }
 
-	/**
-	 *
-	 * @param channelContext
-	 * @param executor
-	 *
-	 */
-	public SendRunnable(ChannelContext channelContext, Executor executor) {
-		super(executor);
-		this.channelContext = channelContext;
-		this.groupContext = channelContext.groupContext;
-		this.aioHandler = groupContext.getAioHandler();
-		this.isSsl = SslUtils.isSsl(groupContext);
-	}
+    public ConcurrentLinkedQueue<Packet> getForSendAfterSslHandshakeCompleted(boolean forceCreate) {
+        if (forSendAfterSslHandshakeCompleted == null && forceCreate) {
+            synchronized (this) {
+                if (forSendAfterSslHandshakeCompleted == null) {
+                    forSendAfterSslHandshakeCompleted = new ConcurrentLinkedQueue<>();
+                }
+            }
+        }
 
-	@Override
-	public boolean addMsg(Packet packet) {
-		if (this.isCanceled()) {
-			log.error("{}, 任务已经取消，{}添加到发送队列失败", channelContext, packet);
-			return false;
-		}
-		if (channelContext.sslFacadeContext != null && !channelContext.sslFacadeContext.isHandshakeCompleted() && SslUtils.needSslEncrypt(packet, groupContext)) {
-			return this.getForSendAfterSslHandshakeCompleted(true).add(packet);
-		} else {
-			return msgQueue.add(packet);
-		}
-	}
+        return forSendAfterSslHandshakeCompleted;
+    }
 
-	/**
-	 * 清空消息队列
-	 */
-	@Override
-	public void clearMsgQueue() {
-		Packet p = null;
-		forSendAfterSslHandshakeCompleted = null;
-		while ((p = msgQueue.poll()) != null) {
-			try {
-				channelContext.processAfterSent(p, false);
-			} catch (Throwable e) {
-				log.error(e.toString(), e);
-			}
-		}
-	}
+    @Override
+    public boolean addMsg(Packet packet) {
+        if (this.isCanceled()) {
+            log.error("{}, 任务已经取消，{}添加到发送队列失败", channelContext, packet);
+            return false;
+        }
+        if (channelContext.sslFacadeContext != null && !channelContext.sslFacadeContext.isHandshakeCompleted() && SslUtils.needSslEncrypt(packet, groupContext)) {
+            return this.getForSendAfterSslHandshakeCompleted(true).add(packet);
+        } else {
+            return msgQueue.add(packet);
+        }
+    }
 
-	private ByteBuffer getByteBuffer(Packet packet) {
-		try {
-			ByteBuffer byteBuffer = packet.getPreEncodedByteBuffer();
-			if (byteBuffer != null) {
-				//			byteBuffer = byteBuffer.duplicate();
-			} else {
-				byteBuffer = aioHandler.encode(packet, groupContext, channelContext);
-			}
+    /**
+     * 清空消息队列
+     */
+    @Override
+    public void clearMsgQueue() {
+        Packet p = null;
+        forSendAfterSslHandshakeCompleted = null;
+        while ((p = msgQueue.poll()) != null) {
+            try {
+                channelContext.processAfterSent(p, false);
+            } catch (Throwable e) {
+                log.error(e.toString(), e);
+            }
+        }
+    }
 
-			if (!byteBuffer.hasRemaining()) {
-				byteBuffer.flip();
-			}
-			return byteBuffer;
-		} catch (Exception e) {
-			log.error(packet.logstr(), e);
-			throw new RuntimeException(e);
-		}
-	}
+    private ByteBuffer getByteBuffer(Packet packet) {
+        try {
+            ByteBuffer byteBuffer = packet.getPreEncodedByteBuffer();
+            if (byteBuffer != null) {
+                //			byteBuffer = byteBuffer.duplicate();
+            } else {
+                byteBuffer = aioHandler.encode(packet, groupContext, channelContext);
+            }
 
-	/**
-	 * 新旧值是否进行了切换
-	 * @param oldValue
-	 * @param newValue
-	 * @return
-	 */
-	private static boolean swithed(Boolean oldValue, boolean newValue) {
-		if (oldValue == null) {
-			return false;
-		}
+            if (!byteBuffer.hasRemaining()) {
+                byteBuffer.flip();
+            }
+            return byteBuffer;
+        } catch (Exception e) {
+            log.error(packet.logstr(), e);
+            throw new RuntimeException(e);
+        }
+    }
 
-		if (Objects.equals(oldValue, newValue)) {
-			return false;
-		}
+    //	private int repeatCount = 0;
 
-		return true;
-	}
+    @Override
+    public void runTask() {
+        int queueSize = msgQueue.size();
+        if (queueSize == 0) {
+            return;
+        }
 
-	private static final int MAX_CAPACITY = TcpConst.MAX_DATA_LENGTH - 1024; //减掉1024是尽量防止溢出的一小部分还分成一个tcp包发出
+        if (queueSize == 1) {
+            //			System.out.println(1);
+            sendPacket(msgQueue.poll());
+            return;
+        }
 
-	//	private int repeatCount = 0;
+        int listInitialCapacity = Math.min(queueSize, 200);
 
-	@Override
-	public void runTask() {
-		int queueSize = msgQueue.size();
-		if (queueSize == 0) {
-			return;
-		}
+        Packet packet = null;
+        List<Packet> packets = new ArrayList<>(listInitialCapacity);
+        List<ByteBuffer> byteBuffers = new ArrayList<>(listInitialCapacity);
+        //		int packetCount = 0;
+        int allBytebufferCapacity = 0;
+        Boolean needSslEncrypted = null;
+        boolean sslSwitched = false;
+        while ((packet = msgQueue.poll()) != null) {
+            ByteBuffer byteBuffer = getByteBuffer(packet);
 
-		if (queueSize == 1) {
-			//			System.out.println(1);
-			sendPacket(msgQueue.poll());
-			return;
-		}
+            packets.add(packet);
+            byteBuffers.add(byteBuffer);
+            //			packetCount++;
+            allBytebufferCapacity += byteBuffer.limit();
 
-		int listInitialCapacity = Math.min(queueSize, 200);
+            if (isSsl) {
+                if (packet.isSslEncrypted()) {
+                    boolean _needSslEncrypted = false;
+                    sslSwitched = swithed(needSslEncrypted, _needSslEncrypted);
+                    needSslEncrypted = _needSslEncrypted;
+                } else {
+                    boolean _needSslEncrypted = true;
+                    sslSwitched = swithed(needSslEncrypted, _needSslEncrypted);
+                    needSslEncrypted = _needSslEncrypted;
+                }
+            } else { //非ssl，不涉及到加密和不加密的切换
+                needSslEncrypted = false;
+            }
 
-		Packet packet = null;
-		List<Packet> packets = new ArrayList<>(listInitialCapacity);
-		List<ByteBuffer> byteBuffers = new ArrayList<>(listInitialCapacity);
-		//		int packetCount = 0;
-		int allBytebufferCapacity = 0;
-		Boolean needSslEncrypted = null;
-		boolean sslSwitched = false;
-		while ((packet = msgQueue.poll()) != null) {
-			ByteBuffer byteBuffer = getByteBuffer(packet);
+            if ((allBytebufferCapacity >= MAX_CAPACITY) || sslSwitched) {
+                break;
+            }
+        }
 
-			packets.add(packet);
-			byteBuffers.add(byteBuffer);
-			//			packetCount++;
-			allBytebufferCapacity += byteBuffer.limit();
+        if (allBytebufferCapacity == 0) {
+            return;
+        }
+        ByteBuffer allByteBuffer = ByteBuffer.allocate(allBytebufferCapacity);
+        for (ByteBuffer byteBuffer : byteBuffers) {
+            allByteBuffer.put(byteBuffer);
+        }
 
-			if (isSsl) {
-				if (packet.isSslEncrypted()) {
-					boolean _needSslEncrypted = false;
-					sslSwitched = swithed(needSslEncrypted, _needSslEncrypted);
-					needSslEncrypted = _needSslEncrypted;
-				} else {
-					boolean _needSslEncrypted = true;
-					sslSwitched = swithed(needSslEncrypted, _needSslEncrypted);
-					needSslEncrypted = _needSslEncrypted;
-				}
-			} else { //非ssl，不涉及到加密和不加密的切换
-				needSslEncrypted = false;
-			}
+        allByteBuffer.flip();
 
-			if ((allBytebufferCapacity >= MAX_CAPACITY) || sslSwitched) {
-				break;
-			}
-		}
+        if (needSslEncrypted) {
+            SslVo sslVo = new SslVo(allByteBuffer, packets);
+            try {
+                channelContext.sslFacadeContext.getSslFacade().encrypt(sslVo);
+                allByteBuffer = sslVo.getByteBuffer();
+            } catch (SSLException e) {
+                log.error(channelContext.toString() + ", 进行SSL加密时发生了异常", e);
+                Tio.close(channelContext, "进行SSL加密时发生了异常");
+                return;
+            }
+        }
 
-		if (allBytebufferCapacity == 0) {
-			return;
-		}
-		ByteBuffer allByteBuffer = ByteBuffer.allocate(allBytebufferCapacity);
-		for (ByteBuffer byteBuffer : byteBuffers) {
-			allByteBuffer.put(byteBuffer);
-		}
+        this.sendByteBuffer(allByteBuffer, packets);
+        //		queueSize = msgQueue.size();
+        //		if (queueSize > 0) {
+        //			repeatCount++;
+        //			if (repeatCount < 3) {
+        //				runTask();
+        //				return;
+        //			}
+        //		}
+        //		repeatCount = 0;
+    }
 
-		allByteBuffer.flip();
+    public boolean sendPacket(Packet packet) {
+        ByteBuffer byteBuffer = getByteBuffer(packet);
 
-		if (needSslEncrypted) {
-			SslVo sslVo = new SslVo(allByteBuffer, packets);
-			try {
-				channelContext.sslFacadeContext.getSslFacade().encrypt(sslVo);
-				allByteBuffer = sslVo.getByteBuffer();
-			} catch (SSLException e) {
-				log.error(channelContext.toString() + ", 进行SSL加密时发生了异常", e);
-				Tio.close(channelContext, "进行SSL加密时发生了异常");
-				return;
-			}
-		}
+        if (isSsl) {
+            if (!packet.isSslEncrypted()) {
+                SslVo sslVo = new SslVo(byteBuffer, packet);
+                try {
+                    channelContext.sslFacadeContext.getSslFacade().encrypt(sslVo);
+                    byteBuffer = sslVo.getByteBuffer();
+                } catch (SSLException e) {
+                    log.error(channelContext.toString() + ", 进行SSL加密时发生了异常", e);
+                    Tio.close(channelContext, "进行SSL加密时发生了异常");
+                    return false;
+                }
+            }
+        }
 
-		this.sendByteBuffer(allByteBuffer, packets);
-		//		queueSize = msgQueue.size();
-		//		if (queueSize > 0) {
-		//			repeatCount++;
-		//			if (repeatCount < 3) {
-		//				runTask();
-		//				return;
-		//			}
-		//		}
-		//		repeatCount = 0;
-	}
+        sendByteBuffer(byteBuffer, packet);
+        return true;
+    }
 
-	public boolean sendPacket(Packet packet) {
-		ByteBuffer byteBuffer = getByteBuffer(packet);
+    /**
+     * @param packets Packet or List<Packet>
+     */
+    public void sendByteBuffer(ByteBuffer byteBuffer, Object packets) {
+        if (byteBuffer == null) {
+            log.error("{},byteBuffer is null", channelContext);
+            return;
+        }
 
-		if (isSsl) {
-			if (!packet.isSslEncrypted()) {
-				SslVo sslVo = new SslVo(byteBuffer, packet);
-				try {
-					channelContext.sslFacadeContext.getSslFacade().encrypt(sslVo);
-					byteBuffer = sslVo.getByteBuffer();
-				} catch (SSLException e) {
-					log.error(channelContext.toString() + ", 进行SSL加密时发生了异常", e);
-					Tio.close(channelContext, "进行SSL加密时发生了异常");
-					return false;
-				}
-			}
-		}
+        if (!TioUtils.checkBeforeIO(channelContext)) {
+            return;
+        }
 
-		sendByteBuffer(byteBuffer, packet);
-		return true;
-	}
+        if (!byteBuffer.hasRemaining()) {
+            byteBuffer.flip();
+        }
 
-	/**
-	 *
-	 * @param byteBuffer
-	 * @param packets Packet or List<Packet>
-	 *
-	 */
-	public void sendByteBuffer(ByteBuffer byteBuffer, Object packets) {
-		if (byteBuffer == null) {
-			log.error("{},byteBuffer is null", channelContext);
-			return;
-		}
+        try {
+            //获取写信号量许可
+            channelContext.writeCompletionHandler.getWriteSemaphore().acquire();
+        } catch (InterruptedException e) {
+            log.error(e.toString(), e);
+        }
 
-		if (!TioUtils.checkBeforeIO(channelContext)) {
-			return;
-		}
+        write(byteBuffer, packets);
+    }
 
-		if (!byteBuffer.hasRemaining()) {
-			byteBuffer.flip();
-		}
+    private void write(ByteBuffer byteBuffer, Object packets) {
+        WriteCompletionVo writeCompletionVo = new WriteCompletionVo(byteBuffer, packets);
+        //通道写消息
+        channelContext.asynchronousSocketChannel.write(byteBuffer, writeCompletionVo, channelContext.writeCompletionHandler);
+    }
 
-		try {
-			channelContext.writeCompletionHandler.getWriteSemaphore().acquire();
-		} catch (InterruptedException e) {
-			log.error(e.toString(), e);
-		}
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() + ":" + channelContext.toString();
+    }
 
-		write(byteBuffer, packets);
-	}
-
-	private void write(ByteBuffer byteBuffer, Object packets) {
-		WriteCompletionVo writeCompletionVo = new WriteCompletionVo(byteBuffer, packets);
-		channelContext.asynchronousSocketChannel.write(byteBuffer, writeCompletionVo, channelContext.writeCompletionHandler);
-	}
-
-	@Override
-	public String toString() {
-		return this.getClass().getSimpleName() + ":" + channelContext.toString();
-	}
-
-	/** 
-	 * @return
-	 *
-	 */
-	@Override
-	public String logstr() {
-		return toString();
-	}
+    /**
+     * @return
+     *
+     */
+    @Override
+    public String logstr() {
+        return toString();
+    }
 
 }

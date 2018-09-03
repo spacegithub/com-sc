@@ -10,13 +10,14 @@ import java.util.concurrent.locks.ReadWriteLock;
 
 /**
  *
+ * 异步线程池,复写异步线程提交execute 和 submit
  *
  * 2017年4月26日 下午2:18:30
  */
 public class SynThreadPoolExecutor extends ThreadPoolExecutor {
-	//	private static Logger log = LoggerFactory.getLogger(SynThreadPoolExecutor.class);
-
-	/** The name. */
+    /**
+     * 线程名称
+     */
 	private String name = null;
 
 	/**
@@ -35,7 +36,7 @@ public class SynThreadPoolExecutor extends ThreadPoolExecutor {
 	}
 
 	/**
-	 *
+	 * 检查异步线程是否已经被提交
 	 * @param runnable
 	 * @return
 	 *
@@ -43,17 +44,14 @@ public class SynThreadPoolExecutor extends ThreadPoolExecutor {
 	private boolean checkBeforeExecute(Runnable runnable) {
 		if (runnable instanceof AbstractSynRunnable) {
 			AbstractSynRunnable synRunnable = (AbstractSynRunnable) runnable;
-			
 			if (synRunnable.isExecuted()) {
-//				synRunnable.avoidRepeatExecuteCount.incrementAndGet();
 				return false;
 			}
-			
 			ReadWriteLock runningLock = synRunnable.runningLock();
 			Lock writeLock = runningLock.writeLock();
 			boolean tryLock = writeLock.tryLock();
 			try {
-//				tryLock = writeLock.tryLock();
+//			tryLock = writeLock.tryLock();
 				if (tryLock) {
 					if (synRunnable.isExecuted()) {
 //						synRunnable.avoidRepeatExecuteCount.incrementAndGet();

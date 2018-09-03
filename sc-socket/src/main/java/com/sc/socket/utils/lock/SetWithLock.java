@@ -9,7 +9,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock.ReadLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
 
 /**
- *
+ * 自带读写锁的set集合
  * 2017年5月14日 上午9:55:37
  */
 public class SetWithLock<T> extends ObjWithLock<Set<T>> {

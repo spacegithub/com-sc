@@ -8,7 +8,7 @@ import java.util.concurrent.Executor;
 
 /**
  *
- *
+ * 异步队列线程池
  * 2017年4月4日 上午9:23:12
  */
 public abstract class AbstractQueueRunnable<T> extends AbstractSynRunnable {

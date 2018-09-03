@@ -10,7 +10,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock.ReadLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
 
 /**
- *
+ * 自带读写锁的Map对象,类似ConcurrentHashMap
  * 2017年5月14日 上午9:55:37
  */
 public class MapWithLock<K, V> extends ObjWithLock<Map<K, V>> {
@@ -22,7 +22,6 @@ public class MapWithLock<K, V> extends ObjWithLock<Map<K, V>> {
 	}
 
 	/**
-	 * @param cacheMap
 	 *
 	 */
 	public MapWithLock(Map<K, V> map) {
@@ -30,7 +29,6 @@ public class MapWithLock<K, V> extends ObjWithLock<Map<K, V>> {
 	}
 
 	/**
-	 * @param cacheMap
 	 * @param lock
 	 *
 	 */
@@ -78,6 +76,7 @@ public class MapWithLock<K, V> extends ObjWithLock<Map<K, V>> {
 			} else {
 				return oldValue;
 			}
+
 		} catch (Throwable e) {
 			log.error(e.getMessage(), e);
 		} finally {

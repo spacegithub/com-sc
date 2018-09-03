@@ -5,71 +5,39 @@ import com.sc.socket.utils.lock.MapWithLock;
 import java.util.HashMap;
 
 /**
- *
+ * 自带读写锁,且支持属性操作
  * 2017年8月18日 下午5:36:02
  */
 public class MapWithLockPropSupport implements IPropSupport {
 
-	private final MapWithLock<String, Object> props = new MapWithLock<>(new HashMap<String, Object>(8));
+    /**
+     * 线程安全的map,操作对象自带读写锁
+     */
+    private final MapWithLock<String, Object> props = new MapWithLock<>(new HashMap<String, Object>(8));
 
-	/**
-	 *
-	 *
-	 */
-	public MapWithLockPropSupport() {
-	}
 
-	/**
-	 *
-	 *
-	 */
-	@Override
-	public void clearAttribute() {
-		//initProps();
-		props.clear();
-	}
+    public MapWithLockPropSupport() {
+    }
 
-	/**
-	 *
-	 * @param key
-	 * @return
-	 *
-	 */
-	@Override
-	public Object getAttribute(String key) {
-		//initProps();
-		return props.getObj().get(key);
-	}
+    @Override
+    public void clearAttribute() {
+        props.clear();
+    }
 
-//	private void initProps() {
-//		if (props == null) {
-//			synchronized (this) {
-//				if (props == null) {
-//					props = new MapWithLock<>(new HashMap<String, Object>(10));
-//				}
-//			}
-//		}
-//	}
+    @Override
+    public Object getAttribute(String key) {
+        return props.getObj().get(key);
+    }
 
-	/**
-	 * @param key
-	 *
-	 */
-	@Override
-	public void removeAttribute(String key) {
-		//initProps();
-		props.remove(key);
-	}
 
-	/**
-	 *
-	 * @param key
-	 * @param value
-	 *
-	 */
-	@Override
-	public void setAttribute(String key, Object value) {
-		//initProps();
-		props.put(key, value);
-	}
+    @Override
+    public void removeAttribute(String key) {
+        props.remove(key);
+    }
+
+
+    @Override
+    public void setAttribute(String key, Object value) {
+        props.put(key, value);
+    }
 }

@@ -15,7 +15,7 @@ import java.util.concurrent.Executor;
 
 /**
  * 
- *
+ * 关闭连接任务,清空队列
  * 2017年10月19日 上午9:39:59
  */
 public class CloseRunnable extends AbstractQueueRunnable<ChannelContext>  {

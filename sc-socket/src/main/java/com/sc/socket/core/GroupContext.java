@@ -4,7 +4,7 @@ import com.sc.socket.core.intf.AioHandler;
 import com.sc.socket.core.intf.AioListener;
 import com.sc.socket.core.intf.GroupListener;
 import com.sc.socket.core.intf.Packet;
-import com.sc.socket.core.intf.TioUuid;
+import com.sc.socket.core.intf.SioUuid;
 import com.sc.socket.core.maintain.BsIds;
 import com.sc.socket.core.maintain.ClientNodes;
 import com.sc.socket.core.maintain.Groups;
@@ -115,7 +115,7 @@ public abstract class GroupContext extends MapWithLockPropSupport {
      */
 	private GroupListener groupListener = null;
 
-	private TioUuid tioUuid = new DefaultTioUuid();
+	private SioUuid tioUuid = new DefaultSioUuid();
     /**
      * 异步线程池
      */
@@ -296,7 +296,7 @@ public abstract class GroupContext extends MapWithLockPropSupport {
 	/**
 	 * @return the tioUuid
 	 */
-	public TioUuid getTioUuid() {
+	public SioUuid getTioUuid() {
 		return tioUuid;
 	}
 
@@ -391,7 +391,7 @@ public abstract class GroupContext extends MapWithLockPropSupport {
 	/**
 	 * @param tioUuid the tioUuid to set
 	 */
-	public void setTioUuid(TioUuid tioUuid) {
+	public void setTioUuid(SioUuid tioUuid) {
 		this.tioUuid = tioUuid;
 	}
 

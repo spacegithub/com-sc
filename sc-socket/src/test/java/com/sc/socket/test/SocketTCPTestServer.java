@@ -3,11 +3,11 @@ package com.sc.socket.test;
 import com.mchange.v2.ser.SerializableUtils;
 import com.sc.socket.core.ChannelContext;
 import com.sc.socket.core.GroupContext;
-import com.sc.socket.core.Tio;
+import com.sc.socket.core.Sio;
 import com.sc.socket.core.exception.AioDecodeException;
 import com.sc.socket.core.intf.Packet;
 import com.sc.socket.server.ServerGroupContext;
-import com.sc.socket.server.TioServer;
+import com.sc.socket.server.SioServer;
 import com.sc.socket.server.intf.ServerAioHandler;
 import com.sc.socket.server.intf.ServerAioListener;
 
@@ -76,7 +76,7 @@ public class SocketTCPTestServer {
                     person.setAge(19);
                     person.setName("服务端木头");
                     helloPacket.setBody(SerializableUtils.toByteArray(person));
-                    Tio.send(channelContext, helloPacket);
+                    Sio.send(channelContext, helloPacket);
                 } else {
                     System.out.println("接收到心跳包直接返回!");
                 }
@@ -115,7 +115,7 @@ public class SocketTCPTestServer {
 
 
 
-        TioServer tioServer = new TioServer(serverGroupContext);
+        SioServer tioServer = new SioServer(serverGroupContext);
         tioServer.start(null, 8886);
     }
 

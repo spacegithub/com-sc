@@ -2,7 +2,7 @@ package com.sc.socket.server;
 
 import com.sc.socket.core.ChannelContext;
 import com.sc.socket.core.GroupContext;
-import com.sc.socket.core.Tio;
+import com.sc.socket.core.Sio;
 import com.sc.socket.core.intf.AioHandler;
 import com.sc.socket.core.intf.AioListener;
 import com.sc.socket.core.ssl.SslConfig;
@@ -172,7 +172,7 @@ public class ServerGroupContext extends GroupContext {
                             long interval = currtime - compareTime;
                             if (interval > heartbeatTimeout) {
                                 log.info("{}, {} ms没有收发消息", channelContext, interval);
-                                Tio.remove(channelContext, interval + " ms没有收发消息");
+                                Sio.remove(channelContext, interval + " ms没有收发消息");
                             }
                         }
                     } catch (Throwable e) {

@@ -104,7 +104,7 @@ public class WriteCompletionHandler implements CompletionHandler<Integer, WriteC
             }
 
             if (!isSentSuccess) {
-                Tio.close(channelContext, throwable, "写数据返回:" + result);
+                Sio.close(channelContext, throwable, "写数据返回:" + result);
             }
         } catch (Throwable e) {
             log.error(e.toString(), e);

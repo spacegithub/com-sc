@@ -23,8 +23,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * 服务端实例
  */
-public class TioServer {
-    private static Logger log = LoggerFactory.getLogger(TioServer.class);
+public class SioServer {
+    private static Logger log = LoggerFactory.getLogger(SioServer.class);
 
     /**
      * 服务端的上下文环境
@@ -54,7 +54,7 @@ public class TioServer {
     /**
      * @param serverGroupContext 2017年1月2日 下午5:53:06
      */
-    public TioServer(ServerGroupContext serverGroupContext) {
+    public SioServer(ServerGroupContext serverGroupContext) {
         super();
         this.serverGroupContext = serverGroupContext;
     }

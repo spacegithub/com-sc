@@ -3,7 +3,7 @@ package com.sc.socket.client;
 import com.sc.socket.client.intf.ClientAioHandler;
 import com.sc.socket.core.ChannelContext;
 import com.sc.socket.core.Node;
-import com.sc.socket.core.Tio;
+import com.sc.socket.core.Sio;
 import com.sc.socket.core.intf.Packet;
 import com.sc.socket.core.ssl.SslFacadeContext;
 import com.sc.socket.core.stat.ChannelStat;
@@ -31,15 +31,15 @@ import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
  * 客户端抽象
  * 2017年4月1日 上午9:29:58
  */
-public class TioClient {
-    private static Logger log = LoggerFactory.getLogger(TioClient.class);
+public class SioClient {
+    private static Logger log = LoggerFactory.getLogger(SioClient.class);
     private AsynchronousChannelGroup channelGroup;
     private ClientGroupContext clientGroupContext;
 
     /**
      * @throws IOException
      */
-    public TioClient(final ClientGroupContext clientGroupContext) throws IOException {
+    public SioClient(final ClientGroupContext clientGroupContext) throws IOException {
         super();
         this.clientGroupContext = clientGroupContext;
         this.channelGroup = AsynchronousChannelGroup.withThreadPool(clientGroupContext.groupExecutor);
@@ -266,7 +266,7 @@ public class TioClient {
                                     if (log.isInfoEnabled()) {
                                         log.info("{}发送心跳包", channelContext.toString());
                                     }
-                                    Tio.send(channelContext, packet);
+                                    Sio.send(channelContext, packet);
                                 }
                             }
                         }
@@ -344,7 +344,7 @@ public class TioClient {
                     {
                         continue;
                     }
-                    ReconnRunnable runnable = new ReconnRunnable(channelContext, TioClient.this);
+                    ReconnRunnable runnable = new ReconnRunnable(channelContext, SioClient.this);
                     reconnConf.getThreadPoolExecutor().execute(runnable);
                 }
             }
@@ -390,11 +390,11 @@ public class TioClient {
      */
     private static class ReconnRunnable implements Runnable {
         ClientChannelContext channelContext = null;
-        TioClient tioClient = null;
+        SioClient tioClient = null;
 
         //		private static Map<Node, Long> cacheMap = new HashMap<>();
 
-        public ReconnRunnable(ClientChannelContext channelContext, TioClient tioClient) {
+        public ReconnRunnable(ClientChannelContext channelContext, SioClient tioClient) {
             this.channelContext = channelContext;
             this.tioClient = tioClient;
         }

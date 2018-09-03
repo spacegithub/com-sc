@@ -3,13 +3,13 @@ package com.sc.socket.core.task;
 import com.sc.socket.core.ChannelContext;
 import com.sc.socket.core.GroupContext;
 import com.sc.socket.core.TcpConst;
-import com.sc.socket.core.Tio;
+import com.sc.socket.core.Sio;
 import com.sc.socket.core.WriteCompletionHandler.WriteCompletionVo;
 import com.sc.socket.core.intf.AioHandler;
 import com.sc.socket.core.intf.Packet;
 import com.sc.socket.core.ssl.SslUtils;
 import com.sc.socket.core.ssl.SslVo;
-import com.sc.socket.core.utils.TioUtils;
+import com.sc.socket.core.utils.SioUtils;
 import com.sc.socket.utils.thread.pool.AbstractQueueRunnable;
 
 import org.slf4j.Logger;
@@ -204,7 +204,7 @@ public class SendRunnable extends AbstractQueueRunnable<Packet> {
                 allByteBuffer = sslVo.getByteBuffer();
             } catch (SSLException e) {
                 log.error(channelContext.toString() + ", 进行SSL加密时发生了异常", e);
-                Tio.close(channelContext, "进行SSL加密时发生了异常");
+                Sio.close(channelContext, "进行SSL加密时发生了异常");
                 return;
             }
         }
@@ -232,7 +232,7 @@ public class SendRunnable extends AbstractQueueRunnable<Packet> {
                     byteBuffer = sslVo.getByteBuffer();
                 } catch (SSLException e) {
                     log.error(channelContext.toString() + ", 进行SSL加密时发生了异常", e);
-                    Tio.close(channelContext, "进行SSL加密时发生了异常");
+                    Sio.close(channelContext, "进行SSL加密时发生了异常");
                     return false;
                 }
             }
@@ -251,7 +251,7 @@ public class SendRunnable extends AbstractQueueRunnable<Packet> {
             return;
         }
 
-        if (!TioUtils.checkBeforeIO(channelContext)) {
+        if (!SioUtils.checkBeforeIO(channelContext)) {
             return;
         }
 

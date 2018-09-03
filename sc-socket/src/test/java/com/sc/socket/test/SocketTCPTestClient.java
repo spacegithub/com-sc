@@ -4,13 +4,13 @@ import com.mchange.v2.ser.SerializableUtils;
 import com.sc.socket.client.ClientChannelContext;
 import com.sc.socket.client.ClientGroupContext;
 import com.sc.socket.client.ReconnConf;
-import com.sc.socket.client.TioClient;
+import com.sc.socket.client.SioClient;
 import com.sc.socket.client.intf.ClientAioHandler;
 import com.sc.socket.client.intf.ClientAioListener;
 import com.sc.socket.core.ChannelContext;
 import com.sc.socket.core.GroupContext;
 import com.sc.socket.core.Node;
-import com.sc.socket.core.Tio;
+import com.sc.socket.core.Sio;
 import com.sc.socket.core.exception.AioDecodeException;
 import com.sc.socket.core.intf.Packet;
 
@@ -120,13 +120,13 @@ public class SocketTCPTestClient {
             }
         }, new ReconnConf(3000));
         clientGroupContext.setHeartbeatTimeout(2000);
-        TioClient tioClient = new TioClient(clientGroupContext);
+        SioClient tioClient = new SioClient(clientGroupContext);
         ClientChannelContext clientChannelContext = tioClient.connect(new Node("127.0.0.1", 8886));
         Person person = new Person();
         person.setAge(18);
         person.setName("客户端木头");
         HelloPacket packet = new HelloPacket();
         packet.setBody(SerializableUtils.toByteArray(person));
-        Tio.send(clientChannelContext, packet);
+        Sio.send(clientChannelContext, packet);
     }
 }

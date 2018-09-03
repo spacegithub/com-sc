@@ -13,7 +13,6 @@ import java.util.HashMap;
 /**
  * 一对一  (bsid <--> ChannelContext)<br>
  * Bs: business，业务id和ChannelContext绑定<br>
- * 需求见：https://gitee.com/tywo45/t-io/issues/IK30Q
  *
  */
 public class BsIds {

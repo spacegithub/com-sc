@@ -1,6 +1,6 @@
 package com.sc.socket.core.maintain;
 
-import com.sc.socket.core.Tio;
+import com.sc.socket.core.Sio;
 import com.sc.socket.utils.SystemTimer;
 import com.sc.socket.utils.cache.caffeine.CaffeineCache;
 import com.sc.socket.utils.time.Time;
@@ -38,7 +38,7 @@ public class IpBlacklist {
 		cache.put(ip, SystemTimer.currTime);
 
 		//再删除相关连接
-		Tio.remove(groupContext, ip, "ip[" + ip + "]被加入了黑名单");
+		Sio.remove(groupContext, ip, "ip[" + ip + "]被加入了黑名单");
 		return true;
 	}
 

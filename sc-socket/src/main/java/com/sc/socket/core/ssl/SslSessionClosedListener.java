@@ -1,7 +1,7 @@
 package com.sc.socket.core.ssl;
 
 import com.sc.socket.core.ChannelContext;
-import com.sc.socket.core.Tio;
+import com.sc.socket.core.Sio;
 import com.sc.socket.core.ssl.facade.ISessionClosedListener;
 
 public class SslSessionClosedListener implements ISessionClosedListener {
@@ -14,7 +14,7 @@ public class SslSessionClosedListener implements ISessionClosedListener {
 	@Override
 	public void onSessionClosed() {
 //		log.info("{} onSessionClosed", channelContext);
-		Tio.close(channelContext, "SSL SessionClosed");
+		Sio.close(channelContext, "SSL SessionClosed");
 	}
 
 }

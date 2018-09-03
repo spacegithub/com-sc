@@ -27,13 +27,13 @@ import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
  * 用户常用操作的封装
  * 用户关心的API几乎全在这
  */
-public class Tio {
+public class Sio {
     /**
      * The log.
      */
-    private static Logger log = LoggerFactory.getLogger(Tio.class);
+    private static Logger log = LoggerFactory.getLogger(Sio.class);
 
-    private Tio() {
+    private Sio() {
     }
 
     /**
@@ -142,7 +142,7 @@ public class Tio {
      * 发消息给指定业务ID
      */
     private static Boolean sendToBsId(GroupContext groupContext, String bsId, Packet packet, boolean isBlock) {
-        ChannelContext channelContext = Tio.getChannelContextByBsId(groupContext, bsId);
+        ChannelContext channelContext = Sio.getChannelContextByBsId(groupContext, bsId);
         if (isBlock) {
             return bSend(channelContext, packet);
         } else {
@@ -359,7 +359,7 @@ public class Tio {
      *
      */
     public static Page<ChannelContext> getPageOfAll(GroupContext groupContext, Integer pageIndex, Integer pageSize) {
-        SetWithLock<ChannelContext> setWithLock = Tio.getAllChannelContexts(groupContext);
+        SetWithLock<ChannelContext> setWithLock = Sio.getAllChannelContexts(groupContext);
         return PageUtils.fromSetWithLock(setWithLock, pageIndex, pageSize);
     }
 
@@ -372,7 +372,7 @@ public class Tio {
      * @return
      */
     public static <T> Page<T> getPageOfAll(GroupContext groupContext, Integer pageIndex, Integer pageSize, Converter<T> converter) {
-        SetWithLock<ChannelContext> setWithLock = Tio.getAllChannelContexts(groupContext);
+        SetWithLock<ChannelContext> setWithLock = Sio.getAllChannelContexts(groupContext);
         return PageUtils.fromSetWithLock(setWithLock, pageIndex, pageSize, converter);
     }
 
@@ -380,7 +380,7 @@ public class Tio {
      * 这个方法是给服务器端用的
      */
     public static Page<ChannelContext> getPageOfConnecteds(ClientGroupContext clientGroupContext, Integer pageIndex, Integer pageSize) {
-        SetWithLock<ChannelContext> setWithLock = Tio.getAllConnectedsChannelContexts(clientGroupContext);
+        SetWithLock<ChannelContext> setWithLock = Sio.getAllConnectedsChannelContexts(clientGroupContext);
         return PageUtils.fromSetWithLock(setWithLock, pageIndex, pageSize);
     }
 
@@ -393,7 +393,7 @@ public class Tio {
      * @return
      */
     public static <T> Page<T> getPageOfConnecteds(ClientGroupContext clientGroupContext, Integer pageIndex, Integer pageSize, Converter<T> converter) {
-        SetWithLock<ChannelContext> setWithLock = Tio.getAllConnectedsChannelContexts(clientGroupContext);
+        SetWithLock<ChannelContext> setWithLock = Sio.getAllConnectedsChannelContexts(clientGroupContext);
         return PageUtils.fromSetWithLock(setWithLock, pageIndex, pageSize, converter);
     }
 
@@ -407,7 +407,7 @@ public class Tio {
      *
      */
     public static Page<ChannelContext> getPageOfGroup(GroupContext groupContext, String group, Integer pageIndex, Integer pageSize) {
-        SetWithLock<ChannelContext> setWithLock = Tio.getChannelContextsByGroup(groupContext, group);
+        SetWithLock<ChannelContext> setWithLock = Sio.getChannelContextsByGroup(groupContext, group);
         return PageUtils.fromSetWithLock(setWithLock, pageIndex, pageSize);
     }
 
@@ -421,7 +421,7 @@ public class Tio {
      * @return
      */
     public static <T> Page<T> getPageOfGroup(GroupContext groupContext, String group, Integer pageIndex, Integer pageSize, Converter<T> converter) {
-        SetWithLock<ChannelContext> setWithLock = Tio.getChannelContextsByGroup(groupContext, group);
+        SetWithLock<ChannelContext> setWithLock = Sio.getChannelContextsByGroup(groupContext, group);
         return PageUtils.fromSetWithLock(setWithLock, pageIndex, pageSize, converter);
     }
 
@@ -436,7 +436,7 @@ public class Tio {
      * 删除client ip为指定值的所有连接
      */
     public static void remove(GroupContext groupContext, String ip, String remark) {
-        SetWithLock<ChannelContext> setWithLock = Tio.getAllChannelContexts(groupContext);
+        SetWithLock<ChannelContext> setWithLock = Sio.getAllChannelContexts(groupContext);
         Lock lock2 = setWithLock.readLock();
         lock2.lock();
         try {
@@ -444,7 +444,7 @@ public class Tio {
             for (ChannelContext channelContext : set) {
                 String clientIp = channelContext.getClientNode().getIp();
                 if (StrUtil.equals(clientIp, ip)) {
-                    Tio.remove(channelContext, remark);
+                    Sio.remove(channelContext, remark);
                 }
             }
         } finally {
@@ -699,7 +699,7 @@ public class Tio {
      * 发消息给指定ChannelContext id
      */
     private static Boolean sendToId(GroupContext groupContext, String channelId, Packet packet, boolean isBlock) {
-        ChannelContext channelContext = Tio.getChannelContextById(groupContext, channelId);
+        ChannelContext channelContext = Sio.getChannelContextById(groupContext, channelId);
         if (isBlock) {
             return bSend(channelContext, packet);
         } else {

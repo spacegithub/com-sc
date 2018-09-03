@@ -363,7 +363,7 @@ public class ClassUtil {
     }
 
     /**
-     * 扫描包路径下所有的class文件 代码摘自网上（https://gitee.com/liuyueyi/quicksilver/blob/master/silver-file/src/main/java/com.hust.hui.quicksilver.file/PkgUtil.java），但作了不少改造
+     * 扫描包路径下所有的class文件
      *
      * @param pkg 形如：org.tio.core
      */

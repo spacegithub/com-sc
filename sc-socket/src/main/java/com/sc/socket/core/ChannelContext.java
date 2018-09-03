@@ -96,7 +96,7 @@ public abstract class ChannelContext extends MapWithLockPropSupport {
                 }
             } catch (Exception e) {
                 log.error("在开始SSL握手时发生了异常", e);
-                Tio.close(this, "在开始SSL握手时发生了异常" + e.getMessage());
+                Sio.close(this, "在开始SSL握手时发生了异常" + e.getMessage());
                 return;
             }
         }

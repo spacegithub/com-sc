@@ -1,7 +1,7 @@
 package com.sc.socket.core.utils;
 
 import com.sc.socket.core.ChannelContext;
-import com.sc.socket.core.Tio;
+import com.sc.socket.core.Sio;
 import com.sc.socket.utils.thread.ThreadUtils;
 
 import org.slf4j.Logger;
@@ -27,7 +27,7 @@ public class AioUtils {
 			if (channelContext.isClosed || channelContext.isRemoved) {
 				if (isopen) {
 					try {
-						Tio.close(channelContext, "asynchronousSocketChannel is open, but channelContext isClosed: " + channelContext.isClosed + ", isRemoved: " + channelContext.isRemoved);
+						Sio.close(channelContext, "asynchronousSocketChannel is open, but channelContext isClosed: " + channelContext.isClosed + ", isRemoved: " + channelContext.isRemoved);
 					} catch (Throwable e) {
 						log.error(e.toString(), e);
 					}
@@ -43,7 +43,7 @@ public class AioUtils {
 
 		if (!isopen) {
 			log.info("{}, 可能对方关闭了连接, isopen:{}, isClosed:{}, isRemoved:{}", channelContext, isopen, channelContext.isClosed, channelContext.isRemoved);
-			Tio.close(channelContext, "asynchronousSocketChannel is not open, 可能对方关闭了连接");
+			Sio.close(channelContext, "asynchronousSocketChannel is not open, 可能对方关闭了连接");
 			return false;
 		}
 		return true;

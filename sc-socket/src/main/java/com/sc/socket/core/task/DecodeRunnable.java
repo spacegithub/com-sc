@@ -2,7 +2,7 @@ package com.sc.socket.core.task;
 
 import com.sc.socket.core.ChannelContext;
 import com.sc.socket.core.GroupContext;
-import com.sc.socket.core.Tio;
+import com.sc.socket.core.Sio;
 import com.sc.socket.core.exception.AioDecodeException;
 import com.sc.socket.core.intf.Packet;
 import com.sc.socket.core.stat.ChannelStat;
@@ -219,7 +219,7 @@ public class DecodeRunnable extends AbstractQueueRunnable<ByteBuffer> {
                     }
                 }
 
-                Tio.close(channelContext, e, "解码异常:" + e.getMessage());
+                Sio.close(channelContext, e, "解码异常:" + e.getMessage());
                 return;
             }
         }

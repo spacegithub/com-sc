@@ -1,7 +1,7 @@
 package com.sc.socket.server;
 
 import com.sc.socket.core.ReadCompletionHandler;
-import com.sc.socket.core.Tio;
+import com.sc.socket.core.Sio;
 import com.sc.socket.core.ssl.SslUtils;
 import com.sc.socket.core.stat.IpStat;
 import com.sc.socket.utils.SystemTimer;
@@ -20,7 +20,7 @@ import java.nio.channels.CompletionHandler;
  * 服务端异步IO结果处理
  * 2017年4月4日 上午9:27:45
  */
-public class AcceptCompletionHandler implements CompletionHandler<AsynchronousSocketChannel, TioServer> {
+public class AcceptCompletionHandler implements CompletionHandler<AsynchronousSocketChannel, SioServer> {
 
     private static Logger log = LoggerFactory.getLogger(AcceptCompletionHandler.class);
 
@@ -31,14 +31,14 @@ public class AcceptCompletionHandler implements CompletionHandler<AsynchronousSo
      * 操作完成
      */
     @Override
-    public void completed(AsynchronousSocketChannel asynchronousSocketChannel, TioServer tioServer) {
+    public void completed(AsynchronousSocketChannel asynchronousSocketChannel, SioServer tioServer) {
         try {
             ServerGroupContext serverGroupContext = tioServer.getServerGroupContext();
             InetSocketAddress inetSocketAddress = (InetSocketAddress) asynchronousSocketChannel.getRemoteAddress();
             String clientIp = inetSocketAddress.getHostString();
 
 
-            if (Tio.IpBlacklist.isInBlacklist(serverGroupContext, clientIp)) {
+            if (Sio.IpBlacklist.isInBlacklist(serverGroupContext, clientIp)) {
                 log.warn("[{}]在黑名单中", clientIp);
                 asynchronousSocketChannel.close();
                 return;
@@ -113,7 +113,7 @@ public class AcceptCompletionHandler implements CompletionHandler<AsynchronousSo
      * 操作失败
      */
     @Override
-    public void failed(Throwable exc, TioServer tioServer) {
+    public void failed(Throwable exc, SioServer tioServer) {
         AsynchronousServerSocketChannel serverSocketChannel = tioServer.getServerSocketChannel();
         //继续监听
         serverSocketChannel.accept(tioServer, this);

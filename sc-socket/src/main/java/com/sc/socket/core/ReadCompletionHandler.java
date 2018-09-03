@@ -2,7 +2,7 @@ package com.sc.socket.core;
 
 import com.sc.socket.core.stat.IpStat;
 import com.sc.socket.core.utils.ByteBufferUtils;
-import com.sc.socket.core.utils.TioUtils;
+import com.sc.socket.core.utils.SioUtils;
 import com.sc.socket.utils.SystemTimer;
 
 import org.slf4j.Logger;
@@ -84,24 +84,24 @@ public class ReadCompletionHandler implements CompletionHandler<Integer, ByteBuf
                     channelContext.sslFacadeContext.getSslFacade().decrypt(copiedByteBuffer);
                 } catch (Exception e) {
                     log.error(channelContext + ", " + e.toString() + copiedByteBuffer, e);
-                    Tio.close(channelContext, e, e.toString());
+                    Sio.close(channelContext, e, e.toString());
                 }
             }
 
-            if (TioUtils.checkBeforeIO(channelContext)) {
+            if (SioUtils.checkBeforeIO(channelContext)) {
                 read();
             }
 
         } else if (result == 0) {
             log.error("{}, 读到的数据长度为0", channelContext);
-            Tio.close(channelContext, null, "读到的数据长度为0");
+            Sio.close(channelContext, null, "读到的数据长度为0");
             return;
         } else if (result < 0) {
             if (result == -1) {
-                Tio.close(channelContext, null, "对方关闭了连接");
+                Sio.close(channelContext, null, "对方关闭了连接");
                 return;
             } else {
-                Tio.close(channelContext, null, "读数据时返回" + result);
+                Sio.close(channelContext, null, "读数据时返回" + result);
                 return;
             }
         }
@@ -122,7 +122,7 @@ public class ReadCompletionHandler implements CompletionHandler<Integer, ByteBuf
      */
     @Override
     public void failed(Throwable exc, ByteBuffer byteBuffer) {
-        Tio.close(channelContext, exc, "读数据时发生异常");
+        Sio.close(channelContext, exc, "读数据时发生异常");
     }
 
     /**

@@ -13,7 +13,7 @@ public class ConnectionCompletionVo {
 
     private ClientChannelContext channelContext = null;
 
-    private TioClient tioClient = null;
+    private SioClient tioClient = null;
 
     private boolean isReconnect = false;
 
@@ -47,7 +47,7 @@ public class ConnectionCompletionVo {
      *
      *
      */
-    public ConnectionCompletionVo(ClientChannelContext channelContext, TioClient tioClient, boolean isReconnect, AsynchronousSocketChannel asynchronousSocketChannel,
+    public ConnectionCompletionVo(ClientChannelContext channelContext, SioClient tioClient, boolean isReconnect, AsynchronousSocketChannel asynchronousSocketChannel,
                                   Node serverNode, String bindIp, Integer bindPort) {
         super();
         this.channelContext = channelContext;
@@ -62,14 +62,14 @@ public class ConnectionCompletionVo {
     /**
      * @return the tioClient
      */
-    public TioClient getTioClient() {
+    public SioClient getTioClient() {
         return tioClient;
     }
 
     /**
      * @param tioClient the tioClient to set
      */
-    public void setTioClient(TioClient tioClient) {
+    public void setTioClient(SioClient tioClient) {
         this.tioClient = tioClient;
     }
 

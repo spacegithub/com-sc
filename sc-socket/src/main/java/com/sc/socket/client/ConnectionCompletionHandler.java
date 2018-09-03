@@ -56,7 +56,7 @@ public class ConnectionCompletionHandler implements CompletionHandler<Void, Conn
 	private void handler(Void result, ConnectionCompletionVo attachment, Throwable throwable) {
 		ClientChannelContext channelContext = attachment.getChannelContext();
 		AsynchronousSocketChannel asynchronousSocketChannel = attachment.getAsynchronousSocketChannel();
-		TioClient tioClient = attachment.getTioClient();
+		SioClient tioClient = attachment.getTioClient();
 		ClientGroupContext clientGroupContext = tioClient.getClientGroupContext();
 		Node serverNode = attachment.getServerNode();
 		String bindIp = attachment.getBindIp();

@@ -18,6 +18,7 @@
         <module>sc-message-queue</module>
         <module>sc-test</module>
         <module>sc-rule-engine</module>
+        <module>sc-thread-pool</module>
     </modules>
 
     <groupId>com.github.senssic</groupId>

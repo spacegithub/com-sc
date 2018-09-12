@@ -1,6 +1,6 @@
 package com.sc.ruleengine.config;
 
-import com.sun.istack.internal.NotNull;
+
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 
@@ -9,7 +9,7 @@ public class Rule {
     /**
      * 规则Id
      */
-    @NotNull
+
     @XStreamAsAttribute
     private String id;
     /**
@@ -17,7 +17,6 @@ public class Rule {
      */
     @XStreamAsAttribute
     private int priority=10;
-
     /**
      * 规则表述
      */
@@ -32,7 +31,6 @@ public class Rule {
     /**
      * 规则类型
      */
-    @NotNull
     @XStreamAsAttribute
     private String type;
     /**

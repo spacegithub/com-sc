@@ -1,8 +1,8 @@
 
 package com.sc.utils.mapper;
 
-import com.sc.utils.utils.Exceptions;
-import com.sc.utils.utils.Reflections;
+import com.sc.utils.exception.Exceptions;
+import com.sc.utils.reflect.Reflections;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;

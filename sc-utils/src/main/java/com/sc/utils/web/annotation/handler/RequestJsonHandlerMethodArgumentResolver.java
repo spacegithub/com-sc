@@ -3,7 +3,7 @@ package com.sc.utils.web.annotation.handler;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.sc.utils.web.MediaTypes;
-import com.sc.utils.utils.Reflections;
+import com.sc.utils.reflect.Reflections;
 import com.sc.utils.web.annotation.RequestJsonParam;
 import com.sc.utils.web.wapper.RequestBodyThreadLocalInterceptor;
 

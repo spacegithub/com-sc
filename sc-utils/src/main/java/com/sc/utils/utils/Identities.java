@@ -1,5 +1,7 @@
 package com.sc.utils.utils;
 
+import com.sc.utils.encrypt.Encodes;
+
 import java.security.SecureRandom;
 import java.util.UUID;
 

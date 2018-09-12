@@ -1,6 +1,8 @@
 
 package com.sc.utils.reflect;
 
+import com.sc.utils.exception.ReflectException;
+
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;

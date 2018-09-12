@@ -4,8 +4,6 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -15,53 +13,58 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-
 public class CodeGeneration {
-    
-    static String domainName = "UpdatePayStatus"; 
-    static String packagePath = "sc.code.platform";
-    static String hessionUrl="hessian.url.payment";
-    
-    static String templateDir = "\\src\\main\\resources\\templete\\";
-    static String sourcePath = System.getProperty("user.dir")+templateDir;
-    static String resultDir = "\\out";
-    static String targetPath = System.getProperty("user.dir")
-            + resultDir + "\\"
-            + packagePath.replace(".", "\\");
+    /**
+     * 用户环境变量
+     */
+    private final static String domainName = "BatchSendMessage";
+    private final static String packagePath = "cjia.message.core";
+    private final static String hessionUrl = "hessian.url.message";
+    private final static String domainUrl = "/svr/message/commonmsg";
+
+    /**
+     * 系统环境
+     */
+    private final static String sourcePath = System.getProperty("user.dir") + "\\sc-code-generator\\src\\main\\resources\\newtemplete";
+    private final static String targetPath = System.getProperty("user.dir") + "\\out" + "\\" + packagePath.replace(".", "\\");
+
+    public static void main(String[] args) throws Exception {
+        /**
+         * 模板路径
+         */
+        Map<String, Object> map = new HashMap();
+        map.put("RequestTemplete.java", "request/" + domainName + "Request.java");
+        map.put("ResponseTemplete.java", "response/" + domainName + "Response.java");
+        map.put("ServiceImplTemplete.java", "service/impl/" + domainName + "ServiceImpl.java");
+        map.put("ServiceTemplete.java", "service/I" + domainName + "Service.java");
+
+        /**
+         * 环境变量
+         */
+        Properties pro = new Properties();
+        pro.setProperty(Velocity.OUTPUT_ENCODING, "UTF-8");
+        pro.setProperty(Velocity.INPUT_ENCODING, "UTF-8");
+        pro.setProperty(Velocity.FILE_RESOURCE_LOADER_PATH, sourcePath);//模板地址
 
 
-
-    private static final Logger logger = LoggerFactory.getLogger(CodeGeneration.class);
-    public static void main(String[]args) throws Exception {
-
-        Map<String,Object> map = new HashMap();
-        map.put("RequestTemplete.java","request/" + domainName + "Request.java");
-        map.put("ResponseTemplete.java","response/" + domainName + "Response.java");
-        map.put("ServiceImplTemplete.java","service/impl/" + domainName + "ServiceImpl.java");
-        map.put("ServiceTemplete.java","service/I" + domainName + "Service.java");
-
-        for(String templateFile:map.keySet()){
+        for (String templateFile : map.keySet()) {
             String targetFile = (String) map.get(templateFile);
-            Properties pro = new Properties();
-            pro.setProperty(Velocity.OUTPUT_ENCODING, "UTF-8");
-            pro.setProperty(Velocity.INPUT_ENCODING, "UTF-8");
-            pro.setProperty(Velocity.FILE_RESOURCE_LOADER_PATH, sourcePath);
             VelocityEngine ve = new VelocityEngine(pro);
-            
-            String packageName=(packagePath+"."+targetFile.substring(0,targetFile.lastIndexOf("/"))).replace("/", ".");
+            String packageName = (packagePath + "." + targetFile.substring(0, targetFile.lastIndexOf("/"))).replace("/", ".");
             VelocityContext context = new VelocityContext();
-            context.put("domainName",domainName);
+            context.put("domainName", domainName);
             context.put("packageName", packageName);
-            context.put("hessionUrl",hessionUrl);
-
+            context.put("hessionUrl", hessionUrl);
+            context.put("domainUrl", domainUrl);
             Template t = ve.getTemplate(templateFile, "UTF-8");
 
             File file = new File(targetPath, targetFile);
-            if (!file.getParentFile().exists())
+            if (!file.getParentFile().exists()) {
                 file.getParentFile().mkdirs();
-            if (!file.exists())
+            }
+            if (!file.exists()) {
                 file.createNewFile();
-
+            }
             FileOutputStream outStream = new FileOutputStream(file);
             OutputStreamWriter writer = new OutputStreamWriter(outStream,
                     "UTF-8");
@@ -70,8 +73,7 @@ public class CodeGeneration {
             sw.flush();
             sw.close();
             outStream.close();
-            System.out.println("成功生成Java文件:"
-                    + (targetPath + targetFile).replaceAll("/", "\\\\"));
+            System.out.println("成功生成Java文件:" + (targetPath + targetFile).replaceAll("/", "\\\\"));
         }
     }
 }

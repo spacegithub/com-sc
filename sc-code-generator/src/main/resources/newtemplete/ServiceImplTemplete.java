@@ -25,7 +25,7 @@ private static final Logger logger=LoggerFactory.getLogger($!{domainName}Service
 
 @RequestMapping(value = "/$!{domain}", method = RequestMethod.POST, produces = {"application/json"})
 @Override
-public $!{domainName}Response call(HeaderInfo t,$!{domainName}Request request){
+public $!{domainName}Response call(HeaderInfo t,@RequestBody $!{domainName}Request request){
         $!{domainName}Response response=new $!{domainName}Response();
         logger.info("call $!{domainName}ServiceImpl({})",JsonMapper.nonEmptyMapper().toJson(request));
         try{

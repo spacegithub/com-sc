@@ -3,16 +3,25 @@ package com.sc.test.restful;
 import com.alibaba.fastjson.JSON;
 import com.sc.test.URLExec;
 
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.TrustStrategy;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.net.ssl.SSLContext;
 
 
 /**
@@ -23,13 +32,34 @@ public class ComRestUtils {
     private static RestTemplate restTemplate = new RestTemplate();
 
     static {
-        StringHttpMessageConverter stringHttpMessageConverter = new StringHttpMessageConverter();
-        List<MediaType> mimeTypes = new ArrayList<MediaType>();
-        mimeTypes.add(MediaType.ALL);
-        stringHttpMessageConverter.setSupportedMediaTypes(mimeTypes);
-        List<HttpMessageConverter<?>> ls = new ArrayList<HttpMessageConverter<?>>();
-        ls.add(stringHttpMessageConverter);
-        restTemplate.setMessageConverters(ls);
+        try {
+            TrustStrategy acceptingTrustStrategy = new TrustStrategy() {
+                @Override
+                public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+                    return true;
+                }
+            };
+            SSLContext sslContext = org.apache.http.ssl.SSLContexts.custom()
+                    .loadTrustMaterial(null, acceptingTrustStrategy)
+                    .build();
+            SSLConnectionSocketFactory csf = new SSLConnectionSocketFactory(sslContext);
+            CloseableHttpClient httpClient = HttpClients.custom()
+                    .setSSLSocketFactory(csf)
+                    .build();
+            HttpComponentsClientHttpRequestFactory requestFactory =
+                    new HttpComponentsClientHttpRequestFactory();
+            requestFactory.setHttpClient(httpClient);
+            StringHttpMessageConverter stringHttpMessageConverter = new StringHttpMessageConverter();
+            List<MediaType> mimeTypes = new ArrayList<MediaType>();
+            mimeTypes.add(MediaType.ALL);
+            stringHttpMessageConverter.setSupportedMediaTypes(mimeTypes);
+            List<HttpMessageConverter<?>> ls = new ArrayList<HttpMessageConverter<?>>();
+            ls.add(stringHttpMessageConverter);
+            restTemplate.setMessageConverters(ls);
+            restTemplate.setRequestFactory(requestFactory);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

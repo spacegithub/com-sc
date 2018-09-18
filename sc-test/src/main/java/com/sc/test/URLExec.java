@@ -29,12 +29,13 @@ public class URLExec {
     }
 
     public URLExec changeURL(String url) {
-        return new URLExec(this.ip,this.port,url);
+        return new URLExec(this.ip, this.port, url);
     }
 
     @Override
     public String toString() {
-        return "http://" + ip + ":" + port + url;
+        //如果是ip访问一般是http访问,如果是域名则一般是https访问
+        return ip.matches("[0-9]+(?:\\.[0-9]+){0,3}") ? "http://" : "https://" + ip + ":" + port + url;
     }
 
 

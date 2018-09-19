@@ -51,9 +51,25 @@ public class FastJsonUtil {
      * @param valuePropertyName
      * @return
      */
-    public static Map jsonPathToMap(final String json,final String jsonPath, final String keyPropertyName, final String valuePropertyName) {
+    public static Map<Object,Object> jsonPathToMap(final String json,final String jsonPath, final String keyPropertyName, final String valuePropertyName) {
         JSONArray jsonArray = (JSONArray) JSONPath.read(json, jsonPath);
         return Collections3.extractToMap(jsonArray, keyPropertyName, valuePropertyName);
+    }
+
+
+    public static void main(String[] args) {
+
+        String json = "[{\"userId\":{\"username\":\"小小\",\"userage\":10},\"reservationCount\":1},{\"userId\":{\"username\":\"大大\",\"userage\":11},\"reservationCount\":2}]";
+        Object object = JSONPath.read(json, "$.statCountReservationList");
+        Map<Object,Object> map = jsonPathToMap(json, "$", "reservationCount", "userId");
+
+        for(Map.Entry<Object,Object> entry:map.entrySet()){
+            System.out.println("-->" +JSONPath.read(entry.getValue().toString(),"$.username"));
+            System.out.println("-->" +JSONPath.read(entry.getValue().toString(),"$.userage"));
+
+        }
+
+
     }
 
 }

@@ -3,6 +3,9 @@ package com.sc.utils.utils.commons;
 import com.google.common.base.MoreObjects;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONPath;
+import com.sc.utils.collection.Collections3;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
@@ -102,12 +105,29 @@ public class ScUtils {
     public static <T> List<T> transList(T... ts) {
         List<T> ls = new ArrayList<>();
         for (T t : ts) {
-            ls.add(t);
+            if (t != null) {
+                ls.add(t);
+            }
         }
         return ls;
     }
 
-    
+    /**
+     * 将JSONArray转换成Map[{"aa":xx,"cc":xx,"bb":xx},{"aa":xx,"cc":xx,"bb":xx}]
+     * 注意一定是ListJson对象转换
+     *
+     * @param json
+     * @param jsonPath
+     * @param keyPropertyName
+     * @param valuePropertyName
+     * @return
+     */
+    public static Map<Object, Object> jsonPathToMap(final String json, final String jsonPath, final String keyPropertyName, final String valuePropertyName) {
+        JSONArray jsonArray = (JSONArray) JSONPath.read(json, jsonPath);
+        return Collections3.extractToMap(jsonArray, keyPropertyName, valuePropertyName);
+    }
+
+
     public static boolean isEmpty(Object obj) {
         return obj == null ? true : (obj.getClass().isArray() ? Array.getLength(obj) == 0 : (obj instanceof CharSequence ? ((CharSequence) obj).length() == 0 : (obj instanceof Collection ? ((Collection) obj).isEmpty() : (obj instanceof Map ? ((Map) obj).isEmpty() : false))));
     }

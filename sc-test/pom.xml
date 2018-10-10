@@ -27,6 +27,11 @@
             <groupId>com.caucho</groupId>
             <artifactId>hessian</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.rabbitmq</groupId>
+            <artifactId>amqp-client</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
 </project>

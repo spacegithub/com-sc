@@ -6,6 +6,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONPath;
 import com.sc.utils.collection.Collections3;
+import com.sc.utils.reflect.Reflections;
+
+import org.apache.commons.beanutils.PropertyUtils;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
@@ -162,11 +165,39 @@ public class ScUtils {
         return JSON.toJSONString(t, jsonNameFilter);
     }
 
-    
+    /**
+     * 费波纳茨
+     *
+     * @param number
+     * @return
+     */
     public static int  fibonacci(int number) {
-        if ((number == 0) || (number == 1))
+        if ((number == 0) || (number == 1)) {
             return number;
-        else
+        } else {
             return fibonacci(number - 1) + fibonacci(number - 2);
+        }
+    }
+
+
+    /**
+     * 提取集合中的对象的一个属性(通过Getter函数), 组合成Map.
+     * 注意如果存在相同的Key会导致key覆盖
+     *
+     * @param collection
+     *         来源集合.
+     * @param propertyName
+     *         要提取的属性名.
+     */
+    public static Map extractToMap(Collection collection, String propertyName) {
+        Map map = new HashMap(collection.size());
+        try {
+            for (Object obj : collection) {
+                map.put(PropertyUtils.getProperty(obj, propertyName), collection);
+            }
+        } catch (Exception e) {
+            throw Reflections.convertReflectionExceptionToUnchecked(e);
+        }
+        return map;
     }
 }

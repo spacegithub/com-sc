@@ -1,5 +1,5 @@
 package $!{packageName};
-import cjia.commons.base.api.BaseRequest;
+import sc.commons.base.api.BaseRequest;
 
 /**
  * <一句话功能简述> <功能详细描述>

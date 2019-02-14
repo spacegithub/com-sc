@@ -1,8 +1,8 @@
 #set($domain=$!domainName.substring(0,1).toLowerCase()+$!domainName.substring(1))
 package $!{packageName};
 
-import cjia.commons.base.api.BaseResponse;
-import cjia.fx.apibase.annotation.hessian.HessianDispatcherServlet;
+import sc.commons.base.api.BaseResponse;
+import sc.fx.apibase.annotation.hessian.HessianDispatcherServlet;
 import com.fg.commons.hessian.header.HeaderInfo;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -3,8 +3,8 @@ package $!{packageName};
 
 import com.fg.commons.hessian.core.Hessian;
 import com.fg.commons.hessian.header.HeaderInfo;
-import cjia.commons.base.api.IBaseService;
-import cjia.commons.base.validator.DataValidator;
+import sc.commons.base.api.IBaseService;
+import sc.commons.base.validator.DataValidator;
 
 /**
  * @see: [相关类/方法]（可选）

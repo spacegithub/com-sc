@@ -1,6 +1,6 @@
 package $!{packageName};
 
-import cjia.commons.base.api.BaseResponse;
+import sc.commons.base.api.BaseResponse;
 
 /**
  * <一句话功能简述> <功能详细描述>

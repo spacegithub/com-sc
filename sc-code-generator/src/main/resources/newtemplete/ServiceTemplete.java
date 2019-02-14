@@ -1,9 +1,9 @@
 #set($domain=$!domainName.substring(0,1).toLowerCase()+$!domainName.substring(1))
 package $!{packageName};
 
-import cjia.fx.apibase.annotation.hessian.Hessian;
+import sc.fx.apibase.annotation.hessian.Hessian;
 import com.fg.commons.hessian.header.HeaderInfo;
-import cjia.commons.base.api.IBaseService;
+import sc.commons.base.api.IBaseService;
 
 /**
  * @see: [相关类/方法]（可选）

@@ -18,7 +18,7 @@ public class CodeGeneration {
      * 用户环境变量
      */
     private final static String domainName = "SearchRefundByIds";
-    private final static String packagePath = "cjia.payment.service.refund.service";
+    private final static String packagePath = "sc.payment.service.refund.service";
     private final static String hessionUrl = "hessian.url.payment.service";
     private final static String domainUrl = "/svr/payment/refund";
 

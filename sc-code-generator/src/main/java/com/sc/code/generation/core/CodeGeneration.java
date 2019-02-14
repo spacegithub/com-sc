@@ -17,15 +17,15 @@ public class CodeGeneration {
     /**
      * 用户环境变量
      */
-    private final static String domainName = "BatchSendMessage";
-    private final static String packagePath = "cjia.message.core";
-    private final static String hessionUrl = "hessian.url.message";
-    private final static String domainUrl = "/svr/message/commonmsg";
+    private final static String domainName = "SearchRefundByIds";
+    private final static String packagePath = "cjia.payment.service.refund.service";
+    private final static String hessionUrl = "hessian.url.payment.service";
+    private final static String domainUrl = "/svr/payment/refund";
 
     /**
      * 系统环境
      */
-    private final static String sourcePath = System.getProperty("user.dir") + "\\sc-code-generator\\src\\main\\resources\\newtemplete";
+    private final static String sourcePath = System.getProperty("user.dir") + "\\sc-code-generator\\src\\main\\resources\\templete";
     private final static String targetPath = System.getProperty("user.dir") + "\\out" + "\\" + packagePath.replace(".", "\\");
 
     public static void main(String[] args) throws Exception {

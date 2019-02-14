@@ -7,11 +7,11 @@
 
 ## 模块说明
 
-**sc-base-api:**基本实体模块,包括统一请求响应分页相关以及业务请求头的规范
+**sc-base-api:** 基本实体模块,包括统一请求响应分页相关以及业务请求头的规范
 
-**sc-code-generator:**基于velocity的代码模板生成代码,可以扩展生成各种模板的代码
+**sc-code-generator:** 基于velocity的代码模板生成代码,可以扩展生成各种模板的代码
 
-**sc-excle:**对于excle操作的一些封装
+**sc-excle:** 对于excle操作的一些封装
 
 ```java
 //1.读取excle
@@ -50,9 +50,9 @@ FileOutputStream fileOutputStream = new FileOutputStream("F:\\a.xlsx");
 ExcelService.writerExcel4TargetDispatch(fileOutputStream, listList);
 ```
 
-**sc-hessian:**基于hessian的RPC调用封装
+**sc-hessian:**  基于hessian的RPC调用封装
 
-**sc-mail:**对email的使用封装
+**sc-mail:**  对email的使用封装
 
 ```java
 MailSenderInfo mailInfo = new MailSenderInfo();
@@ -72,13 +72,13 @@ ComplexMailSender sms = new ComplexMailSender();
 sms.sendAttachmentMail(mailInfo);
 ```
 
-**sc-message-queue:**对于rabbit和spring集成的简单封装
+**sc-message-queue:** 对于rabbit和spring集成的简单封装
 
-**sc-mybatis-generator:**对mybatis生成插件进行处理,使生成的实体和mapper更符合使用要求,可以扩展定制.
+**sc-mybatis-generator:** 对mybatis生成插件进行处理,使生成的实体和mapper更符合使用要求,可以扩展定制.
 
-**sc-pay-channel:**支付宝支付简单封装测试,以后可能会集成多个支付渠道
+**sc-pay-channel:** 支付宝支付简单封装测试,以后可能会集成多个支付渠道
 
-**sc-redis:**对于redis的简单封装
+**sc-redis:** 对于redis的简单封装
 
 ```java
 //1.redis的基本操作封装
@@ -95,7 +95,7 @@ lock.unlock();
 redisson.shutdown();
 ```
 
-**sc-rule-engine:**简单的规则引擎封装
+**sc-rule-engine:** 简单的规则引擎封装
 
 *规则文件:*
 
@@ -163,9 +163,9 @@ ruleEngine.execute(ruleContext, "feerule");
 System.out.println("-->" + ruleContext.get("totalSalary"));
 ```
 
-**sc-socket:**对于网络编程的封装,从TIO项目copy过来的
+**sc-socket:** 对于网络编程的封装,从TIO项目copy过来的
 
-**sc-test:**轻量级的dubbu,hessian,rabbitmq和restful的测试工具类集合
+**sc-test:** 轻量级的dubbu,hessian,rabbitmq和restful的测试工具类集合
 
 *dubbo客户端*
 
@@ -200,9 +200,9 @@ map.put("random", UUID.randomUUID().toString().replace("-", ""));
 rabbitSendUtils.send("test.exchange.topic", "topic.order", map);
 ```
 
-**sc-thread-pool:**模拟线程池处理
+**sc-thread-pool:** 模拟线程池处理
 
-**sc-utils:**常用工具类
+**sc-utils:** 常用工具类
 
 - com.sc.utils
 

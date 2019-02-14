@@ -7,6 +7,43 @@
 
 ## 模块说明
 
+
+**sc-utils:** 常用工具类
+
+- com.sc.utils
+
+  - beanutils *bean的一些工具类,包括验证,转换,过滤,检查,复制,创建等*
+
+  - classcan   类扫描器,支持扫描和匹配目录下所有接口和类
+
+  - collection 对于集合的一些操作包括转换,差并集,过滤排序,分页映射等基本操作
+
+  - enctypt      ASC加密解密,base64操作,url编解码,MD5加密验证,RSA加解密
+
+  - exception  对于异常的一些封装,包括获取根异常,异常原因,异常信息
+
+  - mapper     对于bean的转换和xml以及json和bean的互转进行封装
+
+  - qrcode     生成二维码和一维码
+
+  - reflect       反射的工具类封装,以及获取对于Class对象的封装,获取类路径,加载类,判断类类型
+
+  - rest            对于restful的请求进行封装
+
+  - spring      对于运行时的spring容器的一些常用操作,获取属性值,获取代理类等
+
+  - utils
+
+    - commons  最基本常用的工具类,包括转json,判空,读取json, 费波纳茨,提取属性金额转换等等
+    - file                对于文件目录的一些处理封装,包括配置文件获取,文件压缩,文件属性文件目录拷贝创建等
+    - regex           封装了常用的对于正则的匹配和处理
+    - webutil       封装对于请求体和请求url的一些处理,包括验证码,获取路径返回http code转发,重定向等
+    - xml              对于XML一些处理,包括解析,转换,修改,映射,提取转换
+
+    其他金额的处理,JSON的处理,时间的处理,SSH命令的封装等.
+
+  - web 结合spring容器自定义注解,封装对入参属性的提取和响应的json转换.
+
 **sc-base-api:** 基本实体模块,包括统一请求响应分页相关以及业务请求头的规范
 
 **sc-code-generator:** 基于velocity的代码模板生成代码,可以扩展生成各种模板的代码
@@ -202,41 +239,6 @@ rabbitSendUtils.send("test.exchange.topic", "topic.order", map);
 
 **sc-thread-pool:** 模拟线程池处理
 
-**sc-utils:** 常用工具类
-
-- com.sc.utils
-
-  - beanutils *bean的一些工具类,包括验证,转换,过滤,检查,复制,创建等*
-
-  - classcan   类扫描器,支持扫描和匹配目录下所有接口和类
-
-  - collection 对于集合的一些操作包括转换,差并集,过滤排序,分页映射等基本操作
-
-  - enctypt      ASC加密解密,base64操作,url编解码,MD5加密验证,RSA加解密
-
-  - exception  对于异常的一些封装,包括获取根异常,异常原因,异常信息
-
-  - mapper     对于bean的转换和xml以及json和bean的互转进行封装
-
-  - qrcode     生成二维码和一维码
-
-  - reflect       反射的工具类封装,以及获取对于Class对象的封装,获取类路径,加载类,判断类类型
-
-  - rest            对于restful的请求进行封装
-
-  - spring      对于运行时的spring容器的一些常用操作,获取属性值,获取代理类等
-
-  - utils
-
-    - commons  最基本常用的工具类,包括转json,判空,读取json, 费波纳茨,提取属性金额转换等等
-    - file                对于文件目录的一些处理封装,包括配置文件获取,文件压缩,文件属性文件目录拷贝创建等
-    - regex           封装了常用的对于正则的匹配和处理
-    - webutil       封装对于请求体和请求url的一些处理,包括验证码,获取路径返回http code转发,重定向等
-    - xml              对于XML一些处理,包括解析,转换,修改,映射,提取转换
-
-    其他金额的处理,JSON的处理,时间的处理,SSH命令的封装等.
-
-  - web 结合spring容器自定义注解,封装对入参属性的提取和响应的json转换.
 
 
 

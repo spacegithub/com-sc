@@ -52,6 +52,8 @@
         <j2cache-core.version>2.5.4-release</j2cache-core.version>
         <velocity.version>1.7</velocity.version>
         <cglib-nodep.version>3.1</cglib-nodep.version>
+        <trove4j.version>3.0.2</trove4j.version>
+        <fastutil.version>5.0.9</fastutil.version>
 
         <maven.javadoc.skip>false</maven.javadoc.skip>
         <maven.build.tests.skip>false</maven.build.tests.skip>
@@ -94,6 +96,18 @@
                 <groupId>org.apache.velocity</groupId>
                 <artifactId>velocity</artifactId>
                 <version>${velocity.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.sf.trove4j</groupId>
+                <artifactId>trove4j</artifactId>
+                <version>${trove4j.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>fastutil</groupId>
+                <artifactId>fastutil</artifactId>
+                <version>${fastutil.version}</version>
             </dependency>
 
             <dependency>
